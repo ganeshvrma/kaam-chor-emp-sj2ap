@@ -28,7 +28,7 @@ export class SplashScreenPage implements OnInit {
      setTimeout(() => {
       const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
       if (isLoggedIn) {
-        this.router.navigate(['/tabs/home']);  
+        this.router.navigate(['/job-detail-page']);  //change krna h login its for trail 
        
       } else {
         this.router.navigate(['/login']);

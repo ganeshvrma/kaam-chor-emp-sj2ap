@@ -5,6 +5,7 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
+<!-- <ion-content> <app-otp-input [(ngModel)]="otp"></app-otp-input></ion-content> -->
 
 <ion-content class="ion-padding">
   <div *ngIf="!isNewUser">
@@ -19,7 +20,25 @@
   <p>We Have Sent OTP Via SMS To {{mobileNumber}} For Verification</p>
   </div>
 
-  <app-otp-input [(ngModel)]="otp"></app-otp-input>
+  <!-- <app-otp-input [(ngModel)]="otp"></app-otp-input> -->
+
+  <ion-grid>
+  <ion-row>
+    <ion-col size="3" *ngFor="let _ of [1,2,3,4]; let i = index">
+      <ion-input 
+        type="tel"
+        inputmode="numeric"
+        pattern="[0-9]*"
+        maxlength="1" 
+        class="otp-input" 
+        [id]="'otp-' + i"
+        (ionInput)="onOtpChange($event, i)"
+        (keydown)="onKeyDown($event, i)"
+      ></ion-input>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
   
   <ion-button expand="block" color="primary" (click)="verifyOtp()" [disabled]="otp.length !== 4 || isLoading">
     <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>

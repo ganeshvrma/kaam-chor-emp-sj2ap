@@ -124,8 +124,9 @@ export class LoginPage implements OnInit {
               username: this.username
             }
           };
-
+        console.log(navigationExtras);
           this.router.navigate(['/otp-verf'], navigationExtras);
+          
         },
         error: (error:any) => {
           console.error('Error sending OTP', error);

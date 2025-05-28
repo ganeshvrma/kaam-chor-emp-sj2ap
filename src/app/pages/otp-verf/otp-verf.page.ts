@@ -39,7 +39,7 @@ export class OtpVerfPage implements OnInit {
 
   submitOtp(){
     console.log('Attempting navigation to /tabs/home');
-  this.router.navigate(['/tabs/home']).then(
+  this.router.navigate(['/job-detail-page']).then(
     () => console.log('Navigation successful'),
     (err) => console.error('Navigation failed', err)
   );
@@ -74,9 +74,9 @@ export class OtpVerfPage implements OnInit {
 
           // this.router.navigate(['/home'], navigationExtras); // Adjust the route as needed
           if(this.isNewUser){
-            this.router.navigate(['/reg-aboutme'], navigationExtras);
+            this.router.navigate(['/job-detail-page'], navigationExtras);
           }else{
-            this.router.navigate(['/tabs/home'], navigationExtras);
+            this.router.navigate(['/basic-details-page'], navigationExtras);
           }
          
         },
@@ -101,6 +101,37 @@ export class OtpVerfPage implements OnInit {
       this.navCtrl.back();
     });
   }
+
+
+  otpArray: string[] = ['', '', '', ''];
+// otp: string = '';
+
+onOtpChange(event: any, index: number) {
+  const input = event.target as HTMLIonInputElement;
+  const value = input.value as string;
+
+  if (/^\d$/.test(value)) {
+    this.otpArray[index] = value;
+    this.otp = this.otpArray.join('');
+    if (index < 3) {
+      const nextInput = document.getElementById('otp-' + (index + 1)) as HTMLIonInputElement;
+      if (nextInput) nextInput.setFocus();
+    } else {
+      input.getInputElement().then(native => native.blur());
+    }
+  }
+}
+
+onKeyDown(event: KeyboardEvent, index: number) {
+  const input = event.target as HTMLInputElement;
+  if (event.key === 'Backspace' && !input.value && index > 0) {
+    const prevInput = document.getElementById('otp-' + (index - 1)) as HTMLIonInputElement;
+    if (prevInput) prevInput.setFocus();
+    this.otpArray[index] = '';
+    this.otp = this.otpArray.join('');
+  }
+}
+
 
 
   
