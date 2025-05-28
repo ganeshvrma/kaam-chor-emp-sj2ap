@@ -8,8 +8,32 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'splash-screen',
     pathMatch: 'full'
+  },
+  {
+    path: 'splash-screen',
+    loadChildren: () => import('./pages/splash-screen/splash-screen.module').then( m => m.SplashScreenPageModule)
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+  },
+  {
+    path: 'otp-verf',
+    loadChildren: () => import('./pages/otp-verf/otp-verf.module').then( m => m.OtpVerfPageModule)
+  },
+  {
+    path: 'basic-details-page',
+    loadChildren: () => import('./pages/basic-details-page/basic-details-page.module').then( m => m.BasicDetailsPagePageModule)
+  },
+  {
+    path: 'company-details-page',
+    loadChildren: () => import('./pages/company-details-page/company-details-page.module').then( m => m.CompanyDetailsPagePageModule)
+  },
+  {
+    path: 'job-detail-page',
+    loadChildren: () => import('./pages/job-detail-page/job-detail-page.module').then( m => m.JobDetailPagePageModule)
   },
 ];
 
