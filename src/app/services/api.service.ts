@@ -37,8 +37,15 @@ export class ApiService {
       this.http.get(`${this.jobs_apiUrl}?candidate_location=${encodeURIComponent(candidateLocation)}`)
     );
   }
-
-  
+ submitJob(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/step1`, data);
+  }
+  submitCompany(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/step2`, data);
+  }
+  submitBasic(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/step3`, data);
+  }
   getCities(): Observable<any[]> {
     return this.handleResponse<any[]>(this.http.get(`${this.apiUrl}/Api/get_cities`));
   }
@@ -72,16 +79,17 @@ export class ApiService {
   }
 
   getJobCategory(): Observable<any[]> {
-    return this.handleResponse<any[]>(this.http.get(`${this.apiUrl}/Api/get_jobcategory`));
+    return this.http.get<any[]>(`${this.apiUrl}/Api/get_jobcategory`);
+  }
+  getLanguages(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/Api/get_languages`);
   }
 
   getJobType(): Observable<any[]> {
     return this.handleResponse<any[]>(this.http.get(`${this.apiUrl}/Api/get_jobtype`));
   }
 
-  getLanguages(): Observable<any[]> {
-    return this.handleResponse<any[]>(this.http.get(`${this.apiUrl}/Api/get_languages`));
-  }
+ 
 
   getLangProficiency(): Observable<any[]> {
     return this.handleResponse<any[]>(this.http.get(`${this.apiUrl}/Api/get_lang_proficiency`));

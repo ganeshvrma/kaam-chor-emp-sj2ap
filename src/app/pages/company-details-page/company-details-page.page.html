@@ -1,13 +1,207 @@
-<ion-header [translucent]="true">
+<ion-header>
+  <ion-toolbar style="--min-height: 100px">
+    <ion-title style="padding-bottom: 15px">2/3</ion-title>
+    <ion-title>Post Job </ion-title>
+
+    <ion-button slot="end" id="supporttitle"
+      ><ion-icon name="call-outline"></ion-icon>Call customer
+      support</ion-button
+    >
+  </ion-toolbar>
   <ion-toolbar>
-    <ion-title>company-details-page</ion-title>
+    <!-- <ion-searchbar></ion-searchbar> -->
+
+    <ion-segment value="company">
+      <ion-segment-button value="job" content-id="job">
+        <ion-label class="ion-text-wrap">Job Details</ion-label>
+      </ion-segment-button>
+      <ion-segment-button
+        value="company"
+        content-id="company"
+        style="background-color: purple; color: white !important"
+      >
+        <ion-label class="ion-text-wrap">Company Details</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="basic" content-id="basic">
+        <ion-label class="ion-text-wrap">Basic Details</ion-label>
+      </ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">company-details-page</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <ion-segment-view value="company">
+    <ion-segment-content id="company">
+      <form   [formGroup]="company" (ngSubmit)="nextStep2()">
+        <div class="box">
+          <h2 class="heading">Company Details</h2>
+          <p>Company Name<span style="color: red">*</span></p>
+          <input type="text" value="$event.target.value" formControlName="companyname" />
+          <ion-text
+            color="danger"
+            *ngIf="
+              company.get('companyname')?.touched &&
+              company.get('companyname')?.invalid
+            "
+          >
+            <small *ngIf="company.get('companyname')?.errors?.['required']"
+              >Company name is required</small
+            >
+          </ion-text>
+          <p>Full Address<span style="color: red">*</span></p>
+          <input
+            type="text"
+            value="sdfjsifhuihuifhh"
+            formControlName="companyaddress"
+          />
+          <ion-text
+            color="danger"
+            *ngIf="
+              company.get('companyaddress')?.touched &&
+              company.get('companyaddress')?.invalid
+            "
+          >
+            <small *ngIf="company.get('companyaddress')?.errors?.['required']"
+              >Company address is required</small
+            >
+          </ion-text>
+          <p>State<span style="color: red">*</span></p>
+          <select name="" id="" formControlName="companystate"  [(ngModel)]="selectedState" (ngModelChange)="onStateChange($event)">
+            <option value="">Select one</option>
+             <option *ngFor="let option of stateOptions" [value]="option.id">{{option.name}}</option>
+          </select>
+          <ion-text
+            color="danger"
+            *ngIf="
+              company.get('companystate')?.touched &&
+              company.get('companystate')?.invalid">
+            <small *ngIf="company.get('companystate')?.errors?.['required']"
+              >Feild is required</small>
+          </ion-text>
+          <p>City<span style="color: red">*</span></p>
+          <select name="" id="" formControlName="companycity"  [(ngModel)]="selectedCity" [disabled]="!company.get('companystate')?.value || cityOptions.length === 0">
+            <option value="">Select one</option>
+             <option *ngFor="let option of cityOptions" [value]="option.id">{{option.name}}</option>
+          </select>
+          <ion-text
+            color="danger"
+            *ngIf="
+              company.get('companycity')?.touched &&
+              company.get('companycity')?.invalid
+            "
+          >
+            <small *ngIf="company.get('companycity')?.errors?.['required']"
+              >Feild is required</small
+            >
+          </ion-text>
+          <p>Country<span style="color: red">*</span></p>
+          <input type="text" value="" formControlName="companycountry" >
+          <ion-text
+            color="danger"
+            *ngIf="
+              company.get('companycountry')?.touched &&
+              company.get('companycountry')?.invalid
+            "
+          >
+            <small *ngIf="company.get('companycountry')?.errors?.['required']"
+              >Feild is required</small
+            >
+          </ion-text>
+          <p>Google map Location</p>
+          <input type="text" />
+          <p>Company Website</p>
+          <input type="text" value="" formControlName="companywebsite" />
+          <ion-text
+            color="danger"
+            *ngIf="
+              company.get('companywebsite')?.touched &&
+              company.get('companywebsite')?.invalid
+            "
+          >
+            <small *ngIf="company.get('companywebsite')?.errors?.['required']"
+              >Feild is required</small
+            >
+          </ion-text>
+          <p>About the Company</p>
+          <ion-textarea
+            autoGrow="true"
+            value="Amet in error debit"
+            formControlName="companydesc"
+          >
+          </ion-textarea>
+          <ion-text
+            color="danger"
+            *ngIf="
+              company.get('companydesc')?.touched &&
+              company.get('companydesc')?.invalid
+            "
+          >
+            <small *ngIf="company.get('companydesc')?.errors?.['required']"
+              >Feild is required</small
+            >
+          </ion-text>
+          <p>Industry Type <span style="color: red">*</span></p>
+          <select name="" id="" formControlName="industrytype" [(ngModel)]="selectedIndustryType">
+            <option value="">Select one</option>
+             <option *ngFor="let option of industryTypeOptions" [value]="option.id">{{option.value}}</option>
+
+            <!-- <option value="auto">Automotive</option>
+            <option value=""></option>
+            <option value=""></option>
+            <option value=""></option>
+            <option value=""></option> -->
+          </select>
+          <ion-text
+            color="danger"
+            *ngIf="
+              company.get('industrytype')?.touched &&
+              company.get('industrytype')?.invalid
+            "
+          >
+            <small *ngIf="company.get('industrytype')?.errors?.['required']"
+              >Feild is required</small
+            >
+          </ion-text>
+          <p>Number of Employees</p>
+          <input type="number" name="" id="" formControlName="numemployees" />
+          <ion-text
+            color="danger"
+            *ngIf="
+              company.get('numemployees')?.touched &&
+              company.get('numemployees')?.invalid
+            "
+          >
+            <small *ngIf="company.get('numemployees')?.errors?.['required']"
+              >Feild is required</small
+            >
+          </ion-text>
+          <p>Year of Establishment</p>
+          <input
+            type="number"
+            name=""
+            id=""
+            value="2022"
+            formControlName="companyestb"
+          />
+          <ion-text
+            color="danger"
+            *ngIf="
+              company.get('companyestb')?.touched &&
+              company.get('companyestb')?.invalid
+            "
+          >
+            <small *ngIf="company.get('companyestb')?.errors?.['required']"
+              >Feild is required</small
+            >
+          </ion-text>
+          <div class="btn">
+            <ion-button (click)="prev.emit()">Back</ion-button>
+            
+            <ion-button (click)="submitForm()" type="submit" [disabled]="company.invalid" >Next</ion-button
+            >
+          </div>
+        </div>
+      </form>
+    </ion-segment-content>
+  </ion-segment-view>
 </ion-content>

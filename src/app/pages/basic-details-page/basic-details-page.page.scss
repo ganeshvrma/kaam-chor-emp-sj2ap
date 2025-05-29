@@ -1,0 +1,43 @@
+#supporttitle{
+    font-size: 0.7rem;
+     margin-right: 10px;
+}
+:host {
+  display: block;
+  height: 100%;
+}
+h6{
+  font-size: 0.5rem;
+}
+.inputf{
+  width: 100%;
+  height: 30px;
+}
+.box{
+ 
+  input{
+  width: 100%;
+  height: 40px;
+  border-radius: 5px;
+  }
+
+  select{
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+  }
+}
+.btn{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+.heading{
+  color: purple;
+}
+.submitbtn{
+
+  --background: purple;
+  color: white !important;
+   border-radius: 5px;
+}

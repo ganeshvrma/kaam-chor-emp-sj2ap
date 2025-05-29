@@ -1,0 +1,118 @@
+
+
+// $colors: (
+//   purple: #9b59b6,
+//   /* keep existing colors */
+// );
+#supporttitle{
+    font-size: 0.7rem;
+    margin-right: 10px;
+    --background:purple;
+    color: white !important;
+}
+:host {
+  display: block;
+  height: 100%;
+}
+.purple-button {
+  --background: #800080;
+  --color: #fff;
+}
+h6{
+  font-size: 0.5rem;
+}
+.inputf{
+  width: 100%;
+  height: 30px;
+}
+.box{
+
+  input{
+  width: 100%;
+  height: 40px;
+  border-radius: 5px;
+  }
+ion-textarea{
+    width: 100%;
+    border: 2px solid black;
+    border-radius: 5px;
+   
+  }
+  @media (prefers-color-scheme: dark) {
+   ion-textarea{
+     border: 2px solid white;
+  }}
+  select{
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+  }
+}
+
+.rws{
+  margin-top:5px;
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+.heading{
+  color: purple;
+}
+.langlabel{
+  margin-top: 10px;
+}
+ .jdinputspace{
+  margin-top: 10px;
+  margin-bottom: 10px;
+ }
+.spacebottom{
+  margin-bottom: 10px;
+  border: 2px solid black;
+ }
+.qualification-label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 10px;
+  color: #444;
+}
+
+.qualification-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-start;
+
+  ion-button {
+    min-width: 150px;
+    --border-radius: 15px;
+    --padding-top: 8px;
+    --padding-bottom: 8px;
+    --padding-start: 12px;
+    --padding-end: 12px;
+    text-transform: none;
+    font-size: 14px;
+  }
+
+  ion-button[color="primary"] {
+    --background: #003c9f;
+    --color: white;
+  }
+}
+.candidate-type-toggle,.security-toggle,.job-type-toggle,.gender-type-toggle,.location-toggle,.work-type-toggle {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+
+  ion-button {
+    min-width: 80px;
+    --border-radius: 20px;
+    --padding-top: 8px;
+    --padding-bottom: 8px;
+    font-size: 14px;
+  }
+
+  ion-button[color="primary"] {
+    --background: #003c9f;
+    --color: white;
+  }
+}

@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { BasicDetailsPagePageRoutingModule } from './basic-details-page-routing.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { BasicDetailsPagePage } from './basic-details-page.page';
 
@@ -13,8 +14,8 @@ import { BasicDetailsPagePage } from './basic-details-page.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    BasicDetailsPagePageRoutingModule
+    BasicDetailsPagePageRoutingModule,ReactiveFormsModule
   ],
-  declarations: []
+  declarations: [BasicDetailsPagePage]
 })
 export class BasicDetailsPagePageModule {}

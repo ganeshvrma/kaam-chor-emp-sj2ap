@@ -1,13 +1,166 @@
-<ion-header [translucent]="true">
+<ion-header>
+  <ion-toolbar style="--min-height: 100px">
+    <ion-title style="padding-bottom: 15px">3/3</ion-title>
+    <ion-title>Post Job </ion-title>
+
+    <ion-button slot="end" id="supporttitle"
+      ><ion-icon name="call-outline"></ion-icon>Call customer
+      support</ion-button
+    >
+  </ion-toolbar>
   <ion-toolbar>
-    <ion-title>basic-details-page</ion-title>
+    <!-- <ion-searchbar></ion-searchbar> -->
+
+    <ion-segment value="basic">
+      <ion-segment-button value="job" content-id="job">
+        <ion-label class="ion-text-wrap">Job Details</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="company" content-id="company">
+        <ion-label class="ion-text-wrap">Company Details</ion-label>
+      </ion-segment-button>
+      <ion-segment-button
+        value="basic"
+        content-id="basic"
+        style="background-color: purple; color: white !important"
+      >
+        <ion-label class="ion-text-wrap">Basic Details</ion-label>
+      </ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">basic-details-page</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <ion-segment-view value="basic">
+    <ion-segment-content id="basic">
+      <form [formGroup]="basiclast" (ngSubmit)="subbmit()">
+        <div class="box">
+          <h2 class="heading">Basic Details</h2>
+          <p>Employer Name<span style="color: red">*</span></p>
+          <input type="text" value="John" formControlName="emplname" />
+          <ion-text
+            color="danger"
+            *ngIf="
+              basiclast.get('emplname')?.touched &&
+              basiclast.get('emplname')?.invalid
+            "
+          >
+            <small *ngIf="basiclast.get('emplname')?.errors?.['required']"
+              >Feild is required</small
+            >
+          </ion-text>
+          <p>Email<span style="color: red">*</span></p>
+          <input
+            type="email"
+            name=""
+            id=""
+            value="john@gmail.com"
+            formControlName="emplemail"
+          />
+          <small style="color: green"
+            >--Candidates job application send on this email</small
+          >
+          <div>
+            <ion-text
+              color="danger"
+              *ngIf="
+                basiclast.get('emplemail')?.touched &&
+                basiclast.get('emplemail')?.invalid
+              "
+            >
+              <small *ngIf="basiclast.get('emplemail')?.errors?.['required']"
+                >Feild is required</small
+              >
+            </ion-text>
+          </div>
+          <p>Contact Person Profile<span style="color: red">*</span></p>
+          <select
+            name=""
+            id=""
+            placeholder="General "
+            formControlName="contactperson"
+           
+          >
+            <option value ="">Select one</option>
+<option *ngFor="let option of empProfileOptions" [value]="option.id">{{option.profile}}</option>
+            <!-- <option value="hdgnd">General Manager</option>
+            <option value=""></option>
+            <option value=""></option>
+            <option value=""></option>
+            <option value=""></option> -->
+          </select>
+          <ion-text
+            color="danger"
+            *ngIf="
+              basiclast.get('contactperson')?.touched &&
+              basiclast.get('contactperson')?.invalid
+            "
+          >
+            <small *ngIf="basiclast.get('contactperson')?.errors?.['required']"
+              >Feild is required</small
+            >
+          </ion-text>
+          <p>Registered Mobile Number</p>
+          <!-- <span style="border: 2px solid white; height: 20px; width: 20px;">+91</span> -->
+          <input
+            type="number"
+            name=""
+            id=""
+            value=""
+            formControlName="emplnumber"
+          />
+          <small style="color: green"> --Candidates call in this number</small>
+          <div>
+            <ion-text
+              color="danger"
+              *ngIf="
+                basiclast.get('emplnumber')?.touched &&
+                basiclast.get('emplnumber')?.invalid
+              "
+            >
+              <small *ngIf="basiclast.get('emplnumber')?.errors?.['required']"
+                >Feild is required</small
+              >
+            </ion-text>
+          </div>
+          <!-- <p for="terms"> I Accept Terms and Conditions and Privacy Policy<span style="color: red;">*</span></p>
+      <input type="checkbox" name="terms" id="terms"  > -->
+          <br />
+          <!-- <ion-checkbox labelPlacement="end" style="margin-top: 10px"
+            >I Accept Terms and Conditions and <br />
+            Privacy Policy <span style="color: red;">*</span></ion-checkbox
+          > -->
+           <ion-checkbox
+      formControlName="acceptTerms"
+      labelPlacement="end"
+      style="margin-top: 10px"
+    >
+      I Accept Terms and Conditions and <br />
+      Privacy Policy <span style="color: red;">*</span>
+    </ion-checkbox>
+  
+
+  <ion-text color="danger" *ngIf="basiclast.controls['acceptTerms'].touched && basiclast.controls['acceptTerms'].invalid">
+    <p>You must accept the terms and conditions</p>
+  </ion-text>
+          <div class="btn">
+            <ion-button expand="block" (click)="prev.emit()">Back</ion-button>
+            <!-- <ion-button
+              expand="block"
+              class="submitbtn"
+              (click)="submit.emit()"
+              [disabled]="basiclast.invalid"
+              >Submit</ion-button
+            > -->
+            <ion-button
+              expand="block"
+              class="submitbtn"
+              (click)="submitForm()"
+              [disabled]="basiclast.invalid"
+              >Submit</ion-button
+            >
+          </div>
+        </div>
+      </form>
+    </ion-segment-content>
+  </ion-segment-view>
 </ion-content>

@@ -5,16 +5,18 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { JobDetailPagePageRoutingModule } from './job-detail-page-routing.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
-import { JobDetailPagePage } from './job-detail-page.page';
+import { JobDetailPage } from './job-detail-page.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    JobDetailPagePageRoutingModule
+    JobDetailPagePageRoutingModule,
+    ReactiveFormsModule
   ],
-  declarations: []
+  declarations: [JobDetailPage]
 })
 export class JobDetailPagePageModule {}

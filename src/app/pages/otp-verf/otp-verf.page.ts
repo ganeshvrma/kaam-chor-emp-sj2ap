@@ -74,7 +74,7 @@ export class OtpVerfPage implements OnInit {
 
           // this.router.navigate(['/home'], navigationExtras); // Adjust the route as needed
           if(this.isNewUser){
-            this.router.navigate(['/job-detail-page'], navigationExtras);
+            this.router.navigate(['/company-details-page'], navigationExtras);
           }else{
             this.router.navigate(['/basic-details-page'], navigationExtras);
           }
