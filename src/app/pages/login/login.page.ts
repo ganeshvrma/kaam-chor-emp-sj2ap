@@ -27,10 +27,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
-  standalone:true,
+  standalone:false,
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
-  imports: [CommonModule, IonicModule,ReactiveFormsModule,FormsModule] 
+  // imports: [CommonModule, IonicModule,ReactiveFormsModule,FormsModule] 
 })
 export class LoginPage implements OnInit {
 

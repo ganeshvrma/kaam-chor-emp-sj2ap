@@ -9,10 +9,10 @@ import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-otp-verf',
-  standalone:true,
+  standalone:false,
   templateUrl: './otp-verf.page.html',
   styleUrls: ['./otp-verf.page.scss'],
-   imports: [CommonModule, IonicModule,ReactiveFormsModule,FormsModule] ,
+  //  imports: [CommonModule, IonicModule,ReactiveFormsModule,FormsModule] ,
 })
 export class OtpVerfPage implements OnInit {
   mobileNumber: string = '';
@@ -74,7 +74,7 @@ export class OtpVerfPage implements OnInit {
 
           // this.router.navigate(['/home'], navigationExtras); // Adjust the route as needed
           if(this.isNewUser){
-            this.router.navigate(['/company-details-page'], navigationExtras);
+            this.router.navigate(['/job-detail-page'], navigationExtras);
           }else{
             this.router.navigate(['/basic-details-page'], navigationExtras);
           }

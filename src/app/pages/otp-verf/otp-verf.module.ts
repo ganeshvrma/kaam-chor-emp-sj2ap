@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 import { OtpInputComponent } from 'src/app/components/otp-input/otp-input.component';
@@ -14,8 +15,8 @@ import { OtpVerfPage } from './otp-verf.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    OtpVerfPageRoutingModule
+    OtpVerfPageRoutingModule,ReactiveFormsModule
   ],
-  declarations: []
+  declarations: [OtpVerfPage]
 })
 export class OtpVerfPageModule {}
