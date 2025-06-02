@@ -21,6 +21,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service'; 
 import { LocalStorageUtil } from 'src/app/shared/utils/localStorageUtil';
+import { Router, NavigationExtras } from '@angular/router';
 @Component({
   selector: 'app-lastpage',
   standalone: false,
@@ -40,14 +41,14 @@ export class BasicDetailsPagePage  implements OnInit {
   //  selectedEmplProfile:string="";
 
    //end 
-  constructor( private fb: FormBuilder,  private navCtrl: NavController,private apiService: ApiService) {
+  constructor( private fb: FormBuilder,  private navCtrl: NavController,private apiService: ApiService,private router: Router) {
    {this.basiclast = this.fb.group({
 
   emplname: ['', Validators.required],
   emplemail: ['', Validators.required],
   contactperson: ['', Validators.required],
   emplnumber: ['', Validators.required],
-    acceptTerms: [false, Validators.requiredTrue],
+    // acceptTerms: [false, Validators.requiredTrue],
         });}}
   ngOnInit() {
      this.apiService.getEmpProfile().subscribe((res: any) => {
@@ -57,8 +58,8 @@ export class BasicDetailsPagePage  implements OnInit {
   }
   subbmit() {
   if (this.basiclast.valid) {
-     const accepted = this.basiclast.value.acceptTerms ? 1 : 0;
-      console.log('Accepted value:', accepted);
+    //  const accepted = this.basiclast.value.acceptTerms ? 1 : 0;
+    //   console.log('Accepted value:', accepted);
     console.log('Form data:', this.basiclast.value);
     // this.navCtrl.navigateForward('next-page'); // Replace with actual route
   } else {
@@ -66,17 +67,21 @@ export class BasicDetailsPagePage  implements OnInit {
     console.log('Form is invalid');
   }
 }
+
 submitForm() {
   if (this.basiclast.invalid) {
     this.basiclast.markAllAsTouched(); // Show validation errors
     return;
   }
+   if(this.basiclast.valid){
+            this.router.navigate(['/company-details-page']);
+          }
 
   // const formData = this.jobForm.value;
 const formData = {
   ...this.basiclast.value,
-  step_third_data: "step 3", // replace with actual step one form/control or object
-  user_id: LocalStorageUtil.getItem('user_id')
+  // step_third_data: "step 3", // replace with actual step one form/control or object
+  user_id: LocalStorageUtil.getItem('userId')
 };
 
   console.log('Submitting form:', formData);

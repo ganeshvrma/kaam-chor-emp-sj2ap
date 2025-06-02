@@ -1,189 +1,57 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+// import { Injectable } from '@angular/core';
+
+// @Injectable({
+//   providedIn: 'root'
+// })
+// export class ApiService {
+
+//   constructor() { }
+// }
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ApiService {
-  [x: string]: any;
-  // private formData: any = {};
-  private formData: { [key: string]: any } = {};
-  private jobs_apiUrl = `${environment.baseUrl}/Api/jobs_api`;
+  private baseUrl = 'https://ek-reps.com/kaam-chor/FormApi'; // Replace with your backend URL
   private apiUrl = `${environment.baseUrl}`;
-  private formapiUrl = `${environment.baseUrl}/FormApi`;
+  constructor(private http: HttpClient) {}
 
-
-
-
-  constructor(private http: HttpClient) { }
-
-  private handleResponse<T>(observable: Observable<any>): Observable<T> {
-    return observable.pipe(
-      map((response: any) => {
-        if (response.status === 'success') {
-          return response.data;
-        } else {
-          throw new Error(response.data?.message || 'An error occurred');
-        }
-      })
-    );
-  }
-
-  getJobs(candidateLocation: string): Observable<any[]> {
-    return this.handleResponse<any[]>(
-      this.http.get(`${this.jobs_apiUrl}?candidate_location=${encodeURIComponent(candidateLocation)}`)
-    );
-  }
- submitJob(data: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/step1`, data);
+  submitJob(data: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/step1`, data);
   }
   submitCompany(data: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/step2`, data);
+    return this.http.post(`${this.baseUrl}/step2`, data);
   }
   submitBasic(data: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/step3`, data);
+    return this.http.post(`${this.baseUrl}/step3`, data);
   }
-  getCities(): Observable<any[]> {
-    return this.handleResponse<any[]>(this.http.get(`${this.apiUrl}/Api/get_cities`));
-  }
-
-  getStates(): Observable<any[]> {
-    return this.handleResponse<any[]>(this.http.get(`${this.apiUrl}/Api/get_states`));
-  }
-
-  getSkills(): Observable<any[]> {
-    return this.handleResponse<any[]>(this.http.get(`${this.apiUrl}/Api/get_skills`));
-  }
-
-  getEduBranch(): Observable<any[]> {
-    return this.handleResponse<any[]>(this.http.get(`${this.apiUrl}/Api/get_edu_branch`));
-  }
-
-  getEduQual(): Observable<any[]> {
-    return this.handleResponse<any[]>(this.http.get(`${this.apiUrl}/Api/get_edu_qual`));
-  }
-
-  getEduTitle(): Observable<any[]> {
-    return this.handleResponse<any[]>(this.http.get(`${this.apiUrl}/Api/get_edu_title`));
-  }
-
-  getEmpProfile(): Observable<any[]> {
-    return this.handleResponse<any[]>(this.http.get(`${this.apiUrl}/Api/get_emp_profile`));
-  }
-
-  getIndustryType(): Observable<any[]> {
-    return this.handleResponse<any[]>(this.http.get(`${this.apiUrl}/Api/get_industrytype`));
-  }
-
-  getJobCategory(): Observable<any[]> {
+   getJobCategory(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/Api/get_jobcategory`);
+  }
+  getEduQual(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/Api/get_edu_qual`);
   }
   getLanguages(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/Api/get_languages`);
   }
-
-  getJobType(): Observable<any[]> {
-    return this.handleResponse<any[]>(this.http.get(`${this.apiUrl}/Api/get_jobtype`));
+  getIndustryType(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/Api/get_industrytype`);
   }
-
- 
-
-  getLangProficiency(): Observable<any[]> {
-    return this.handleResponse<any[]>(this.http.get(`${this.apiUrl}/Api/get_lang_proficiency`));
+   getEmpProfile(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/Api/get_emp_profile`);
   }
-
-  getUnivName(): Observable<any[]> {
-    return this.handleResponse<any[]>(this.http.get(`${this.apiUrl}/Api/get_univ_name`));
+  getStates(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/Api/get_states`);
   }
-
   getCitiesByState(stateId: number): Observable<any[]> {
-    return this.handleResponse<any[]>(this.http.get(`${this.apiUrl}/Api/get_cities_by_state/${stateId}`));
+    return this.http.get<any[]>(`${this.apiUrl}/Api/get_cities_by_state/${stateId}`);
   }
-
-  geteduTitlesByQual(qualId: number): Observable<any[]> {
-    return this.handleResponse<any[]>(this.http.get(`${this.apiUrl}/Api/get_edutitle_by_qual/${qualId}`));
+  getSkills(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/Api/get_skills`);
   }
-
-  // getMobileNumberByUserId(qualId: string): Observable<any[]> {
-  //   return this.handleResponse<any[]>(this.http.get(`${this.apiUrl}/Api/get_mb_by_userid/${qualId}`));
-  // }
-
-  getMobileNumberByUserId(userId: number): Observable<any> {
-    return this.http.get<any>(`${this.formapiUrl}/get_mb_by_userid/${userId}`);
-}
-
-uploadResume(formData: FormData): Observable<any> {
-  return this.http.post(`${this.formapiUrl}/upload`, formData);
-}
-  //Application form submission 
-  submitAboutMe(data: any): Observable<any> {
-    return this.http.post(`${this.formapiUrl}/aboutme`, data);
-  }
-
-  submitEducation(data: any): Observable<any> {
-    return this.http.post(`${this.formapiUrl}/education`, data);
-  }
-
-  submitExperience(data: any): Observable<any> {
-    return this.http.post(`${this.formapiUrl}/experience`, data);
-  }
-
-  submitSkills(data: any): Observable<any> {
-    return this.http.post(`${this.formapiUrl}/skills`, data);
-  }
-
-  
-  //Form Data Fetch Service
-
-// formData is an object that can store multiple form data objects.
-// setFormData() takes a key (e.g., 'aboutMeForm', 'educationForm', etc.) and the form data to be stored.
-// getFormData() takes a key and returns the corresponding form data.
-// clearFormData() takes a key and clears the form data for that specific form.
-
- 
-
-  // Method to get the current form data
-  getFormData(key: string, userId: string): Observable<any> {
-    return this.http.get(`${this.formapiUrl}/getformData/${userId}/${key}`);
-  }
-
-  
-
-
-  // Update form Apis using PUT
-  // Method to update form data
-  updateFormData(formKey: string, userId: string, data: any): Observable<any> {
-    return this.http.put(`${this.formapiUrl}/updateFormData/${userId}/${formKey}`, data);
-  }
-  //for delete lang on click remove lang
-  deleteLanguage(languageId: number, userId: string): Observable<any> {
-    return this.http.delete(`${this.formapiUrl}/delete_lang/${userId}/${languageId}`);
-  }
-
-  // Method to upload a file
-  uploadFile(formData: FormData): Observable<any> {
-    const url = `${this.apiUrl}/FileUpload/upload`; // Adjust the endpoint as necessary
-    return this.http.post(url, formData, {
-      headers: new HttpHeaders({
-        // You can set additional headers here if needed
-      })
-    });
-  }
-
-  getUserReviewData(userId: number): Observable<any> {
-    return this.http.get(`${this.formapiUrl}/getUserReviewData/${userId}`);
-  }
-
-  // jobs module 
-  getEmployerDetailsWithJobs(): Observable<any> {
-    return this.http.get(`${this.formapiUrl}/getEmployerDetailsWithJobs`);
-  }
-  // getEmployerDetailsWithJobs(): Observable<any[]> {
-  //   return this.handleResponse<any[]>(this.http.get(`${this.formapiUrl}/getEmployerDetailsWithJobs`));
-  // }
-
   
 }

@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-
+import { FormsModule ,ReactiveFormsModule} from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { IonicModule } from '@ionic/angular';
 
 import { JobDetailPagePageRoutingModule } from './job-detail-page-routing.module';
-import { ReactiveFormsModule } from '@angular/forms';
 
 import { JobDetailPage } from './job-detail-page.page';
 
@@ -14,8 +13,7 @@ import { JobDetailPage } from './job-detail-page.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    JobDetailPagePageRoutingModule,
-    ReactiveFormsModule
+    JobDetailPagePageRoutingModule,ReactiveFormsModule,NgSelectModule
   ],
   declarations: [JobDetailPage]
 })

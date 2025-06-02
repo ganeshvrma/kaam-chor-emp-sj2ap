@@ -1,48 +1,60 @@
-#supporttitle{
-    font-size: 0.7rem;
-     margin-right: 10px;
-}
-:host {
-  display: block;
-  height: 100%;
-}
-h6{
-  font-size: 0.5rem;
-}
-.inputf{
-  width: 100%;
-  height: 30px;
-}
-.box{
+// #supporttitle{
+//     font-size: 0.7rem;
+//      margin-right: 10px;
+// }
+// :host {
+//   display: block;
+//   height: 100%;
+// }
+// h6{
+//   font-size: 0.5rem;
+// }
+// .inputf{
+//   width: 100%;
+//   height: 30px;
+// }
+// .box{
  
-  input{
-  width: 100%;
-  height: 40px;
-  border-radius: 5px;
-  }
-ion-textarea{
-    width: 100%;
-    border: 2px solid black;
-    border-radius: 5px;
-  }
-  @media (prefers-color-scheme: dark) {
-   ion-textarea{
-     border: 2px solid white;
-  }}
-  // body.dark ion-textarea{
-  //    border: 2px solid white;
-  // }
-  select{
-    width: 100%;
-    height: 40px;
-    border-radius: 5px;
-  }
-}
+//   input{
+//   width: 100%;
+//   height: 40px;
+//   border-radius: 5px;
+//   }
+// ion-textarea{
+//     width: 100%;
+//     border: 2px solid black;
+//     border-radius: 5px;
+//   }
+//   @media (prefers-color-scheme: dark) {
+//    ion-textarea{
+//      border: 2px solid white;
+//   }}
+  
+//   select{
+//     width: 100%;
+//     height: 40px;
+//     border-radius: 5px;
+//   }
+// }
 .btn{
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
 }
-.heading{
-  color: purple;
+// .heading{
+//   color: purple;
+// }
+.scrollable-form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
 }
+
+.box {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+   /* ensures spacing at the bottom for buttons */
+}
+

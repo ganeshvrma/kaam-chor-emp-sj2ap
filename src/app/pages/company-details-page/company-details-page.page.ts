@@ -1,21 +1,16 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController } from '@ionic/angular';
-// import { LocalStorageUtil } from 'src/app/shared/utils/localStorageUtil';
+import { LocalStorageUtil } from 'src/app/shared/utils/localStorageUtil';
 import { ApiService } from 'src/app/services/api.service'; 
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-mainfirst',
   standalone: false,
   templateUrl: './company-details-page.page.html',
   styleUrls: ['./company-details-page.page.scss'],
-  template: `
-    <ion-card>
-      <ion-card-header>Second Component</ion-card-header>
-      <ion-button (click)="back.emit()">Back to First</ion-button>
-    </ion-card>
-  `,
+ 
 })
 export class CompanyDetailsPagePage implements OnInit {
   @Input() formData: any;
@@ -33,7 +28,7 @@ export class CompanyDetailsPagePage implements OnInit {
    selectedCity:string="";
 
 //
-  constructor(private fb: FormBuilder, private navCtrl: NavController,private apiService: ApiService) {
+  constructor(private fb: FormBuilder, private navCtrl: NavController,private apiService: ApiService,private router: Router) {
     {
       this.company = this.fb.group({
         companyname: ['', Validators.required],
@@ -91,18 +86,23 @@ export class CompanyDetailsPagePage implements OnInit {
     }
   }
   //
+  previousPage() {
+
+    this.router.navigate(['/basic-details-page']);
+   
+  }
 
   submitForm() {
     if (this.company.invalid) {
       this.company.markAllAsTouched(); // Show validation errors
       return;
     }
-
+   
     // const formData = this.jobForm.value;
     const formData = {
       ...this.company.value,
-      step_two_data: "step 2", // replace with actual step one form/control or object
-      // user_id: LocalStorageUtil.getItem('user_id'),
+      // step_two_data: "step 2", // replace with actual step one form/control or object
+      user_id: LocalStorageUtil.getItem('userId'),
     };
 
     console.log('Submitting form:', formData);
@@ -112,6 +112,8 @@ export class CompanyDetailsPagePage implements OnInit {
       (response: any) => {
         console.log('Success:', response);
         // Show success toast or redirect
+        this.router.navigate(['/job-detail-page']);
+
       },
       (error: any) => {
         console.error('API Error:', error);

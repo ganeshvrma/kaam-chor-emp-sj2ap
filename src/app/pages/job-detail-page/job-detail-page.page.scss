@@ -1,74 +1,153 @@
-
-
-// $colors: (
-//   purple: #9b59b6,
-//   /* keep existing colors */
-// );
-#supporttitle{
-    font-size: 0.7rem;
-    margin-right: 10px;
-    --background:purple;
-    color: white !important;
+// Navigation and header styles
+.navbtna {
+  background-color: purple;
+  color: white !important;
 }
+
+#supporttitle {
+  font-size: 0.7rem;
+  margin-right: 10px;
+  --background: purple;
+  color: white !important;
+}
+
 :host {
   display: block;
   height: 100%;
 }
+
+// Purple button theme
 .purple-button {
   --background: #800080;
   --color: #fff;
+  --border-color: #800080;
 }
-h6{
+
+h6 {
   font-size: 0.5rem;
 }
-.inputf{
+
+// Form container styling
+.box {
+  padding: 20px 0;
+  
+  // Ion-item styling for form inputs
+  ion-item {
+    --background: transparent;
+    --border-color: #ccc;
+    --border-width: 1px;
+    --border-style: solid;
+    --border-radius: 8px;
+    --padding-start: 16px;
+    --padding-end: 16px;
+    --inner-padding-end: 0;
+    margin-bottom: 16px;
+    border-radius: 8px;
+    
+    ion-label {
+      font-weight: 500;
+      color: var(--ion-text-color);
+      
+      // Required field asterisk styling
+      span {
+        color: red;
+      }
+    }
+    
+    ion-input {
+      --color: var(--ion-text-color);
+      --placeholder-color: var(--ion-text-color, 0.5);
+      font-size: 16px;
+    }
+    
+    ion-select {
+      --color: var(--ion-text-color);
+      --placeholder-color: var(--ion-text-color, 0.5);
+    }
+  }
+  
+  // Dark mode specific styles
+  @media (prefers-color-scheme: dark) {
+    ion-item {
+      --border-color: #444;
+      
+      ion-label {
+        color: white;
+      }
+      
+      ion-input {
+        --color: white;
+        --placeholder-color: rgba(255, 255, 255, 0.6);
+      }
+      
+      ion-select {
+        --color: white;
+        --placeholder-color: rgba(255, 255, 255, 0.6);
+      }
+    }
+  }
+}
+
+// Legacy input styles (for any remaining standard inputs)
+.inputf {
   width: 100%;
   height: 30px;
 }
-.box{
 
-  input{
-  width: 100%;
-  height: 40px;
-  border-radius: 5px;
-  }
-ion-textarea{
-    width: 100%;
-    border: 2px solid black;
-    border-radius: 5px;
-   
-  }
+// Ion-textarea specific styling
+ion-textarea {
+  --border-color: #ccc;
+  --border-width: 2px;
+  --border-style: solid;
+  --border-radius: 8px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  margin-bottom: 16px;
+  
   @media (prefers-color-scheme: dark) {
-   ion-textarea{
-     border: 2px solid white;
-  }}
-  select{
-    width: 100%;
-    height: 40px;
-    border-radius: 5px;
+    --border-color: white;
+    --color: white;
   }
 }
 
-.rws{
-  margin-top:5px;
+// Read/Write/Speak checkboxes
+.rws {
+  margin-top: 5px;
   margin-bottom: 15px;
   display: flex;
   justify-content: space-between;
+  
+  ion-checkbox {
+    --size: 18px;
+    --checkbox-background-checked: #800080;
+    --border-color-checked: #800080;
+    --checkmark-color: white;
+  }
 }
-.heading{
+
+// Headings
+.heading {
   color: purple;
+  margin-bottom: 24px;
 }
-.langlabel{
+
+.langlabel {
   margin-top: 10px;
 }
- .jdinputspace{
+
+// Spacing utilities
+.jdinputspace {
   margin-top: 10px;
   margin-bottom: 10px;
- }
-.spacebottom{
+}
+
+.spacebottom {
   margin-bottom: 10px;
-  border: 2px solid black;
- }
+}
+
+// Qualification buttons
 .qualification-label {
   display: block;
   font-weight: 500;
@@ -81,7 +160,8 @@ ion-textarea{
   flex-wrap: wrap;
   gap: 10px;
   justify-content: flex-start;
-
+  margin-bottom: 20px;
+  
   ion-button {
     min-width: 150px;
     --border-radius: 15px;
@@ -91,28 +171,277 @@ ion-textarea{
     --padding-end: 12px;
     text-transform: none;
     font-size: 14px;
-  }
-
-  ion-button[color="primary"] {
-    --background: #003c9f;
-    --color: white;
+    
+    &.purple-button {
+      --background: #800080;
+      --color: white;
+      --border-color: #800080;
+    }
+    
+    &.medium {
+      --background: transparent;
+      --color: var(--ion-text-color);
+      --border-color: var(--ion-border-color);
+    }
   }
 }
-.candidate-type-toggle,.security-toggle,.job-type-toggle,.gender-type-toggle,.location-toggle,.work-type-toggle {
+
+// Toggle button groups
+.candidate-type-toggle,
+.security-toggle,
+.job-type-toggle,
+.gender-type-toggle,
+.location-toggle,
+.work-type-toggle {
   display: flex;
   gap: 12px;
   margin-top: 8px;
-
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  
   ion-button {
     min-width: 80px;
     --border-radius: 20px;
     --padding-top: 8px;
     --padding-bottom: 8px;
     font-size: 14px;
+    text-transform: none;
+    
+    &.purple-button {
+      --background: #800080;
+      --color: white;
+      --border-color: #800080;
+    }
+    
+    &.medium {
+      --background: transparent;
+      --color: var(--ion-text-color);
+      --border-color: var(--ion-border-color);
+    }
   }
+}
 
-  ion-button[color="primary"] {
-    --background: #003c9f;
+// Form layout
+.scrollable-form {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+// ng-select styling (enhanced for better integration)
+ng-select {
+  width: 100%;
+  min-height: 48px;
+  border-radius: 8px;
+  display: block;
+  margin-bottom: 16px;
+  
+  &.custom-ng-select {
+    font-size: 16px;
+  }
+}
+
+// Enhanced ng-select theming
+::ng-deep {
+  ng-select {
+    font-size: 16px;
+    width: 100%;
+    
+    .ng-select-container {
+      min-height: 48px;
+      border-radius: 8px;
+      padding: 12px 16px;
+      border: 1px solid var(--ion-border-color, #ccc);
+      background-color: var(--ion-background-color, white);
+      color: var(--ion-text-color);
+      transition: border-color 0.2s ease;
+      
+      &:hover {
+        border-color: #800080;
+      }
+      
+      &.ng-select-focused {
+        border-color: #800080;
+        box-shadow: 0 0 0 2px rgba(128, 0, 128, 0.2);
+      }
+      
+      .ng-value-container {
+        padding: 0;
+        
+        .ng-placeholder {
+          color: var(--ion-placeholder-color, rgba(0, 0, 0, 0.5));
+        }
+        
+        .ng-value {
+          color: var(--ion-text-color);
+        }
+      }
+      
+      .ng-arrow-wrapper {
+        .ng-arrow {
+          border-color: #800080 transparent transparent;
+        }
+      }
+    }
+  }
+  
+  // Dropdown panel styling
+  .ng-dropdown-panel {
+    position: absolute !important;
+    z-index: 1050 !important;
+    background-color: var(--ion-background-color, white);
+    color: var(--ion-text-color);
+    border: 1px solid var(--ion-border-color, #ccc);
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    
+    .ng-option {
+      padding: 12px 16px;
+      color: var(--ion-text-color);
+      transition: background-color 0.2s ease;
+      
+      &.ng-option-selected {
+        background-color: #800080 !important;
+        color: #fff;
+      }
+      
+      &:hover {
+        background-color: var(--ion-color-light, #f5f5f5);
+      }
+      
+      &.ng-option-highlighted {
+        background-color: rgba(128, 0, 128, 0.1);
+      }
+    }
+  }
+  
+  // Dark mode ng-select
+  @media (prefers-color-scheme: dark) {
+    ng-select .ng-select-container {
+      background-color: var(--ion-item-background, #1e1e1e);
+      border-color: var(--ion-border-color, #444);
+      color: white;
+      
+      .ng-value-container .ng-placeholder {
+        color: rgba(255, 255, 255, 0.6);
+      }
+    }
+    
+    .ng-dropdown-panel {
+      background-color: var(--ion-item-background, #2c2c2c);
+      border-color: var(--ion-border-color, #444);
+      
+      .ng-option {
+        color: white;
+        
+        &:hover {
+          background-color: #444;
+        }
+      }
+    }
+  }
+}
+
+// Selected skill chips
+.selected-skill-chip {
+  display: inline-flex;
+  align-items: center;
+  background-color: #800080;
+  color: white;
+  border-radius: 16px;
+  padding: 4px 12px;
+  margin: 2px;
+  font-size: 13px;
+  
+  .remove-chip {
+    margin-left: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+    
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+// Form section labels
+p {
+  font-weight: 500;
+  margin: 20px 0 8px 0;
+  color: var(--ion-text-color);
+  
+  span {
+    color: red;
+  }
+}
+
+// Submit button
+ion-button[expand="full"] {
+  margin-top: 32px;
+  --border-radius: 8px;
+  --padding-top: 14px;
+  --padding-bottom: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  
+  &:not([disabled]) {
+    --background: #800080;
     --color: white;
   }
+  
+  &[disabled] {
+    --background: var(--ion-color-medium);
+    --color: var(--ion-color-medium-contrast);
+    opacity: 0.6;
+  }
+}
+
+// Error text styling
+ion-text[color="danger"] {
+  display: block;
+  margin-top: 4px;
+  margin-bottom: 12px;
+  
+  small {
+    font-size: 12px;
+    font-weight: 400;
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .qualification-buttons {
+    ion-button {
+      min-width: 120px;
+      font-size: 13px;
+    }
+  }
+  
+  .candidate-type-toggle,
+  .security-toggle,
+  .job-type-toggle,
+  .gender-type-toggle,
+  .location-toggle,
+  .work-type-toggle {
+    ion-button {
+      min-width: 70px;
+      font-size: 13px;
+      --padding-start: 8px;
+      --padding-end: 8px;
+    }
+  }
+  
+  .box {
+    padding: 16px 0;
+  }
+}
+
+// Focus states for better accessibility
+ion-input:focus-within,
+ion-select:focus-within,
+ion-textarea:focus-within {
+  --border-color: #800080;
+  --border-width: 2px;
 }

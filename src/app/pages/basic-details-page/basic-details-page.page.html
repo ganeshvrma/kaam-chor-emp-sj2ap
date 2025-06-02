@@ -32,7 +32,7 @@
 <ion-content class="ion-padding">
   <ion-segment-view value="basic">
     <ion-segment-content id="basic">
-      <form [formGroup]="basiclast" (ngSubmit)="subbmit()">
+      <form [formGroup]="basiclast" >
         <div class="box">
           <h2 class="heading">Basic Details</h2>
           <p>Employer Name<span style="color: red">*</span></p>
@@ -129,7 +129,9 @@
             >I Accept Terms and Conditions and <br />
             Privacy Policy <span style="color: red;">*</span></ion-checkbox
           > -->
-           <ion-checkbox
+
+          <!-- new check -->
+           <!-- <ion-checkbox
       formControlName="acceptTerms"
       labelPlacement="end"
       style="margin-top: 10px"
@@ -141,9 +143,9 @@
 
   <ion-text color="danger" *ngIf="basiclast.controls['acceptTerms'].touched && basiclast.controls['acceptTerms'].invalid">
     <p>You must accept the terms and conditions</p>
-  </ion-text>
+  </ion-text> -->
           <div class="btn">
-            <ion-button expand="block" (click)="prev.emit()">Back</ion-button>
+            <!-- <ion-button expand="block" (click)="prev.emit()">Back</ion-button> -->
             <!-- <ion-button
               expand="block"
               class="submitbtn"
@@ -152,7 +154,7 @@
               >Submit</ion-button
             > -->
             <ion-button
-              expand="block"
+              expand="full"
               class="submitbtn"
               (click)="submitForm()"
               [disabled]="basiclast.invalid"
