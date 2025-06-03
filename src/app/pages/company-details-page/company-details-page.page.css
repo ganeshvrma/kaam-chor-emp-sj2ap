@@ -1,64 +1,7 @@
-#supporttitle{
-    font-size: 0.6rem;
-     margin-right: 8px;
-  //     --background: purple;
-  // color: white !important;
+#supporttitle {
+  font-size: 0.6rem;
+  margin-right: 8px;
 }
-// :host {
-//   display: block;
-//   height: 100%;
-// }
-// h6{
-//   font-size: 0.5rem;
-// }
-// .inputf{
-//   width: 100%;
-//   height: 30px;
-// }
-// .box{
- 
-//   input{
-//   width: 100%;
-//   height: 40px;
-//   border-radius: 5px;
-//   }
-// ion-textarea{
-//     width: 100%;
-//     border: 2px solid black;
-//     border-radius: 5px;
-//   }
-//   @media (prefers-color-scheme: dark) {
-//    ion-textarea{
-//      border: 2px solid white;
-//   }}
-  
-//   select{
-//     width: 100%;
-//     height: 40px;
-//     border-radius: 5px;
-//   }
-// }
-// .btn{
-//   display: flex;
-//   justify-content: space-between;
-//   margin-top: 10px;
-// }
-// // .heading{
-// //   color: purple;
-// // }
-// .scrollable-form {
-//   display: flex;
-//   flex-direction: column;
-//   height: 100%;
-//   overflow-y: auto;
-// }
-
-// .box {
-//   display: flex;
-//   flex-direction: column;
-//   flex-grow: 1;
-//    /* ensures spacing at the bottom for buttons */
-// }
 
 ::ng-deep ion-modal.popup-modal {
   --width: 90%;
@@ -69,6 +12,7 @@
   align-self: center;
   justify-self: center;
 }
+
 /* General box styling */
 .box {
   background-color: var(--ion-background-color, #1e1e1e);
@@ -87,8 +31,8 @@
 }
 
 /* Input and Select fields */
-input[type='text'],
-input[type='number'],
+input[type=text],
+input[type=number],
 select,
 ion-input,
 ion-textarea {
@@ -108,7 +52,7 @@ ion-textarea {
 }
 
 /* Error text */
-ion-text[color="danger"] small {
+ion-text[color=danger] small {
   color: var(--ion-color-danger, #eb445a);
   font-size: 0.85rem;
 }
@@ -184,4 +128,4 @@ ion-title {
     flex-direction: column;
     gap: 12px;
   }
-}
+}/*# sourceMappingURL=company-details-page.page.css.map */
