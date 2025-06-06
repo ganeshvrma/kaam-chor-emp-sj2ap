@@ -1,0 +1,23 @@
+.plan-card {
+  border-radius: 12px;
+  background-color: #fff;
+  text-align: center;
+}
+.plan-card .plan-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+.plan-card .plan-price {
+  color: #9900cc;
+  font-size: 1.5rem;
+  margin: 10px 0;
+}
+
+:host {
+  display: block;
+}
+
+.btn {
+  --background: purple;
+  color: white !important;
+}/*# sourceMappingURL=plan-card.component.css.map */
