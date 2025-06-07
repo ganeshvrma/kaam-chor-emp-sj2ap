@@ -5,4 +5,13 @@
 .btn {
   --background: purple;
   color: white !important;
+}
+
+.sidebarBtn {
+  display: flex;
+  flex-direction: column;
+}
+
+.cardbtnlower {
+  text-align: center;
 }/*# sourceMappingURL=employer-plan.page.css.map */
