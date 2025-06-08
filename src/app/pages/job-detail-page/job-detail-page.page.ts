@@ -93,7 +93,7 @@ export class JobDetailPage implements OnInit {
       jobEndTime: ['', Validators.required],
       interviewTime: ['', Validators.required],
       interviewDay: ['', Validators.required],
-          acceptTerms: [false, Validators.requiredTrue],
+         TermsAndconditions: [false, Validators.requiredTrue],
 
     });
   }
@@ -148,7 +148,7 @@ removeSkill(skill: any) {
       console.log('Form data:', this.jobForm.value);
       // Navigate to next step/page here, adjust route accordingly
       this.navCtrl.navigateForward('');
-      const accepted = this.jobForm.value.acceptTerms ? 1 : 0;
+      const accepted = this.jobForm.value.TermsAndconditions ? 1 : 0;
     //   console.log('Accepted value:', accepted);
     } else {
       console.log('Form is invalid');
