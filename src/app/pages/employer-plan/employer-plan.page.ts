@@ -100,10 +100,10 @@ plans = [
   }
 
   ngOnInit() {
-    // this.apiService.getEmployerPlans().subscribe((res: any) => {
-    //   if (res.status === 'success') {
-    //     this.plans = res.data;}
-    //   });
+    this.apiService.getEmployerPlans().subscribe((res: any) => {
+      if (res.status === 'success') {
+        this.plans = res.data;}
+      });
   }
 
 

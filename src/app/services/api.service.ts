@@ -53,5 +53,9 @@ export class ApiService {
   getSkills(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/Api/get_skills`);
   }
+   getEmployerPlans(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/Employer_Api/getEmployerPlans`);
+
+  }
   
 }
