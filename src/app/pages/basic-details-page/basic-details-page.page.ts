@@ -35,7 +35,8 @@ export class BasicDetailsPagePage  implements OnInit {
   @Output() submit = new EventEmitter<void>();
 
    basiclast:FormGroup;
-
+   user_id!: number;
+   mobileNumber: string='';
    //get api
    empProfileOptions:any[]=[];
   //  selectedEmplProfile:string="";
@@ -49,12 +50,28 @@ export class BasicDetailsPagePage  implements OnInit {
   contactperson: ['', Validators.required],
   emplnumber: ['', Validators.required],
     // acceptTerms: [false, Validators.requiredTrue],
-        });}}
+        });}
+  //       const nav = this.router.getCurrentNavigation();
+  // if (nav?.extras?.state?.['userId']) {
+  //   this.user_id = nav.extras.state['userId'];
+  // }
+      }
   ngOnInit() {
      this.apiService.getEmpProfile().subscribe((res: any) => {
       if (res.status === 'success') {
         this.empProfileOptions = res.data;}
       });
+      const storedUserId = localStorage.getItem('userId');
+      if (storedUserId) {
+        this.user_id = parseInt(storedUserId, 10);
+    this.apiService.Getmbbyuserid(this.user_id).subscribe(res => {
+      if (res.status && res.data?.mobile_number) {
+        this.mobileNumber = res.data.mobile_number;
+        this.basiclast.patchValue({ emplnumber: this.mobileNumber }); // Prefill mobile field
+      }
+    });
+  }
+       
   }
   subbmit() {
   if (this.basiclast.valid) {

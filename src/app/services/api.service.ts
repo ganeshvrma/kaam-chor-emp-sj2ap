@@ -57,5 +57,7 @@ export class ApiService {
     return this.http.get<any[]>(`${this.apiUrl}/Employer_Api/getEmployerPlans`);
 
   }
-  
+  Getmbbyuserid(userId: number): Observable<any> {
+  return this.http.get<any>(`${this.apiUrl}/Employer_Api/Getmbbyuserid/${userId}`);
+}
 }

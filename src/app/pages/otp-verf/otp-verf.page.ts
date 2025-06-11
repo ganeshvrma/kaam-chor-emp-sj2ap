@@ -65,15 +65,18 @@ export class OtpVerfPage implements OnInit {
         //     this.formDataService.setFormData(data); // Prefill the form data
         //     this.router.navigate(['/step-one']); // Navigate to the first step
         // });
-
+          //  const userId=response.data.user_id;
           const navigationExtras: NavigationExtras = {
             state: {
-              verified: true
+              verified: true,
+            //  userId:userId
             }
           };
 
           // this.router.navigate(['/home'], navigationExtras); // Adjust the route as needed
           if(this.isNewUser){
+          localStorage.setItem('userId', response.data.user_id.toString());
+
             this.router.navigate(['/basic-details-page'], navigationExtras);
           }else{
             this.router.navigate(['/login'], navigationExtras);
