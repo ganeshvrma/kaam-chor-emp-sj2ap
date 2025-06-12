@@ -80,17 +80,17 @@ export class BasicDetailsPagePage  implements OnInit {
      
    
      
-      //  this.apiService.getEmployerData(this.user_id).subscribe((res) => {
-      //    if (res.status && res.data) {
-      //      console.log(res);
+       this.apiService.getEmployerData(this.user_id).subscribe((res) => {
+         if (res.status && res.data) {
+           console.log(res);
 
-      //     //  this.empProfile=res.data.employer_name;
-      //    this.basiclast.patchValue({emplname:res.data.employer_name,
-      //     emplnumber:res.data.reg_mb,
-      //    contactperson:res.data.contact_person_profile,
-      //    emplemail:res.data.email
-      //    });
-      //    }});
+          //  this.empProfile=res.data.employer_name;
+         this.basiclast.patchValue({emplname:res.data.employer_name,
+          emplnumber:res.data.reg_mb,
+         contactperson:res.data.contact_person_profile,
+         emplemail:res.data.email
+         });
+         }});
      }
   }
   // validatePhoneNumber(event: any) {

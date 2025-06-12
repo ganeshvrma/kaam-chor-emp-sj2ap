@@ -55,7 +55,7 @@
           </ion-text>
 
           <p>City<span style="color: red">*</span></p>
-          <select formControlName="companycity" [(ngModel)]="selectedCity" [disabled]="!company.get('companystate')?.value || cityOptions.length === 0">
+          <select formControlName="companycity"  [disabled]="!company.get('companystate')?.value || cityOptions.length === 0">
             <option value="">Select one</option>
             <option *ngFor="let option of cityOptions" [value]="option.id">{{ option.name }}</option>
           </select>
