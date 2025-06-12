@@ -107,6 +107,7 @@
             id=""
             value=""
             formControlName="emplnumber"
+            readonly
           />
           <small style="color: green"> --Candidates call in this number</small>
           <div>
@@ -158,8 +159,13 @@
               class="submitbtn"
               (click)="submitForm()"
               [disabled]="basiclast.invalid"
-              >Submit</ion-button
+              >Save & continue </ion-button
             >
+            <ion-button 
+            expand="full"
+            (click)="onlyNavigate"
+
+            >Next</ion-button>
           </div>
         </div>
       </form>

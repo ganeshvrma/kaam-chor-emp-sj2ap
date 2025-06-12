@@ -16,6 +16,7 @@
 //   }
 
 // }
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit ,Input ,Output,EventEmitter} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController } from '@ionic/angular';
@@ -35,62 +36,87 @@ export class BasicDetailsPagePage  implements OnInit {
   @Output() submit = new EventEmitter<void>();
 
    basiclast:FormGroup;
-   user_id!: number;
+ user_id!: number;
    mobileNumber: string='';
    //get api
+  //  empProfileOptions:string='';
    empProfileOptions:any[]=[];
   //  selectedEmplProfile:string="";
-
+ emplnumber: string = '';
+ empProfile:string='';
+  
    //end 
-  constructor( private fb: FormBuilder,  private navCtrl: NavController,private apiService: ApiService,private router: Router) {
+  constructor( private fb: FormBuilder,  private navCtrl: NavController,private apiService: ApiService,private router: Router,private route: ActivatedRoute,) {
    {this.basiclast = this.fb.group({
 
   emplname: ['', Validators.required],
-  emplemail: ['', Validators.required],
+  emplemail: ['', Validators.required,Validators.email],
   contactperson: ['', Validators.required],
   emplnumber: ['', Validators.required],
-    // acceptTerms: [false, Validators.requiredTrue],
+ 
+    
         });}
-  //       const nav = this.router.getCurrentNavigation();
-  // if (nav?.extras?.state?.['userId']) {
-  //   this.user_id = nav.extras.state['userId'];
-  // }
+      
+      
+      
+      
       }
   ngOnInit() {
      this.apiService.getEmpProfile().subscribe((res: any) => {
-      if (res.status === 'success') {
-        this.empProfileOptions = res.data;}
-      });
-      const storedUserId = localStorage.getItem('userId');
-      if (storedUserId) {
-        this.user_id = parseInt(storedUserId, 10);
-    this.apiService.Getmbbyuserid(this.user_id).subscribe(res => {
-      if (res.status && res.data?.mobile_number) {
-        this.mobileNumber = res.data.mobile_number;
-        this.basiclast.patchValue({ emplnumber: this.mobileNumber }); // Prefill mobile field
-      }
-    });
-  }
-       
-  }
-  subbmit() {
-  if (this.basiclast.valid) {
-    //  const accepted = this.basiclast.value.acceptTerms ? 1 : 0;
-    //   console.log('Accepted value:', accepted);
-    console.log('Form data:', this.basiclast.value);
-    // this.navCtrl.navigateForward('next-page'); // Replace with actual route
-  } else {
-    this.basiclast.markAllAsTouched();
-    console.log('Form is invalid');
-  }
-}
+       if (res.status === 'success') {
+         this.empProfileOptions = res.data;
+       }
+     });
 
+     const storedUserId = localStorage.getItem('userId');
+     if (storedUserId) {
+       this.user_id = parseInt(storedUserId, 10);
+       this.apiService.Getmbbyuserid(this.user_id).subscribe((res) => {
+         if (res.status && res.data?.mobile_number) {
+           this.mobileNumber = res.data.mobile_number;
+           this.basiclast.patchValue({ emplnumber: this.mobileNumber }); // Prefill mobile field
+         }
+       });
+     
+   
+     
+      //  this.apiService.getEmployerData(this.user_id).subscribe((res) => {
+      //    if (res.status && res.data) {
+      //      console.log(res);
+
+      //     //  this.empProfile=res.data.employer_name;
+      //    this.basiclast.patchValue({emplname:res.data.employer_name,
+      //     emplnumber:res.data.reg_mb,
+      //    contactperson:res.data.contact_person_profile,
+      //    emplemail:res.data.email
+      //    });
+      //    }});
+     }
+  }
+  // validatePhoneNumber(event: any) {
+  //   const input = event.target as HTMLIonInputElement;
+  //   const value = input.value as string;
+
+  //   // Remove any non-digit characters
+  //   const numericValue = value.replace(/\D/g, '');
+
+  //   // Limit to 10 digits
+  //   this.emplnumber = numericValue.slice(0, 10);
+
+  //   // Update the input value
+  //   input.value = this.emplnumber;
+  // }
+
+onlyNavigate(){
+            this.router.navigate(['/company-details-page']);
+
+}
 submitForm() {
-  if (this.basiclast.invalid) {
+  if (this.basiclast.invalid ) {
     this.basiclast.markAllAsTouched(); // Show validation errors
     return;
   }
-   if(this.basiclast.valid){
+   if(this.basiclast.valid ){
             this.router.navigate(['/company-details-page']);
           }
 
@@ -108,6 +134,8 @@ const formData = {
     (response:any) => {
       console.log('Success:', response);
       // Show success toast or redirect
+            this.router.navigate(['/company-details-page']);
+
     },
     (error:any) => {
       console.error('API Error:', error);
