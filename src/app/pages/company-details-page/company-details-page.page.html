@@ -3,14 +3,15 @@
     <ion-title style="padding-bottom: 15px">2/3</ion-title>
     <ion-title>Post Job</ion-title>
 
-    <ion-button slot="end" id="supporttitle">
+    <ion-button slot="end" id="supporttitle" >
       <ion-icon name="call-outline"></ion-icon>Call customer support
     </ion-button>
   </ion-toolbar>
   <ion-toolbar>
     <ion-segment value="company">
-      <ion-segment-button value="job" content-id="job">
-        <ion-label class="ion-text-wrap">Job Details</ion-label>
+     
+      <ion-segment-button value="basic" >
+        <ion-label class="ion-text-wrap">Basic Details</ion-label>
       </ion-segment-button>
       <ion-segment-button
         value="company"
@@ -19,8 +20,8 @@
       >
         <ion-label class="ion-text-wrap">Company Details</ion-label>
       </ion-segment-button>
-      <ion-segment-button value="basic" content-id="basic">
-        <ion-label class="ion-text-wrap">Basic Details</ion-label>
+       <ion-segment-button value="job" >
+        <ion-label class="ion-text-wrap">Job Details</ion-label>
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
@@ -31,7 +32,7 @@
     <ion-segment-content id="company">
       <form [formGroup]="company" (ngSubmit)="nextStep2()" class="scrollable-form">
         <div class="box">
-          <h2 class="heading">Company Details</h2>
+          <h2 class="heading" style="text-align: center;">Company Details</h2>
 
           <p>Company Name<span style="color: red">*</span></p>
           <input type="text" formControlName="companyname" />
@@ -47,6 +48,8 @@
 
           <p>State<span style="color: red">*</span></p>
           <select formControlName="companystate" [(ngModel)]="selectedState" (ngModelChange)="onStateChange($event)">
+
+
             <option value="">Select one</option>
             <option *ngFor="let option of stateOptions" [value]="option.id">{{ option.name }}</option>
           </select>
@@ -54,7 +57,8 @@
             <small *ngIf="company.get('companystate')?.errors?.['required']">Field is required</small>
           </ion-text>
 
-          <p>City<span style="color: red">*</span></p>
+          <p>City
+           <span style="color: red">*</span></p>
           <select formControlName="companycity"  [disabled]="!company.get('companystate')?.value || cityOptions.length === 0">
             <option value="">Select one</option>
             <option *ngFor="let option of cityOptions" [value]="option.id">{{ option.name }}</option>
@@ -64,13 +68,40 @@
           </ion-text>
 
           <p>Country<span style="color: red">*</span></p>
-          <input type="text" formControlName="companycountry" />
-          <ion-text color="danger" *ngIf="company.get('companycountry')?.touched && company.get('companycountry')?.invalid">
-            <small *ngIf="company.get('companycountry')?.errors?.['required']">Field is required</small>
-          </ion-text>
+          <input type="text" formControlName="companycountry"  readonly/>
+        
 
-          <p>Google map Location</p>
-          <input type="text" />
+  <p > Google map Location
+    <a (click)="openTutorial()" style="cursor:pointer; color:blue;">link</a>
+  </p>
+  <ion-input type="text" formControlName="google_map_loc" placeholder="Paste iframe code here" ></ion-input>
+<ion-modal [isOpen]="showTutorial" (didDismiss)="closeTutorial()">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Google Map Link Tutorial</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeTutorial()">
+            <ion-icon name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="ion-padding">
+      <h2>Steps:</h2>
+      <ol>
+        <li>Open <a href="https://www.google.com/maps" target="_blank">Google Maps</a> and search for the desired location.</li>
+        <li>Click on the <b>Share</b> button.</li>
+        <li>Select the <b>Embed a map</b> tab.</li>
+        <li>Copy the provided HTML iframe code.</li>
+        <li>Paste the iframe code.</li>
+      </ol>
+       <img src="../../../assets/embed-map.jpg" alt="">
+
+    </ion-content>
+  </ng-template>
+</ion-modal>
 
           <p>Company Website</p>
           <input type="text" formControlName="companywebsite" />
@@ -104,10 +135,11 @@
           <ion-text color="danger" *ngIf="company.get('companyestb')?.touched && company.get('companyestb')?.invalid">
             <small *ngIf="company.get('companyestb')?.errors?.['required']">Field is required</small>
           </ion-text>
-
+ 
           <div class="btn">
-            <ion-button (click)="previousPage()">Back</ion-button>
-            <ion-button (click)="submitForm()" type="submit" [disabled]="company.invalid">Next</ion-button>
+            <ion-button  shape="round"  class="submitbtn"  (click)="previousPage()">Back</ion-button>
+            <ion-button    shape="round" class="submitbtn"  (click)="submitForm()" type="submit" [disabled]="company.invalid" *ngIf="isNewUser">Save & continue</ion-button>
+            <ion-button    shape="round"  class="submitbtn"  (click)="onlyNavigate()" *ngIf="!isNewUser" >Next </ion-button>
           </div>
         </div>
       </form>

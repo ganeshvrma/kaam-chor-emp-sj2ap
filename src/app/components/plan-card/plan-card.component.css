@@ -20,4 +20,8 @@
 .btn {
   --background: purple;
   color: white !important;
+}
+
+p {
+  margin-bottom: 12px;
 }/*# sourceMappingURL=plan-card.component.css.map */

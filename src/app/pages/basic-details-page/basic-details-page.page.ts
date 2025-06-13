@@ -44,7 +44,7 @@ export class BasicDetailsPagePage  implements OnInit {
   //  selectedEmplProfile:string="";
  emplnumber: string = '';
  empProfile:string='';
-  
+  isNewUser: boolean = true;
    //end 
   constructor( private fb: FormBuilder,  private navCtrl: NavController,private apiService: ApiService,private router: Router,private route: ActivatedRoute,) {
    {this.basiclast = this.fb.group({
@@ -90,27 +90,34 @@ export class BasicDetailsPagePage  implements OnInit {
          contactperson:res.data.contact_person_profile,
          emplemail:res.data.email
          });
-         }});
+           this.basiclast.disable();
+           this.isNewUser = false;
+         }
+         else {
+        // If no data, treat as new user
+        this.isNewUser = true;
+      }
+        });
      }
   }
-  // validatePhoneNumber(event: any) {
-  //   const input = event.target as HTMLIonInputElement;
-  //   const value = input.value as string;
+  validatePhoneNumber(event: any) {
+    const input = event.target as HTMLIonInputElement;
+    const value = input.value as string;
 
-  //   // Remove any non-digit characters
-  //   const numericValue = value.replace(/\D/g, '');
+    // Remove any non-digit characters
+    const numericValue = value.replace(/\D/g, '');
 
-  //   // Limit to 10 digits
-  //   this.emplnumber = numericValue.slice(0, 10);
+    // Limit to 10 digits
+    this.emplnumber = numericValue.slice(0, 10);
 
-  //   // Update the input value
-  //   input.value = this.emplnumber;
-  // }
-
-onlyNavigate(){
+    // Update the input value
+    input.value = this.emplnumber;
+  }
+onlyNavigation(){
             this.router.navigate(['/company-details-page']);
 
 }
+
 submitForm() {
   if (this.basiclast.invalid ) {
     this.basiclast.markAllAsTouched(); // Show validation errors

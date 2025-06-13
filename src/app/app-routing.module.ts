@@ -42,7 +42,11 @@ const routes: Routes = [
   {
     path: 'checkout-modal',
     loadChildren: () => import('./checkout-modal/checkout-modal.module').then( m => m.CheckoutModalPageModule)
+  },  {
+    path: 'my-profile',
+    loadChildren: () => import('./pages/my-profile/my-profile.module').then( m => m.MyProfilePageModule)
   },
+
 
 
   

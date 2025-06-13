@@ -1,9 +1,9 @@
 <ion-header>
   <ion-toolbar style="--min-height: 100px">
-    <ion-title style="padding-bottom: 15px">3/3</ion-title>
+    <ion-title style="padding-bottom: 15px">1/3</ion-title>
     <ion-title>Post Job </ion-title>
 
-    <ion-button slot="end" id="supporttitle"
+    <ion-button slot="end" id="supporttitle" 
       ><ion-icon name="call-outline"></ion-icon>Call customer
       support</ion-button
     >
@@ -12,18 +12,19 @@
     <!-- <ion-searchbar></ion-searchbar> -->
 
     <ion-segment value="basic">
-      <ion-segment-button value="job" content-id="job">
-        <ion-label class="ion-text-wrap">Job Details</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="company" content-id="company">
-        <ion-label class="ion-text-wrap">Company Details</ion-label>
-      </ion-segment-button>
-      <ion-segment-button
+     
+       <ion-segment-button
         value="basic"
         content-id="basic"
         style="background-color: purple; color: white !important"
       >
         <ion-label class="ion-text-wrap">Basic Details</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="company" >
+        <ion-label class="ion-text-wrap">Company Details</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="job" >
+        <ion-label class="ion-text-wrap">Job Details</ion-label>
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
@@ -34,7 +35,7 @@
     <ion-segment-content id="basic">
       <form [formGroup]="basiclast" >
         <div class="box">
-          <h2 class="heading">Basic Details</h2>
+          <h2 class="heading" style="text-align: center;">Basic Details</h2>
           <p>Employer Name<span style="color: red">*</span></p>
           <input type="text" value="John" formControlName="emplname" />
           <ion-text
@@ -53,7 +54,7 @@
             type="email"
             name=""
             id=""
-            value="john@gmail.com"
+            value=""
             formControlName="emplemail"
           />
           <small style="color: green"
@@ -81,12 +82,8 @@
            
           >
             <option value ="">Select one</option>
-<option *ngFor="let option of empProfileOptions" [value]="option.id">{{option.profile}}</option>
-            <!-- <option value="hdgnd">General Manager</option>
-            <option value=""></option>
-            <option value=""></option>
-            <option value=""></option>
-            <option value=""></option> -->
+             <option *ngFor="let option of empProfileOptions" [value]="option.id">{{option.profile}}</option>
+           
           </select>
           <ion-text
             color="danger"
@@ -100,15 +97,10 @@
             >
           </ion-text>
           <p>Registered Mobile Number</p>
-          <!-- <span style="border: 2px solid white; height: 20px; width: 20px;">+91</span> -->
-          <input
-            type="number"
-            name=""
-            id=""
-            value=""
-            formControlName="emplnumber"
-            readonly
-          />
+        
+        <input class="mb_input"  type="tel"
+        formControlName="emplnumber" name="mobileNumber" required minlength="10" maxlength="10" pattern="^[0-9]{10}$"
+        (ionInput)="validatePhoneNumber($event)"  readonly>
           <small style="color: green"> --Candidates call in this number</small>
           <div>
             <ion-text
@@ -123,49 +115,21 @@
               >
             </ion-text>
           </div>
-          <!-- <p for="terms"> I Accept Terms and Conditions and Privacy Policy<span style="color: red;">*</span></p>
-      <input type="checkbox" name="terms" id="terms"  > -->
-          <br />
-          <!-- <ion-checkbox labelPlacement="end" style="margin-top: 10px"
-            >I Accept Terms and Conditions and <br />
-            Privacy Policy <span style="color: red;">*</span></ion-checkbox
-          > -->
-
-          <!-- new check -->
-           <!-- <ion-checkbox
-      formControlName="acceptTerms"
-      labelPlacement="end"
-      style="margin-top: 10px"
-    >
-      I Accept Terms and Conditions and <br />
-      Privacy Policy <span style="color: red;">*</span>
-    </ion-checkbox>
-  
-
-  <ion-text color="danger" *ngIf="basiclast.controls['acceptTerms'].touched && basiclast.controls['acceptTerms'].invalid">
-    <p>You must accept the terms and conditions</p>
-  </ion-text> -->
+       
+        
           <div class="btn">
-            <!-- <ion-button expand="block" (click)="prev.emit()">Back</ion-button> -->
-            <!-- <ion-button
-              expand="block"
-              class="submitbtn"
-              (click)="submit.emit()"
-              [disabled]="basiclast.invalid"
-              >Submit</ion-button
-            > -->
             <ion-button
-              expand="full"
+              expand="block"
               class="submitbtn"
               (click)="submitForm()"
               [disabled]="basiclast.invalid"
-              >Save & continue </ion-button
+          *ngIf="!isNewUser"
+              >Save & Continue</ion-button
             >
-            <ion-button 
-            expand="full"
-            (click)="onlyNavigate"
-
-            >Next</ion-button>
+            <ion-button  expand="block" class="submitbtn"  (click)="onlyNavigation()"
+             *ngIf="isNewUser" >
+              Next
+            </ion-button>
           </div>
         </div>
       </form>
