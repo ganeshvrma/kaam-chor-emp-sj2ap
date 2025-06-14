@@ -4,7 +4,7 @@ ion-item {
   --border-radius: 8px;
   --padding-start: 10px;
   --inner-padding-end: 10px;
-  --highlight-color-focused: #511168; // purple focus
+  --highlight-color-focused: #511168;
   margin-bottom: 15px;
   border: 1px solid #ccc;
 }
@@ -16,11 +16,11 @@ ion-label {
 }
 
 /* Style input text */
-input{
+input {
   width: 100%;
   height: 40px;
   border-radius: 5px;
-  }
+}
 
 ion-textarea {
   --padding-start: 10px;
@@ -28,40 +28,26 @@ ion-textarea {
   font-size: 15px;
   color: #000;
 }
-select{
-    width: 100%;
-    height: 40px;
-    border-radius: 5px;
-  }
+
+select {
+  width: 100%;
+  height: 40px;
+  border-radius: 5px;
+}
 
 /* Optional: Card spacing */
 ion-card {
   margin-bottom: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
+
 ion-card-title {
   font-size: 18px;
   font-weight: bold;
-  color: #511168; // Purple
+  color: #511168;
 }
-// .sidebar-container {
-//   width: 250px; // Adjust as needed
-//   background-color: #f8f9fa; // Optional
-//   z-index: 1;
-// }
 
-// .content-container {
-//   flex: 1;
-//   overflow-y: auto;
-//   position: relative;
-// }
-// .main-container {
-//   display: flex;
-//   height: 100vh; // Full screen height
-// }
-.sidebarBtn{
+.sidebarBtn {
   display: flex;
   flex-direction: column;
-  // align-items: center;
-  
-}
+}/*# sourceMappingURL=my-profile.page.css.map */

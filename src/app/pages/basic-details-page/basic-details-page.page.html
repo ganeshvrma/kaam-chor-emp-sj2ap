@@ -67,7 +67,9 @@
                 basiclast.get('emplemail')?.touched &&
                 basiclast.get('emplemail')?.invalid
               "
-            >
+            > <small *ngIf="basiclast.get('emplemail')?.errors?.['email']">
+      Enter a valid email address
+    </small>
               <small *ngIf="basiclast.get('emplemail')?.errors?.['required']"
                 >Feild is required</small
               >
