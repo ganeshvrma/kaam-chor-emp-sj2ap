@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-
+import { AuthGuard } from './guards/auth.guard';
 const routes: Routes = [
   {
     path: 'home',
@@ -25,30 +25,31 @@ const routes: Routes = [
   },
   {
     path: 'basic-details-page',
-    loadChildren: () => import('./pages/basic-details-page/basic-details-page.module').then( m => m.BasicDetailsPagePageModule)
+    loadChildren: () => import('./pages/basic-details-page/basic-details-page.module').then( m => m.BasicDetailsPagePageModule),canActivate: [AuthGuard]
   },
   {
     path: 'company-details-page',
-    loadChildren: () => import('./pages/company-details-page/company-details-page.module').then( m => m.CompanyDetailsPagePageModule)
+    loadChildren: () => import('./pages/company-details-page/company-details-page.module').then( m => m.CompanyDetailsPagePageModule),canActivate: [AuthGuard]
   },
   {
     path: 'job-detail-page',
-    loadChildren: () => import('./pages/job-detail-page/job-detail-page.module').then( m => m.JobDetailPagePageModule)
+    loadChildren: () => import('./pages/job-detail-page/job-detail-page.module').then( m => m.JobDetailPagePageModule),canActivate: [AuthGuard]
   },
   {
     path: 'employer-plan',
-    loadChildren: () => import('./pages/employer-plan/employer-plan.module').then( m => m.EmployerPlanPageModule)
+    loadChildren: () => import('./pages/employer-plan/employer-plan.module').then( m => m.EmployerPlanPageModule),canActivate: [AuthGuard]
   },
   {
     path: 'checkout-modal',
-    loadChildren: () => import('./checkout-modal/checkout-modal.module').then( m => m.CheckoutModalPageModule)
-  },  {
+    loadChildren: () => import('./checkout-modal/checkout-modal.module').then( m => m.CheckoutModalPageModule),canActivate: [AuthGuard]
+  },
+  {
     path: 'my-profile',
-    loadChildren: () => import('./pages/my-profile/my-profile.module').then( m => m.MyProfilePageModule)
+    loadChildren: () => import('./pages/my-profile/my-profile.module').then( m => m.MyProfilePageModule),canActivate: [AuthGuard]
   },
   {
     path: 'account-setting',
-    loadChildren: () => import('./pages/account-setting/account-setting.module').then( m => m.AccountSettingPageModule)
+    loadChildren: () => import('./pages/account-setting/account-setting.module').then( m => m.AccountSettingPageModule),canActivate: [AuthGuard]
   },
 
 

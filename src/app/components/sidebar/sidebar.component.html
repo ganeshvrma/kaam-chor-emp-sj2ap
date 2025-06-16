@@ -1,3 +1,74 @@
-<p>
-  sidebar works!
-</p>
+<ion-menu contentId="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <!-- <ion-title>Menu Content</ion-title> -->
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+  <div class="sidebarBtn">
+    <div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+    <ion-button   routerLink="/employer-plan" expand="block" class="menu-button">
+      Dashboard
+    </ion-button></div>
+<div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+    <ion-button   routerLink="/my-profile" expand="block" class="menu-button">
+      <ion-icon  slot="start" name="person" ></ion-icon> My Profile
+    </ion-button></div>
+<div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+    <ion-button  routerLink="/candidate" expand="block" class="menu-button">
+      Candidate
+    </ion-button></div>
+
+   <div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+  <ion-button  [routerLink]="'/my-jobs'" expand="block" class="menu-button">
+    My Jobs
+  </ion-button>
+</div>
+
+   <div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+
+    <ion-button   routerLink="/inactive-jobs" expand="block" class="menu-button">
+      Inactive Jobs
+    </ion-button></div>
+   <div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+
+    <ion-button   routerLink="/basic-details-page" expand="block" class="menu-button">
+      Post Job
+    </ion-button></div>
+
+   <div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+
+    <ion-button  routerLink="/saved-candidates" expand="block" class="menu-button">
+      <ion-icon name="bookmark"  slot="start"></ion-icon> Saved Candidate
+    </ion-button></div>
+   <div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+
+    <ion-button  routerLink="/account-settings" expand="block" class="menu-button">
+      <ion-icon name="settings"  slot="start"></ion-icon> Account Setting
+    </ion-button></div>
+
+   <div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">
+
+    <ion-button   routerLink="/splash-screen" expand="block" class="menu-button ">
+      <ion-icon name="exit"  slot="start"></ion-icon> Logout
+    </ion-button></div>
+  </div>
+</ion-content>
+</ion-menu>
+<div class="ion-page" id="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <img
+        src="../../../assets/icons/kaam-chor-logo-removebg.png"
+        style="opacity: 0.7"
+        alt="logo"
+      />
+      <!-- <ion-title>Menu</ion-title> -->
+    </ion-toolbar>
+  </ion-header>
+
+
+  </div>
