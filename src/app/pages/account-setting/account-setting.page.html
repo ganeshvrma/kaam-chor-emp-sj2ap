@@ -1,33 +1,41 @@
-<ion-content class="ion-padding">
+
+ <ion-content class="ion-padding">
   <ion-card class="account-card">
     <ion-card-header>
-      <ion-card-title class="title">Account Setting</ion-card-title>
+      <ion-card-title class="title">Account Settings</ion-card-title>
       <ion-card-subtitle class="subtitle">Change your email</ion-card-subtitle>
     </ion-card-header>
-
-    <!-- <ion-card-content>
-      <p class="label"><strong>Email Address:</strong></p>
-      <p class="email-text">
-     {{oldemail}}
-        <a class="change-link">Change Email</a>
-      </p>
-    </ion-card-content> -->
     <ion-card-content>
-  <p class="label"><strong>Email Address:</strong></p>
+      <p class="label"><strong>Email Address:</strong></p>
 
-  <ng-container *ngIf="!editingEmail; else editEmailForm">
-    <p class="email-text">
-      {{ oldemail }}
-      <a class="change-link" (click)="enableEmailEdit()">Change Email</a>
-    </p>
-  </ng-container>
+      <ng-container *ngIf="!editingEmail; else editEmailForm">
+        <p class="email-text">
+          {{ oldemail }}
+          <a class="change-link" (click)="enableEmailEdit()">Change Email</a>
+        </p>
+      </ng-container>
 
-  <ng-template #editEmailForm>
-    <ion-input [(ngModel)]="newemail" placeholder="Enter new email"></ion-input>
-    <ion-button size="small" (click)="updateEmail()">Update</ion-button>
-    <ion-button size="small" color="medium" (click)="editingEmail = false">Cancel</ion-button>
-  </ng-template>
-</ion-card-content>
+      <ng-template #editEmailForm>
+        <ion-item lines="none">
+          <ion-input
+            [(ngModel)]="newemail"
+            placeholder="Enter new email"
+            type="email"
+            required
+          ></ion-input>
+        </ion-item>
 
+        <div class="button-row">
+          <ion-button size="small" (click)="updateEmail()" [disabled]="loading">
+            {{ loading ? 'Updating...' : 'Update' }}
+          </ion-button>
+          <ion-button size="small" color="medium" (click)="editingEmail = false">
+            Cancel
+          </ion-button>
+        </div>
+        <ion-text color="danger" *ngIf="errorMessage">{{ errorMessage }}</ion-text>
+        <ion-text color="success" *ngIf="successMessage">{{ successMessage }}</ion-text>
+      </ng-template>
+    </ion-card-content>
   </ion-card>
 </ion-content>

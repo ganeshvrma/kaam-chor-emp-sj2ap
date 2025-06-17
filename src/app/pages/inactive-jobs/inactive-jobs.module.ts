@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { AccountSettingPageRoutingModule } from './account-setting-routing.module';
+import { InactiveJobsPageRoutingModule } from './inactive-jobs-routing.module';
 
-import { AccountSettingPage } from './account-setting.page';
+import { InactiveJobsPage } from './inactive-jobs.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    AccountSettingPageRoutingModule
+    InactiveJobsPageRoutingModule
   ],
-  declarations: [AccountSettingPage]
+  declarations: [InactiveJobsPage]
 })
-export class AccountSettingPageModule {}
+export class InactiveJobsPageModule {}

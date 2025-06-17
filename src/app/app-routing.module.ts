@@ -50,7 +50,23 @@ const routes: Routes = [
   {
     path: 'account-setting',
     loadChildren: () => import('./pages/account-setting/account-setting.module').then( m => m.AccountSettingPageModule),canActivate: [AuthGuard]
+  },  {
+    path: 'my-jobs',
+    loadChildren: () => import('./pages/my-jobs/my-jobs.module').then( m => m.MyJobsPageModule)
   },
+  {
+    path: 'inactive-jobs',
+    loadChildren: () => import('./pages/inactive-jobs/inactive-jobs.module').then( m => m.InactiveJobsPageModule)
+  },
+  {
+    path: 'saved-candidates',
+    loadChildren: () => import('./pages/saved-candidates/saved-candidates.module').then( m => m.SavedCandidatesPageModule)
+  },
+  {
+    path: 'candidate-list',
+    loadChildren: () => import('./pages/candidate-list/candidate-list.module').then( m => m.CandidateListPageModule)
+  },
+
 
 
 

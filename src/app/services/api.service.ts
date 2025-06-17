@@ -69,16 +69,20 @@ getEmployerCompanyData(userId: number): Observable<any> {
 getEmployerProfile(userId: number): Observable<any> {
   return this.http.get<any>(`${this.apiUrl}/Employer_Api/getEmployerProfile/${userId}`);
 }
-// updateEmployerEmail(userId: number,email:string): Observable<any> {
-//   return this.http.put<any>(`${this.apiUrl}/Employer_Api/updateEmployerEmail`,{userId,email});
-// }
-updateEmployerEmail(userId: number, email: string): Observable<any> {
-  const url = `${this.apiUrl}/Employer_Api/updateEmployerEmail`;
-  const params = new HttpParams()
-    .set('user_id', userId.toString())
-    .set('email', email);
-
-  return this.http.put<any>(url, {}, { params }); // Note: empty body
+updateEmployerEmail(userId: number, email: string) {
+  return this.http.put<any>(`${this.apiUrl}/Employer_Api/updateEmployerEmail`, {
+    user_id: userId,
+    email: email
+  });
 }
-
+ emailbyuserid(userId: number): Observable<any> {
+  return this.http.get<any>(`${this.apiUrl}/Employer_Api/emailbyuserid/${userId}`);
+}
+employer_jobs(data: any,userId: number,page:number,limit:number): Observable<any> {
+    return this.http.post(`${this.baseUrl}/employer_jobs`, {data,
+      user_id:userId,
+      page,
+      limit,
+    });
+  }
 }
