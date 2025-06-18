@@ -85,4 +85,12 @@ employer_jobs(data: any,userId: number,page:number,limit:number): Observable<any
       limit,
     });
   }
+  
+  savedCandidates(data: any,userId: number,page:number,limit:number): Observable<any> {
+    return this.http.post(`${this.baseUrl}/savedCandidates`, {data,
+      employer_id:userId,
+      page,
+      limit,
+    });
+  }
 }

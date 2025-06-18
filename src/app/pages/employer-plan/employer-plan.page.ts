@@ -6,7 +6,6 @@ import { ModalController } from '@ionic/angular';
 import { CheckoutModalPage } from 'src/app/checkout-modal/checkout-modal.page';
 import { ApiService } from 'src/app/services/api.service';
 
-import { PlanCardComponent } from 'src/app/components/plan-card/plan-card.component';
 interface Plan {
   title: string;
   price: number;
@@ -21,11 +20,11 @@ interface Plan {
   
   templateUrl: './employer-plan.page.html',
   styleUrls: ['./employer-plan.page.scss'],
-  standalone: true,
-  imports: [
+  standalone: false,
+  // imports: [
 
-    IonicModule,PlanCardComponent,CommonModule
-  ],
+  //   IonicModule,PlanCardComponent,CommonModule
+  // ],
 })
 export class EmployerPlanPage implements OnInit {
   

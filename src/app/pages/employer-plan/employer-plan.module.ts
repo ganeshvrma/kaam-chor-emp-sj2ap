@@ -29,16 +29,18 @@ import { IonicModule } from '@ionic/angular';
 import { CheckoutModalPage } from 'src/app/checkout-modal/checkout-modal.page';
 import { EmployerPlanPageRoutingModule } from './employer-plan-routing.module';
 import { EmployerPlanPage } from './employer-plan.page';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+import { PlanCardComponent } from 'src/app/components/plan-card/plan-card.component';
 
 @NgModule({
-  declarations: [
+  declarations: [EmployerPlanPage
     
   ],
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    EmployerPlanPageRoutingModule,EmployerPlanPage,CheckoutModalPage
+    EmployerPlanPageRoutingModule,CheckoutModalPage,RouterLinkActive,RouterLink,PlanCardComponent
   ],
   // entryComponents: [CheckoutModalPage] // Required for modals
 })

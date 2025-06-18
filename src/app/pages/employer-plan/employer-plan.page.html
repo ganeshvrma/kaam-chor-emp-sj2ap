@@ -109,26 +109,60 @@
 <ion-menu contentId="main-content">
   <ion-header>
     <ion-toolbar>
-      <ion-title>Menu Content</ion-title>
+      <!-- <ion-title>Menu Content</ion-title> -->
     </ion-toolbar>
   </ion-header>
   <ion-content class="ion-padding">
-    <div class="sidebarBtn">
-      <ion-button >Dashboard</ion-button>
-    <ion-button >  <ion-icon name="person" ></ion-icon>My  Profile</ion-button>
-      <ion-button >Candidate</ion-button>
-      <ion-button>My Jobs</ion-button>
-      <ion-button>Inactive Jobs</ion-button>
-      <ion-button> <a href="basic-details-page" style="text-decoration: none; color: black;">Post Job</a></ion-button>
-      <ion-button
-        ><ion-icon name="bookmark"></ion-icon>Saved Candidate</ion-button
-      >
-      <ion-button
-        ><ion-icon name="settings"></ion-icon>Account Setting
-      </ion-button>
-      <ion-button><ion-icon name="exit"></ion-icon>Logout</ion-button>
-    </div>
-  </ion-content>
+  <div class="sidebarBtn">
+    <div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="sideButton">
+    <a   routerLink="/employer-plan" expand="block" class="menu-button">
+      Dashboard
+    </a></div>
+<div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="sideButton">
+    <a   routerLink="/my-profile" expand="block" class="menu-button">
+      <ion-icon  slot="start" name="person" ></ion-icon> My Profile
+    </a></div>
+<div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="sideButton">
+    <a  routerLink="/candidate-list" expand="block" class="menu-button">
+      Candidate
+    </a></div>
+
+   <div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="sideButton">
+  <a  [routerLink]="'/my-jobs'" expand="block" class="menu-button">
+    My Jobs
+  </a>
+</div>
+
+   <div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="sideButton">
+
+    <a   routerLink="/inactive-jobs" expand="block" class="menu-button">
+      Inactive Jobs
+    </a></div>
+   <div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="sideButton">
+
+    <a   routerLink="/basic-details-page" expand="block" class="menu-button">
+      Post Job
+    </a></div>
+
+   <div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="sideButton">
+
+    <a  routerLink="/saved-candidates" expand="block" class="menu-button">
+      <ion-icon name="bookmark"  slot="start"></ion-icon> Saved Candidate
+    </a></div>
+   <div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="sideButton">
+
+     <a  routerLink="/account-setting" expand="block" class="menu-button"><ion-icon name="settings"  slot="start"></ion-icon>
+       Account Setting
+    </a></div>
+
+   <div routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }" class="sideButton">
+
+    <a   routerLink="/splash-screen" expand="block" class="menu-button ">
+      <ion-icon name="exit"  slot="start"></ion-icon> Logout
+    </a></div>
+  </div>
+</ion-content>
+
 </ion-menu>
 
 <div class="ion-page" id="main-content">
@@ -250,6 +284,11 @@
             (purchase)="openCheckoutModal($event)"
           ></app-plan-card>
         </ion-col>
+         </ion-row>
+    </ion-grid>
+     
+    <ion-grid>
+      <ion-row>
         <ion-col>
           <ion-card>
             <ion-card-header class="ion-text-center">
@@ -262,6 +301,7 @@
             </ion-card-content>
           </ion-card>
         </ion-col>
+        
         <ion-col
           ><ion-card>
             <ion-card-header class="ion-text-center">
