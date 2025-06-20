@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { CandidateListPageRoutingModule } from './candidate-list-routing.module';
 
 import { CandidateListPage } from './candidate-list.page';
+import { ReactiveFormsModule } from '@angular/forms';
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    CandidateListPageRoutingModule
+    CandidateListPageRoutingModule,ReactiveFormsModule
   ],
   declarations: [CandidateListPage]
 })

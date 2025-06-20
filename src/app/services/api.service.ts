@@ -99,4 +99,8 @@ employer_jobs(data: any,userId: number,page:number,limit:number): Observable<any
       
     });
   }
+  candidates(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/Employer_Api/candidates`, {data
+    });
+  }
 }
