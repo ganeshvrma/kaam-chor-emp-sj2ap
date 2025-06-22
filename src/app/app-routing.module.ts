@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
+import { LoginRedirectGuard } from './guards/login-redirect.guard';
 const routes: Routes = [
   {
     path: 'home',
@@ -17,11 +18,11 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule),canActivate: [LoginRedirectGuard]
   },
   {
     path: 'otp-verf',
-    loadChildren: () => import('./pages/otp-verf/otp-verf.module').then( m => m.OtpVerfPageModule)
+    loadChildren: () => import('./pages/otp-verf/otp-verf.module').then( m => m.OtpVerfPageModule),canActivate: [LoginRedirectGuard]
   },
   {
     path: 'basic-details-page',
@@ -50,7 +51,8 @@ const routes: Routes = [
   {
     path: 'account-setting',
     loadChildren: () => import('./pages/account-setting/account-setting.module').then( m => m.AccountSettingPageModule),canActivate: [AuthGuard]
-  },  {
+  },
+  {
     path: 'my-jobs',
     loadChildren: () => import('./pages/my-jobs/my-jobs.module').then( m => m.MyJobsPageModule)
   },
