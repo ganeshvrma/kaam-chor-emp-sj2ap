@@ -8,24 +8,24 @@
   --background: #511168;
   --color: white;
 }
-.menu-button {
+.menu-item {
   --background: transparent;
   --color: black;
   transition: background-color 0.3s, color 0.3s;
-  text-align: left ;
-  justify-content: flex-start!important;
+  // text-align: left ;
+  // justify-content: flex-start!important;
    --padding-start: 16px; /* Optional spacing */
   --padding-end: 16px;
   
   
 }
 
-.menu-button:hover {
+.menu-item:hover {
   --background: #511168; // Light gray on hover
   --color: #fff;
 }
 
-.active-link .menu-button {
+.active-menu-item {
   background-color: #511168 ; // Light blue when active
   --color: #fff;
   font-weight: bold;

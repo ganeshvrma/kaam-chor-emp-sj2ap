@@ -1,3 +1,9 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <app-sidebar 
+    menuId="main-menu" 
+    contentId="main-content"
+    [menuItems]="menuItems">
+  </app-sidebar>
+
+  <ion-router-outlet id="main-content"></ion-router-outlet>
 </ion-app>
