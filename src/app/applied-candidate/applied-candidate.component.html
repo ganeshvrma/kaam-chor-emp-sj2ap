@@ -1,3 +1,88 @@
-<p>
-  applied-candidate works!
-</p>
+<ion-header style="margin-top: 20px;">
+  <ion-toolbar color="primary">
+    <ion-title> Applied Candidates Details</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content >
+   <!-- <app-sidebar></app-sidebar> -->
+    <ion-title class="ion-text-center" style="padding-top: 70px;" >Applied Candidate List</ion-title>
+
+  <ion-card>
+    <ion-card-content class="cardBody">
+
+      <!-- Filters -->
+      <ion-row class="ion-align-items-center ion-justify-content-between table-controls">
+        <ion-col size="6">
+          Show
+          <!-- <ion-select [(ngModel)]="itemsPerPage" interface="popover">
+            <ion-select-option *ngFor="let num of [5,10,25,50]" [value]="num">{{ num }}</ion-select-option>
+          </ion-select> -->
+          <select  >
+            <option *ngFor="let num of [5,10,25,50]" [value]="num">{{ num }}</option>
+          </select>
+          entries
+        </ion-col>
+
+        <ion-col size="6" class="ion-text-right">
+          <!-- <ion-input [(ngModel)]="searchTerm" placeholder="Search..." clearInput></ion-input> -->
+        </ion-col>
+      </ion-row>
+
+      <!-- Data List -->
+      <ion-list>
+        <ion-item *ngFor="let user of paginatedData(); let i = index" lines="full">
+          <ion-grid>
+            <ion-row>
+              <ion-col size="12" class="ion-text-left">
+                <ion-label color="medium">{{ (currentPage - 1) * itemsPerPage + i + 1 }}</ion-label>
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="info-row" *ngFor="let data of canData">
+              <ion-col size="12">
+                <strong>Name:</strong> {{ data.candidate_name }}
+              </ion-col>
+              <ion-col size="12">
+                <strong>Email:</strong> {{ data.candidate_email }}
+              </ion-col>
+              <ion-col size="12">
+                <strong>Mobile number:</strong> {{ data.candidate_mobile }}
+              </ion-col>
+              <ion-col size="12">
+                <strong>Location:</strong> {{ data.company_location }}
+              </ion-col>
+              <ion-col size="12">
+                <strong>Job Type:</strong> {{ data.job_type }}
+              </ion-col>
+              <!-- <ion-col size="12">
+                <strong>Applied on:</strong> {{ data.created_on }}
+              </ion-col>
+              <ion-col size="12">
+                <strong>Last Active:</strong> {{ data.updated_on }}
+                
+              </ion-col> -->
+            </ion-row>
+<ion-row class="ion-justify-content-end">
+             <ion-button fill="clear" size="small" (click)="presentActionSheet(user)">
+           <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+          </ion-button>
+
+            </ion-row>
+           
+          </ion-grid>
+        </ion-item>
+      </ion-list>
+
+      <!-- Pagination -->
+      <div class="pagination ion-text-center">
+        <ion-button size="small" fill="outline" (click)="prevPage()" [disabled]="currentPage === 1">Previous</ion-button>
+        <ion-button size="small" fill="outline">{{ currentPage }}</ion-button>
+        <ion-button size="small" fill="outline" (click)="nextPage()" [disabled]="currentPage >= totalPages()">Next</ion-button>
+      </div>
+
+    </ion-card-content>
+  </ion-card>
+</ion-content>
