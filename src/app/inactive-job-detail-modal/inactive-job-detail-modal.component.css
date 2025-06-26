@@ -1,0 +1,147 @@
+ion-content {
+  --background: #ffffff;
+}
+
+.job-title {
+  margin-top: 20px;
+  text-align: center;
+}
+.job-title h5 {
+  color: #511168;
+  margin-bottom: 0;
+  font-weight: bolder;
+}
+.job-title p {
+  color: #666;
+  margin-top: 5px;
+  font-size: 12px;
+}
+
+ion-chip {
+  --background: #f0f0f0;
+  --color: #333;
+}
+
+ion-grid {
+  margin-top: 20px;
+}
+ion-grid ion-col:last-child {
+  border-right: none;
+}
+ion-grid ion-icon {
+  font-size: 24px;
+}
+ion-grid p {
+  color: #666;
+  margin: 5px 0;
+}
+ion-grid h2 {
+  color: #333;
+  margin: 0;
+}
+
+.custom-segment ion-segment-button ion-label {
+  white-space: normal;
+  text-overflow: clip;
+  overflow: visible;
+  text-transform: capitalize;
+  overflow-x: auto;
+}
+
+ion-segment.custom-segment.md.hydrated {
+  overflow-x: scroll;
+}
+
+.description-content {
+  margin-top: 20px;
+}
+.description-content h3 {
+  color: #333;
+}
+.description-content p {
+  color: #666;
+}
+
+ion-list {
+  background: transparent;
+}
+
+ion-item {
+  --background: transparent;
+}
+
+.styled-chip {
+  display: inline-block; /* Make it behave like a block element */
+  padding: 6px 12px; /* Add padding similar to ion-chip */
+  background-color: #F8E4FF; /* Primary color background (adjust as needed) */
+  color: #511168; /* Text color */
+  border-radius: 20px; /* Rounded corners */
+  font-size: 14px; /* Font size */
+  line-height: 1; /* Line height for better vertical alignment */
+}
+
+.styled-text {
+  display: inline-block; /* Make it behave like a block element */
+  padding: 6px 4px; /* Add padding similar to ion-chip */
+  font-size: 14px; /* Font size */
+  line-height: 1; /* Line height for better vertical alignment */
+}
+
+.scrollable-buttons {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.scrollable-buttons ion-buttons {
+  display: inline-flex;
+}
+
+.scrollable-buttons::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+ion-button {
+  flex-shrink: 0;
+  margin-right: 10px; /* Optional: Adds spacing between buttons */
+}
+
+.scrollable-buttons ion-button.active {
+  background-color: #511168; /* Purple background color */
+  color: white; /* White font color */
+  border-radius: 20px; /* Rounded corners */
+  padding: 8px 16px; /* Adjust padding to fit your design */
+}
+
+.job-highlights-card {
+  margin: 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.job-highlights-card ion-card-header {
+  background-color: #efe9f2; /* Light background color */
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.job-highlights-card ion-card-title {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #511168; /* Primary color */
+}
+
+.job-highlights-card ion-label h2 {
+  font-size: 1.2em;
+  margin: 0;
+  color: #333; /* Darker text color for headings */
+}
+
+.job-highlights-card ion-label p {
+  margin: 0;
+  color: #666; /* Lighter text color for paragraphs */
+}
+
+.job_cutom_div {
+  margin-top: 20px;
+}/*# sourceMappingURL=inactive-job-detail-modal.component.css.map */

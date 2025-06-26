@@ -1,0 +1,189 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+   <ion-button (click)="goBack()" fill="clear">
+  <ion-icon name="arrow-back" size="large"></ion-icon>
+</ion-button>
+    <!-- <ion-title>jobDetail</ion-title> -->
+    <!-- <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon name="share-social-outline"></ion-icon>
+      </ion-button>
+      <ion-button>
+        <ion-icon name="heart-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons> -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- <ion-header class="ion-no-border">
+    <ion-toolbar>
+      <ion-title class="ion-text-center">
+        <ion-text color="primary" style="font-size: 15px;">INACTIVE JOB DETAIL</ion-text>
+      </ion-title>
+    </ion-toolbar>
+  </ion-header> -->
+
+  <div class="job-title">
+    <h5>{{ jobData.job_title }}</h5>
+    <p>{{ jobData.company_name }}</p>
+    <ion-row class="flex-row" style="font-size: 12px; justify-content:center;">
+      <ion-col size="auto">
+        <ion-icon name="location" color="primary"></ion-icon>
+        <ion-text color="dark" class="styled-text">
+          {{jobData.company_city}}, {{jobData.company_state}}
+        </ion-text>
+      </ion-col>
+      <ion-col size="auto">
+        <ion-icon name="briefcase" color="primary"></ion-icon>
+        <ion-text color="dark" class="styled-text">
+          Onsite
+        </ion-text>
+      </ion-col>
+      <!-- <ion-col size="auto">
+        <ion-text color="primary" class="styled-chip">
+          Senior
+        </ion-text>
+      </ion-col> -->
+    </ion-row>
+  </div>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="4" class="ion-text-center">
+        <ion-icon name="document" color="dark" size="large"></ion-icon>
+        <!-- <p>Applicants</p> --><br>
+        <small>Applicants</small>
+        <h6>{{jobData.job_applicants_count}}</h6>
+      </ion-col>
+      <ion-col size="4" class="ion-text-center">
+        <ion-icon name="briefcase" color="dark" size="large"></ion-icon>
+        <!-- <p>Job Type</p> --><br>
+        <small>Job Type</small>
+        <h6>{{jobData.job_type}}</h6>
+      </ion-col>
+      <ion-col size="4" class="ion-text-center">
+        <ion-icon name="cash" color="dark" size="large"></ion-icon>
+        <!-- <p>Salary</p> -->
+        <br>
+        <small>Salary</small>
+        <h6>{{jobData.salary_per_annum}}</h6>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  
+
+  <div class="scrollable-buttons">
+    <ion-buttons>
+      <ion-button class="ion-text-capitalize" [class.active]="activeButton === 'description'"
+        (click)="setActiveButton('description')">Description</ion-button>
+      <ion-button class="ion-text-capitalize" [class.active]="activeButton === 'company'"
+        (click)="setActiveButton('company')">Company Details</ion-button>
+      <ion-button class="ion-text-capitalize" [class.active]="activeButton === 'requirements'"
+        (click)="setActiveButton('requirements')">Candidate Requirements</ion-button>
+      <ion-button class="ion-text-capitalize" [class.active]="activeButton === 'additionalInfo'"
+        (click)="setActiveButton('additionalInfo')">Additional Information</ion-button>
+    </ion-buttons>
+  </div>
+
+
+  <div *ngIf="activeButton === 'description'" class="job_cutom_div">
+    <!-- <h3>About this Job</h3> -->
+    <ion-text color="primary">
+      About this Job
+    </ion-text>
+    <p>As a {{jobData.job_title}}, you will be a key contributor to the growth, implementation and overall improvement of
+      Scott's Design rights. You will be collaborating with a lean team to...</p>
+
+    <ion-card class="job-highlights-card">
+      <ion-card-header>
+
+        <ion-card-title><ion-icon name="ribbon" color="primary" style="padding: 0px 16px;"></ion-icon> Job
+          Highlights</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-list>
+          <ion-item lines="none">
+            <!-- <ion-icon name="checkmark-circle" slot="start" color="primary"></ion-icon> -->
+            <ion-label>
+              <h2>Skills Required</h2>
+              <p>{{jobData.skills_required}}</p>
+            </ion-label>
+          </ion-item>
+          <ion-item lines="none">
+            <!-- <ion-icon name="checkmark-circle" slot="start" color="primary"></ion-icon> -->
+            <ion-label>
+              <h2>Language</h2>
+              <p>Hindi, English</p>
+            </ion-label>
+          </ion-item>
+          <ion-item lines="none">
+            <!-- <ion-icon name="checkmark-circle" slot="start" color="primary"></ion-icon> -->
+            <ion-label>
+              <h2>Job Timings</h2>
+              <p> {{jobData.job_start_time}} - {{jobData.job_end_time}}</p>
+            </ion-label>
+          </ion-item>
+          <ion-item lines="none">
+            <!-- <ion-icon name="checkmark-circle" slot="start" color="primary"></ion-icon> -->
+            <ion-label>
+              <h2>Role</h2>
+              <p>{{jobData.job_title}}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </div>
+  <div *ngIf="activeButton === 'company'" class="job_cutom_div">
+    <ion-text color="primary">
+      Company Details
+    </ion-text>
+    <p>
+      <strong>Company Name:</strong> {{jobData.company_name}}<br>
+      <strong>Estb year:</strong> {{jobData.year_of_establishment}}<br>
+      <strong>Organization Size:</strong> {{jobData.comp_size}}<br>
+      <strong>Industry type:</strong>{{jobData.industry_type}}<br>
+
+    </p>
+
+    <ion-text color="primary">
+      About the Company
+    </ion-text>
+    <p>
+      Scott's Design is a leading agency specializing in innovative graphic design solutions. Our mission is to provide
+      exceptional design services that help our clients stand out in a competitive market. We pride ourselves on our
+      creative approach and commitment to excellence.
+    </p>
+  </div>
+  <div *ngIf="activeButton === 'requirements'" class="job_cutom_div">
+    <ion-text color="primary">
+      Candidate Requirements
+    </ion-text>
+    <p class="candidate-requirements">
+      <strong>Education:</strong> {{jobData.min_qual}}<br>
+      <strong>Skills Required:</strong> {{jobData.skills_required}}<br>
+      <strong>Languages Required:</strong> {{jobData.job_languages.language}}<br>
+      <strong>Job Timings:</strong> {{jobData.job_start_time}} - {{jobData.job_end_time}}<br>
+      <strong>Role:</strong> {{jobData.job_title}}
+    </p>
+  </div>
+  <div *ngIf="activeButton === 'additionalInfo'" class="job_cutom_div">
+    <ion-text color="primary">
+      Additional Requirements
+    </ion-text>
+    <p class="additional-requirements">
+      <strong>Job Timings:</strong>  {{jobData.job_start_time}} - {{jobData.job_end_time}}<br>
+      <strong>Job Type:</strong> {{jobData.job_type}}<br>
+      <strong>Department:</strong> Design<br>
+      <strong>Role:</strong> {{jobData.job_title}}<br>
+      <strong>Job Address:</strong>{{jobData.full_address}}
+    </p>
+  </div>
+
+
+  
+
+</ion-content>

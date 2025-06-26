@@ -16,7 +16,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class ApiService {
-  private baseUrl = 'https://ek-reps.com/kaam-chor/FormApi'; // Replace with your backend URL
+  private baseUrl = 'https://staging.ekarigar.com/kaam-chor/FormApi'; // Replace with your backend URL
   private apiUrl = `${environment.baseUrl}`;
   constructor(private http: HttpClient) {}
 
@@ -110,5 +110,8 @@ employer_jobs(data: any,userId: number,page:number,limit:number): Observable<any
       limit,
       job_id
     });
+  }
+  employer_inactive_job_detail(job_id:number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/Employer_Api/job_details/${job_id}`);
   }
 }
