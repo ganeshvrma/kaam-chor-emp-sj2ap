@@ -114,4 +114,11 @@ employer_jobs(data: any,userId: number,page:number,limit:number): Observable<any
   employer_inactive_job_detail(job_id:number): Observable<any> {
     return this.http.get(`${this.apiUrl}/Employer_Api/job_details/${job_id}`);
   }
+  save_candidate(userId: number,candidate_id:number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/Employer_Api/save_candidate`, {
+      employer_id:userId,
+      candidate_id,
+     
+    });
+  }
 }
