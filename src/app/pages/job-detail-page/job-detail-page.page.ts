@@ -178,16 +178,16 @@ const formData = {
 
     console.log('Submitting form:', formData);
 
-    this.apiService.submitJob(formData).subscribe(
-      (response: any) => {
-        console.log('Success:', response);
-        // Show success toast or redirect here
-      },
-      (error: any) => {
-        console.error('API Error:', error);
-        // Show error toast here
-      }
-    );
+    // this.apiService.submitJob(formData).subscribe(
+    //   (response: any) => {
+    //     console.log('Success:', response);
+    //     // Show success toast or redirect here
+    //   },
+    //   (error: any) => {
+    //     console.error('API Error:', error);
+    //     // Show error toast here
+    //   }
+    // );
   }
 
   selectQualifications(level: string) {

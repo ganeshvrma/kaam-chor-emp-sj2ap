@@ -53,11 +53,12 @@ export class OtpVerfPage implements OnInit {
       this.authService.verifyOtp(this.mobileNumber, this.otp).subscribe({
         next: (response) => {
           console.log('OTP verified successfully', response);
+          console.log("ddfd   :",response.data.message);
           this.isLoading = false;
 
           //set localstorage is loggedin 
           // Set localStorage indicator for login
-          console.log('userid',response.data.user_id);
+           console.log('userid',response.data.user_id);
           localStorage.setItem('isLoggedIn', 'true');
           localStorage.setItem('userId', response.data.user_id.toString());
 
