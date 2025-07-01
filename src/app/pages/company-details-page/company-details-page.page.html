@@ -3,14 +3,14 @@
     <ion-title style="padding-bottom: 15px">2/3</ion-title>
     <ion-title>Post Job</ion-title>
 
-    <ion-button slot="end" id="supporttitle" >
+    <!-- <ion-button slot="end" id="supporttitle" >
       <ion-icon name="call-outline"></ion-icon>Call customer support
-    </ion-button>
+    </ion-button> -->
   </ion-toolbar>
   <ion-toolbar>
     <ion-segment value="company">
      
-      <ion-segment-button value="basic" >
+      <ion-segment-button value="basic"  content-id="" click="basicpg()" >
         <ion-label class="ion-text-wrap">Basic Details</ion-label>
       </ion-segment-button>
       <ion-segment-button
@@ -32,7 +32,7 @@
     <ion-segment-content id="company">
       <form [formGroup]="company" (ngSubmit)="nextStep2()" class="scrollable-form">
         <div class="box">
-          <h2 class="heading" style="text-align: center;">Company Details</h2>
+          <h2 class="heading">Company Details</h2>
 
           <p>Company Name<span style="color: red">*</span></p>
           <input type="text" formControlName="companyname" />
@@ -74,7 +74,10 @@
   <p > Google map Location
     <a (click)="openTutorial()" style="cursor:pointer; color:blue;">link</a>
   </p>
-  <ion-input type="text" formControlName="google_map_loc" placeholder="Paste iframe code here" ></ion-input>
+
+  <ion-input *ngIf="isNewUser" type="text"  formControlName="google_map_loc"  placeholder="Paste iframe code here" ></ion-input>
+   <div *ngIf="!isNewUser" [innerHTML]="company.get('google_map_loc')?.value"></div>
+
 <ion-modal [isOpen]="showTutorial" (didDismiss)="closeTutorial()">
   <ng-template>
     <ion-header>
@@ -126,15 +129,15 @@
 
           <p>Number of Employees</p>
           <input type="number" formControlName="numemployees" />
-          <ion-text color="danger" *ngIf="company.get('numemployees')?.touched && company.get('numemployees')?.invalid">
+          <!-- <ion-text color="danger" *ngIf="company.get('numemployees')?.touched && company.get('numemployees')?.invalid">
             <small *ngIf="company.get('numemployees')?.errors?.['required']">Field is required</small>
-          </ion-text>
+          </ion-text> -->
 
           <p>Year of Establishment</p>
           <input type="number" formControlName="companyestb" />
-          <ion-text color="danger" *ngIf="company.get('companyestb')?.touched && company.get('companyestb')?.invalid">
+          <!-- <ion-text color="danger" *ngIf="company.get('companyestb')?.touched && company.get('companyestb')?.invalid">
             <small *ngIf="company.get('companyestb')?.errors?.['required']">Field is required</small>
-          </ion-text>
+          </ion-text> -->
  
           <div class="btn">
             <ion-button  shape="round"  class="submitbtn"  (click)="previousPage()">Back</ion-button>

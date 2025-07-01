@@ -6,6 +6,7 @@ import { NavController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
 import { LocalStorageUtil } from 'src/app/shared/utils/localStorageUtil';
 import { Router, NavigationExtras } from '@angular/router';
+import { ViewDidEnter  } from '@ionic/angular'; 
 @Component({
   selector: 'app-lastpage',
   standalone: false,
@@ -44,16 +45,49 @@ export class BasicDetailsPagePage implements OnInit {
       });
     }
   }
-  ngOnInit() {
+       ngOnInit() {
     this.apiService.getEmpProfile().subscribe((res: any) => {
       if (res.status === 'success') {
         this.empProfileOptions = res.data;
       }
     });
+      const storedUserId = localStorage.getItem('userId');
 
-    const storedUserId = localStorage.getItem('userId');
-    if (storedUserId) {
+     if(storedUserId){
+       this.user_id = Number(storedUserId);
+
+       this.apiService.Getmbbyuserid(this.user_id).subscribe((res) => {
+        if (res.status && res.data?.mobile_number) {
+          this.mobileNumber = res.data.mobile_number;
+          this.basiclast.patchValue({ emplnumber: this.mobileNumber }); // Prefill mobile field
+        }
+      });
+        this.getEmployerdata();
+
+     }
+    
+
+    }
+    ionViewDidEnter(){
+      this.getEmployerdata();
+    }
+    getEmployerdata(){
+      const storedUserId = localStorage.getItem('userId');
+  if (!storedUserId) {
+    console.warn('User ID not available, skipping employer data fetch');
+    return;
+  }
+
+  this.user_id = parseInt(storedUserId, 10);
+      const formCompleted = localStorage.getItem('basicFormCompleted') === 'true';
+  
       this.user_id = parseInt(storedUserId, 10);
+          if (formCompleted) {
+       
+        this.isNewUser = false;
+        this.basiclast.disable();
+        return;
+      }
       this.apiService.Getmbbyuserid(this.user_id).subscribe((res) => {
         if (res.status && res.data?.mobile_number) {
           this.mobileNumber = res.data.mobile_number;
@@ -62,7 +96,7 @@ export class BasicDetailsPagePage implements OnInit {
       });
 
      this.apiService.getEmployerData(this.user_id).subscribe(
-  (res) => {
+     (res) => {
     console.log(res);
     if (res.status && res.data) {
       console.log(res);
@@ -95,8 +129,7 @@ export class BasicDetailsPagePage implements OnInit {
     }
   }
 );
-
-    }
+    
   }
   validatePhoneNumber(event: any) {
     const input = event.target as HTMLIonInputElement;
@@ -114,7 +147,9 @@ export class BasicDetailsPagePage implements OnInit {
   onlyNavigation() {
     this.router.navigate(['/company-details-page']);
   }
-
+onlyDashboard(){
+  this.router.navigate(['/employer-plan']);
+}
   submitForm() {
     if (this.basiclast.invalid) {
       this.basiclast.markAllAsTouched(); // Show validation errors
@@ -138,6 +173,7 @@ export class BasicDetailsPagePage implements OnInit {
       (response: any) => {
         console.log('Success:', response);
         // Show success toast or redirect
+        localStorage.setItem('basicFormCompleted', 'true');
         this.router.navigate(['/company-details-page']);
       },
       (error: any) => {
@@ -146,4 +182,5 @@ export class BasicDetailsPagePage implements OnInit {
       }
     );
   }
+ 
 }

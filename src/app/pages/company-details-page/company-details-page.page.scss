@@ -71,7 +71,7 @@
 }
 /* General box styling */
 .box {
-  background-color: var(--ion-background-color, #1e1e1e);
+  background-color: var(--ion-background-color, #adadad);
   border-radius: 12px;
   padding: 24px;
   box-shadow: 0 2px 8px rgba(255, 255, 255, 0.05);
@@ -79,7 +79,7 @@
 }
 .submitbtn{
 
-  --background: purple;
+  --background: #511168;
   color: white !important;
    border-radius: 5px;
 }
@@ -87,7 +87,7 @@
 .heading {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #511168;
+  color: var(--ion-text-color, #ffffff);
   margin-bottom: 16px;
 }
 
@@ -132,7 +132,7 @@ ion-button {
   --padding-start: 20px;
   --padding-end: 20px;
   font-weight: bold;
-  --background:#800080;
+  --background:#511168;
   --color: white !important;
 }
 
@@ -167,7 +167,7 @@ ion-modal img {
 ion-segment-button {
   --indicator-color: transparent;
   --color-checked: #ffffff;
-  --background-checked: purple;
+  --background-checked: #511168;
 }
 
 /* Titles */

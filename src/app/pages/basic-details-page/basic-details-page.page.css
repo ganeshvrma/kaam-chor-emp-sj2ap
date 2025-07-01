@@ -1,47 +1,50 @@
-#supporttitle{
-    font-size: 0.7rem;
-     margin-right: 10px;
+#supporttitle {
+  font-size: 0.7rem;
+  margin-right: 10px;
 }
-ion-button{
+
+ion-button {
   --background:#511168;
   --color: white ;
 }
+
 :host {
   display: block;
   height: 100%;
 }
-h6{
+
+h6 {
   font-size: 0.5rem;
 }
-.inputf{
+
+.inputf {
   width: 100%;
   height: 30px;
 }
-.box{
- 
-  input{
+
+.box input {
   width: 100%;
   height: 40px;
   border-radius: 5px;
-  }
-
-  select{
-    width: 100%;
-    height: 40px;
-    border-radius: 5px;
-  }
 }
-.btn{
+.box select {
+  width: 100%;
+  height: 40px;
+  border-radius: 5px;
+}
+
+.btn {
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
 }
-.heading{
+
+.heading {
   color: #511168;
 }
-.submitbtn{
 
+.submitbtn {
   --background: #511168;
   color: white !important;
-   border-radius: 5px;
-}
+  border-radius: 5px;
+}/*# sourceMappingURL=basic-details-page.page.css.map */
