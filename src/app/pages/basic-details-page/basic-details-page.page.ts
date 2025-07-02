@@ -1,34 +1,28 @@
-
-import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
-import { LocalStorageUtil } from 'src/app/shared/utils/localStorageUtil';
-import { Router, NavigationExtras } from '@angular/router';
-import { ViewDidEnter  } from '@ionic/angular'; 
+
 @Component({
   selector: 'app-lastpage',
-  standalone: false,
+  standalone:false,
   templateUrl: './basic-details-page.page.html',
   styleUrls: ['./basic-details-page.page.scss'],
 })
 export class BasicDetailsPagePage implements OnInit {
-  @Input() formData: any;
   @Output() prev = new EventEmitter<void>();
   @Output() submit = new EventEmitter<void>();
 
   basiclast: FormGroup;
   user_id!: number;
   mobileNumber: string = '';
-  //get api
-  //  empProfileOptions:string='';
   empProfileOptions: any[] = [];
-  //  selectedEmplProfile:string="";
   emplnumber: string = '';
   empProfile: string = '';
-  isNewUser: boolean | undefined ;
-  //end
+  isNewUser: boolean = true;
+  selectedSegment: string = 'basic';
+
   constructor(
     private fb: FormBuilder,
     private navCtrl: NavController,
@@ -36,151 +30,105 @@ export class BasicDetailsPagePage implements OnInit {
     private router: Router,
     private route: ActivatedRoute
   ) {
-    {
-      this.basiclast = this.fb.group({
-        emplname: ['', Validators.required],
-        emplemail: ['', Validators.required, Validators.email],
-        contactperson: ['', Validators.required],
-        emplnumber: ['', Validators.required],
-      });
-    }
+    this.basiclast = this.fb.group({
+      emplname: ['', Validators.required],
+      emplemail: ['', Validators.compose([Validators.required, Validators.email])],
+      contactperson: ['', Validators.required],
+      emplnumber: ['', Validators.required],
+    });
   }
-       ngOnInit() {
+
+  ngOnInit() {
     this.apiService.getEmpProfile().subscribe((res: any) => {
       if (res.status === 'success') {
         this.empProfileOptions = res.data;
       }
     });
-      const storedUserId = localStorage.getItem('userId');
-
-     if(storedUserId){
-       this.user_id = Number(storedUserId);
-
-       this.apiService.Getmbbyuserid(this.user_id).subscribe((res) => {
-        if (res.status && res.data?.mobile_number) {
-          this.mobileNumber = res.data.mobile_number;
-          this.basiclast.patchValue({ emplnumber: this.mobileNumber }); // Prefill mobile field
-        }
-      });
-        this.getEmployerdata();
-
-     }
-    
-
-    }
-    ionViewDidEnter(){
-      this.getEmployerdata();
-    }
-    getEmployerdata(){
-      const storedUserId = localStorage.getItem('userId');
-  if (!storedUserId) {
-    console.warn('User ID not available, skipping employer data fetch');
-    return;
+    this.user_id = Number(localStorage.getItem('userId'));
+    this.fetchMobileNumber();
+    this.checkIfUserExists();
   }
 
-  this.user_id = parseInt(storedUserId, 10);
-      const formCompleted = localStorage.getItem('basicFormCompleted') === 'true';
-  
-      this.user_id = parseInt(storedUserId, 10);
-          if (formCompleted) {
-       
-        this.isNewUser = false;
-        this.basiclast.disable();
-        return;
+  ionViewDidEnter() {
+    this.checkIfUserExists(); // Always check if user already submitted
+  }
+
+  fetchMobileNumber() {
+    this.apiService.Getmbbyuserid(this.user_id).subscribe((res) => {
+      if (res.status && res.data?.mobile_number) {
+        this.mobileNumber = res.data.mobile_number;
+        this.basiclast.patchValue({ emplnumber: this.mobileNumber });
       }
-      this.apiService.Getmbbyuserid(this.user_id).subscribe((res) => {
-        if (res.status && res.data?.mobile_number) {
-          this.mobileNumber = res.data.mobile_number;
-          this.basiclast.patchValue({ emplnumber: this.mobileNumber }); // Prefill mobile field
-        }
-      });
-
-     this.apiService.getEmployerData(this.user_id).subscribe(
-     (res) => {
-    console.log(res);
-    if (res.status && res.data) {
-      console.log(res);
-
-      this.basiclast.patchValue({
-        emplname: res.data.employer_name,
-        emplnumber: res.data.reg_mb,
-        contactperson: res.data.contact_person_profile,
-        emplemail: res.data.email,
-      });
-
-      this.basiclast.disable();
-      this.isNewUser = false;
-    } else {
-      // If no data, treat as new user
-      this.isNewUser = true;
-      console.log(this.isNewUser);
-    }
-  },
-  (error) => {
-    console.error('Error fetching employer data:', error);
-
-    if (error.status === 404) {
-      // Specifically handle 404
-      console.log('Employer data not found (404). Treating as new user.');
-      this.isNewUser = true;
-    } else {
-      // Handle other errors if needed
-      console.log('An unexpected error occurred.');
-    }
+    });
   }
-);
-    
-  }
+
+  checkIfUserExists() {
+  this.apiService.getEmployerData(this.user_id).subscribe(
+    (res) => {
+      if (res.status && res.data && res.data.employer_name) {
+        // ✅ Server confirms user exists
+        this.isNewUser = false;
+        this.basiclast.patchValue({
+          emplname: res.data.employer_name,
+          emplnumber: res.data.reg_mb,
+          contactperson: res.data.contact_person_profile,
+          emplemail: res.data.email,
+        });
+        this.basiclast.disable();
+      } else {
+        // ✅ Server says no data: treat as new user
+        this.isNewUser = true;
+        this.basiclast.enable();
+      }
+    },
+    (error) => {
+      console.error('Error checking employer:', error);
+      // If 404 or any unexpected error — treat as new user
+      this.isNewUser = true;
+      this.basiclast.enable();
+    }
+  );
+}
+
+
   validatePhoneNumber(event: any) {
     const input = event.target as HTMLIonInputElement;
     const value = input.value as string;
-
-    // Remove any non-digit characters
     const numericValue = value.replace(/\D/g, '');
-
-    // Limit to 10 digits
     this.emplnumber = numericValue.slice(0, 10);
-
-    // Update the input value
     input.value = this.emplnumber;
   }
+
   onlyNavigation() {
     this.router.navigate(['/company-details-page']);
   }
-onlyDashboard(){
-  this.router.navigate(['/employer-plan']);
-}
+
+  onlyDashboard() {
+    this.router.navigate(['/employer-plan']);
+  }
+
   submitForm() {
     if (this.basiclast.invalid) {
-      this.basiclast.markAllAsTouched(); // Show validation errors
+      this.basiclast.markAllAsTouched();
       return;
     }
-    if (this.basiclast.valid) {
-      this.router.navigate(['/company-details-page']);
-    }
 
-    // const formData = this.jobForm.value;
     const formData = {
       ...this.basiclast.value,
-      // step_third_data: "step 3", // replace with actual step one form/control or object
-      user_id: LocalStorageUtil.getItem('userId'),
+      user_id: this.user_id,
     };
 
     console.log('Submitting form:', formData);
 
-    // Call your API service here
     this.apiService.submitBasic(formData).subscribe(
       (response: any) => {
         console.log('Success:', response);
-        // Show success toast or redirect
         localStorage.setItem('basicFormCompleted', 'true');
         this.router.navigate(['/company-details-page']);
       },
       (error: any) => {
         console.error('API Error:', error);
-        // Show error toast
       }
     );
   }
- 
 }
