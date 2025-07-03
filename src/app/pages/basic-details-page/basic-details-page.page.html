@@ -1,137 +1,153 @@
 <ion-header>
-  <ion-toolbar style="--min-height: 100px">
-    <ion-title style="padding-bottom: 15px">1/3</ion-title>
-    <ion-title>Post Job </ion-title>
+  <div class="toolbar">
+    <p class="title-sub">1/3</p>
 
-    <!-- <ion-button slot="end" id="supporttitle" 
-      ><ion-icon name="call-outline"></ion-icon>Call customer
-      support</ion-button
-    > -->
-  </ion-toolbar>
-  <ion-toolbar>
-    <!-- <ion-searchbar></ion-searchbar> -->
+    <h1 class="title-main">Post Job</h1>
+  </div>
 
-    <ion-segment value="basic">
-     
-       <ion-segment-button
-        value="basic"
-        content-id="basic"
-        style="background-color: purple; color: white !important"
-      >
-        <ion-label class="ion-text-wrap">Basic Details{{isNewUser}}</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="company" >
-        <ion-label class="ion-text-wrap">Company Details</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="job" >
-        <ion-label class="ion-text-wrap">Job Details</ion-label>
-      </ion-segment-button>
-    </ion-segment>
-  </ion-toolbar>
+  <div class="segment-toolbar">
+    <div class="segments">
+      <button class="segment-button active">Basic Details</button>
+      <button class="segment-button disabled">Company Details</button>
+      <button class="segment-button disabled">Job Details</button>
+    </div>
+  </div>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content class="ion-padding" [fullscreen]="true" scroll-y="true">
   <ion-segment-view value="basic">
     <ion-segment-content id="basic">
-      <form [formGroup]="basiclast" >
+      <form [formGroup]="basiclast">
         <div class="box">
-          <h2 class="heading" style="text-align: center;">Basic Details</h2>
-          <p>Employer Name<span style="color: red">*</span></p>
-          <input type="text" value="John" formControlName="emplname" />
+          <h2 class="heading" style="text-align: center">Basic Details</h2>
+
+          <!-- Employer Name -->
+          <div>
+            <ion-label position="stacked" class="label-class"
+              >Employer Name <span style="color: red">*</span></ion-label
+            >
+            <ion-input
+              type="text"
+              formControlName="emplname"
+              placeholder="Enter employer name"
+            ></ion-input>
+          </div>
           <ion-text
             color="danger"
-            *ngIf="
-              basiclast.get('emplname')?.touched &&
-              basiclast.get('emplname')?.invalid
-            "
+            *ngIf="basiclast.get('emplname')?.touched && basiclast.get('emplname')?.invalid"
           >
             <small *ngIf="basiclast.get('emplname')?.errors?.['required']"
               >Feild is required</small
             >
           </ion-text>
-          <p>Email<span style="color: red">*</span></p>
-          <input
-            type="email"
-          
-            value=""
-            formControlName="emplemail"
-          />
-          <small style="color: green"
+
+          <!-- Email -->
+          <div>
+            <ion-label position="stacked"
+              >Email <span style="color: red">*</span></ion-label
+            >
+            <ion-input
+              type="email"
+              formControlName="emplemail"
+              placeholder="Enter your email"
+            ></ion-input>
+          </div>
+          <small style="color: green; margin-bottom: 15px"
             >--Candidates job application send on this email</small
           >
           <div>
             <ion-text
               color="danger"
-              *ngIf="
-                basiclast.get('emplemail')?.touched &&
-                basiclast.get('emplemail')?.invalid 
-              "
-            > 
-            <small *ngIf="basiclast.get('emplemail')?.errors?.['email']">
-      Enter a valid email address
-    </small>
+              *ngIf="basiclast.get('emplemail')?.touched && basiclast.get('emplemail')?.invalid"
+            >
+              <small *ngIf="basiclast.get('emplemail')?.errors?.['email']"
+                >Enter a valid email address</small
+              >
               <small *ngIf="basiclast.get('emplemail')?.errors?.['required']"
                 >Feild is required</small
               >
             </ion-text>
           </div>
-          <p>Contact Person Profile<span style="color: red">*</span></p>
-          <select
-            name=""
-            id=""
-            placeholder="General "
-            formControlName="contactperson"
-           
-          >
-            <option value ="">Select one</option>
-             <option *ngFor="let option of empProfileOptions" [value]="option.id">{{option.profile}}</option>
-           
-          </select>
+
+          <!-- Contact Person Profile -->
+
+          <div style="margin-top: 10px">
+            <ion-label position="stacked"
+              >Contact Person Profile
+              <span style="color: red">*</span></ion-label
+            >
+            <ion-select
+              placeholder="Select One"
+              formControlName="contactperson"
+            >
+              <ion-select-option value="">Select One</ion-select-option>
+              <ion-select-option
+                *ngFor="let option of empProfileOptions"
+                [value]="option.id"
+              >
+                {{ option.profile }}
+              </ion-select-option>
+            </ion-select>
+          </div>
           <ion-text
             color="danger"
-            *ngIf="
-              basiclast.get('contactperson')?.touched &&
-              basiclast.get('contactperson')?.invalid
-            "
+            *ngIf="basiclast.get('contactperson')?.touched && basiclast.get('contactperson')?.invalid"
           >
             <small *ngIf="basiclast.get('contactperson')?.errors?.['required']"
-              >Feild is required</small
+              >Field is required</small
             >
           </ion-text>
-          <p>Registered Mobile Number</p>
-        
-        <input class="mb_input"  type="tel"
-        formControlName="emplnumber" name="mobileNumber" required minlength="10" maxlength="10" pattern="^[0-9]{10}$"
-        (ionInput)="validatePhoneNumber($event)"  readonly>
-          <small style="color: green"> --Candidates call in this number</small>
+
+          <!-- Registered Mobile Number -->
           <div>
-            <ion-text
-              color="danger"
-              *ngIf="
-                basiclast.get('emplnumber')?.touched &&
-                basiclast.get('emplnumber')?.invalid
-              "
-            >
-              <small *ngIf="basiclast.get('emplnumber')?.errors?.['required']"
-                >Feild is required</small
-              >
-            </ion-text>
+            <ion-label position="stacked">Registered Mobile Number</ion-label>
+            <ion-input
+              type="tel"
+              formControlName="emplnumber"
+              name="mobileNumber"
+              inputmode="numeric"
+              maxlength="10"
+              pattern="^[0-9]{10}$"
+              (ionInput)="validatePhoneNumber($event)"
+              readonly
+              placeholder="Enter 10-digit mobile number"
+            ></ion-input>
           </div>
-       
-        
+          <small style="color: green">--Candidates call in this number</small>
+          <ion-text
+            color="danger"
+            *ngIf="basiclast.get('emplnumber')?.touched && basiclast.get('emplnumber')?.invalid"
+          >
+            <small *ngIf="basiclast.get('emplnumber')?.errors?.['required']"
+              >Field is required</small
+            >
+          </ion-text>
+
+          <!-- Buttons -->
           <div class="btn">
             <ion-button
-              expand="block"
+              shape="round"
               class="submitbtn"
               (click)="submitForm()"
               [disabled]="basiclast.invalid"
-               *ngIf="isNewUser"
-              >Save & Continue</ion-button
+              *ngIf="isNewUser"
             >
-            <ion-button  expand="block" class="submitbtn"  (click)="onlyDashboard()"
-             *ngIf="!isNewUser">Back to Dashboard</ion-button>
-            <ion-button  expand="block" class="submitbtn"  (click)="onlyNavigation()"
-             *ngIf="!isNewUser" >
+              Save & Continue
+            </ion-button>
+            <ion-button
+              shape="round"
+              class="submitbtn"
+              (click)="onlyDashboard()"
+              *ngIf="!isNewUser"
+            >
+              Back To Dashboard
+            </ion-button>
+            <ion-button
+              shape="round"
+              class="submitbtn"
+              (click)="onlyNavigation()"
+              *ngIf="!isNewUser"
+            >
               Next
             </ion-button>
           </div>
