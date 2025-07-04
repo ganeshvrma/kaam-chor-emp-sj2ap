@@ -3,7 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { StatusBar,Style as StatusBarStyle } from '@capacitor/status-bar';
-import { IonicModule, NavController, Platform } from '@ionic/angular';
+import { AlertController, IonicModule, NavController, Platform } from '@ionic/angular';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 
 
@@ -21,8 +22,17 @@ export class OtpVerfPage implements OnInit {
   isLoading: boolean = false;
   isNewUser: boolean = false;
   // isNewUser: boolean | undefined;
+userType:string='';
+backButtonSub: Subscription | undefined;
+  isAlertPresented: boolean = false;
 
-  constructor(private navCtrl: NavController, private platform: Platform,private router: Router,private route: ActivatedRoute,private authService: AuthService) { }
+  // Define your route restrictions here
+  restrictedRoutes: string[] = [ '/otp-verf'];
+  confirmRoutes: string[] = ['/employer-plan', '/basic-details-page'];
+  constructor(private navCtrl: NavController,
+     private platform: Platform,private router: Router,private route: ActivatedRoute,private authService: AuthService,
+     
+    private alertCtrl: AlertController,) { }
 
   ngOnInit() {
     StatusBar.setBackgroundColor({ color: '#ffffff' }); // white
@@ -35,6 +45,7 @@ export class OtpVerfPage implements OnInit {
       this.isNewUser = navigation.extras.state['isNewUser'];
       this.username = navigation.extras.state['username'];
     }
+    this.handleBackButton();
   }
 
   submitOtp(){
@@ -53,13 +64,14 @@ export class OtpVerfPage implements OnInit {
       this.authService.verifyOtp(this.mobileNumber, this.otp).subscribe({
         next: (response) => {
           console.log('OTP verified successfully', response);
-          console.log("ddfd   :",response.data.message);
           this.isLoading = false;
 
           //set localstorage is loggedin 
           // Set localStorage indicator for login
-           console.log('userid',response.data.user_id);
+          console.log('userid',response.data.user_id);
+          this.userType=response.data.user_type;
           localStorage.setItem('isLoggedIn', 'true');
+          localStorage.setItem('type_Of_User',response.data.user_type);
           localStorage.setItem('userId', response.data.user_id.toString());
 
         //   this.formDataService.getFormData(this.userId).subscribe(data => {
@@ -71,16 +83,24 @@ export class OtpVerfPage implements OnInit {
             state: {
               verified: true,
             //  userId:userId
+            userType:this.userType
             }
           };
 
-          // this.router.navigate(['/home'], navigationExtras); // Adjust the route as needed
-          if(this.isNewUser){
+          
+          // if(this.isNewUser){
+          // localStorage.setItem('userId', response.data.user_id.toString());
+
+          //   this.router.navigate(['/basic-details-page'], navigationExtras);
+          // }else{
+          //   this.router.navigate(['/employer-plan'], navigationExtras);
+          // }
+          if(this.userType==="new"){
           localStorage.setItem('userId', response.data.user_id.toString());
 
             this.router.navigate(['/basic-details-page'], navigationExtras);
           }else{
-            this.router.navigate(['/login'], navigationExtras);
+            this.router.navigate(['/employer-plan'], navigationExtras);
           }
          
         },
@@ -99,13 +119,13 @@ export class OtpVerfPage implements OnInit {
   }
 
   goBack(){
-    this.navCtrl.back();
+    // this.navCtrl.back();
     //handle hardware back button navigation
-    this.platform.backButton.subscribeWithPriority(10, () => {
-      this.navCtrl.back();
-    });
+    // this.platform.backButton.subscribeWithPriority(10, () => {
+      this.router.navigate(['/otp-verf']);
+      // this.navCtrl.back();
+    // });
   }
-
 
   otpArray: string[] = ['', '', '', ''];
 // otp: string = '';
@@ -135,6 +155,56 @@ onKeyDown(event: KeyboardEvent, index: number) {
     this.otp = this.otpArray.join('');
   }
 }
+
+//handle hardware back button 
+ async handleBackButton() {
+    this.backButtonSub = this.platform.backButton.subscribeWithPriority(9999, async () => {
+      const currentUrl = this.router.url.split('?')[0];
+
+      // Block back navigation on restricted routes
+      if (this.restrictedRoutes.includes(currentUrl)) {
+        return;
+      }
+
+      // Show confirmation alert on specific routes
+      if (this.confirmRoutes.includes(currentUrl)) {
+        if (this.isAlertPresented) return;
+
+        this.isAlertPresented = true;
+        const alert = await this.alertCtrl.create({
+          header: 'Confirm',
+          message: 'Are you sure you want to go back to the homepage? Unsaved changes may be lost.',
+          buttons: [
+            {
+              text: 'Cancel',
+              role: 'cancel',
+              handler: () => {
+                this.isAlertPresented = false;
+              },
+            },
+            {
+              text: 'Confirm',
+              handler: () => {
+                this.isAlertPresented = false;
+                this.navCtrl.navigateRoot('/employer-plan');
+              },
+            },
+          ],
+        });
+
+        await alert.present();
+      } else {
+        // Allow normal back navigation
+        this.navCtrl.back();
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.backButtonSub) {
+      this.backButtonSub.unsubscribe();
+    }
+  }
 
 
 }
