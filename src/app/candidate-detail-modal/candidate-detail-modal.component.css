@@ -1,7 +1,8 @@
-.modalheader{
-     --background: #511168;
+.modalheader {
+  --background: #511168;
   color: white !important;
 }
+
 .language-entry {
   margin-bottom: 12px;
   border-bottom: 1px solid #e0e0e0;
@@ -22,7 +23,6 @@
 
 .skill {
   display: flex;
-//   flex-direction: row;
   align-items: center;
   font-size: 14px;
   color: #333;
@@ -41,29 +41,33 @@
   color: #555;
   margin-top: 2px;
 }
-ion-card{
-    border: 1px solid black;
-    // background-color: aqua;
+
+ion-card {
+  border: 1px solid black;
 }
-.wrapper{
-    display: flex;
-    justify-content: space-between;
-}
-.btn{
+
+.wrapper {
   display: flex;
   justify-content: space-between;
 }
-.submitbtn{
 
+.btn {
+  display: flex;
+  justify-content: space-between;
+}
+
+.submitbtn {
   --background: #511168;
   color: white !important;
-   border-radius: 5px;
+  border-radius: 5px;
 }
-.modalbtn{
-    display: flex;
-    justify-content: space-between;
+
+.modalbtn {
+  display: flex;
+  justify-content: space-between;
 }
-ion-card-header{
+
+ion-card-header {
   --background:grey;
   text-align: start;
-}
+}/*# sourceMappingURL=candidate-detail-modal.component.css.map */

@@ -1,28 +1,47 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar class="modalheader">
     <ion-title>Candidate Details</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="dismiss()">Close</ion-button>
+      <ion-button (click)="dismiss()"
+        ><ion-icon name="close-outline" size="large"></ion-icon
+      ></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
   <ng-container *ngIf="!loading && userData">
+    <div class="btn">
+      <ion-button (click)="viewpdf()" class="submitbtn"
+        >Download pdf</ion-button
+      >
+      <!-- <ion-button *ngIf="this.pdf"  (click)="viewpdf()"class="submitbtn" >View Downloaded pdf</ion-button> -->
+    </div>
     <ion-card>
       <ion-card-header>
         <ion-card-title>Basic Details</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        
-        <p><strong>Name:</strong> {{ userData.about_me.name }}</p>
-        <p><strong>Gender:</strong> {{ userData.about_me.gender }}</p>
-        <p><strong>Date of Birth:</strong> {{ userData.about_me.dob }}</p>
-        <!-- <p><strong>State:</strong> {{ userData.about_me.state }}</p> -->
-        <!-- <p><strong>Skills:</strong> {{ userData.skills }}</p> -->
-        <p><strong>Email:</strong> {{ userData.about_me.email }}</p>
-        <p><strong>Phone:</strong> {{ userData.about_me.mobile_number }}</p>
-        <!-- <ion-button expand="block" (click)="downloadPdf()">Download PDF</ion-button> -->
+        <p>
+          <ion-icon name="person-outline"></ion-icon><strong>Name:</strong>
+          {{ userData.about_me.name }}
+        </p>
+        <p>
+          <ion-icon name="male-female-outline"></ion-icon
+          ><strong>Gender:</strong> {{ userData.about_me.gender }}
+        </p>
+        <p>
+          <ion-icon name="calendar-number-outline"></ion-icon
+          ><strong>Date of Birth:</strong> {{ userData.about_me.dob }}
+        </p>
+        <p>
+          <ion-icon name="mail-outline"></ion-icon><strong>Email:</strong>
+          {{ userData.about_me.email }}
+        </p>
+        <p>
+          <ion-icon name="call-outline"></ion-icon><strong>Phone:</strong>
+          {{ userData.about_me.mobile_number }}
+        </p>
       </ion-card-content>
     </ion-card>
     <ion-card>
@@ -30,22 +49,27 @@
         <ion-card-title>Location</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-         <p><strong>State:</strong>{{userData.about_me.state}}</p>
-         <p><strong>City:</strong>{{userData.about_me.city}}</p>
+        <p>
+          <ion-icon name="location-outline"></ion-icon><strong>State:</strong
+          >{{ userData.about_me.state }}
+        </p>
+        <p>
+          <ion-icon name="pin-outline"></ion-icon><strong>City:</strong
+          >{{ userData.about_me.city }}
+        </p>
       </ion-card-content>
     </ion-card>
-
 
     <ion-card *ngFor="let edu of userData.education">
       <ion-card-header>
         <ion-card-title>Highest Qualification Details</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-         <p><strong>Degree:</strong>{{edu.qualification_name}}</p>
-         <p><strong>Institution: </strong>{{edu.university_name}}</p>
-         <p><strong>Course name:</strong>{{edu.Education_title_name}}</p>
-         <p><strong>Branch of Study:</strong>{{edu.branch_name}}</p>
-         <p><strong>Year of Completion:</strong>{{edu.passing_year}}</p>
+        <p><strong>Degree:</strong>{{ edu.qualification_name }}</p>
+        <p><strong>Institution: </strong>{{ edu.university_name }}</p>
+        <p><strong>Course name:</strong>{{ edu.Education_title_name }}</p>
+        <p><strong>Branch of Study:</strong>{{ edu.branch_name }}</p>
+        <p><strong>Year of Completion:</strong>{{ edu.passing_year }}</p>
       </ion-card-content>
     </ion-card>
 
@@ -54,44 +78,67 @@
         <ion-card-title>Experience Details</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-         <p><strong>Position: -</strong>{{exp.currentpast_job_title}}</p>
-         <p><strong>Company: -</strong>{{exp.industry_name}}</p>
-         <p><strong> Industry Type: -</strong>{{exp.industry_type}}</p>
-         <p><strong>Total Year of Experience: -</strong>{{exp.year_of_experience}}</p>
-         <p><strong>Monthly Salary: ₹-</strong>{{exp.monthly_salary}}</p>
+        <p><strong>Position: -</strong>{{ exp.currentpast_job_title }}</p>
+        <p><strong>Company: -</strong>{{ exp.industry_name }}</p>
+        <p><strong> Industry Type: -</strong>{{ exp.industry_type }}</p>
+        <p>
+          <strong>Total Year of Experience: -</strong
+          >{{ exp.year_of_experience }}
+        </p>
+        <p><strong>Monthly Salary: ₹-</strong>{{ exp.monthly_salary }}</p>
       </ion-card-content>
     </ion-card>
-    <ion-card>
+    <ion-card *ngFor="let skill of userData.skills">
       <ion-card-header>
         <ion-card-title>Skills</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-         <p><strong></strong></p>
-         
+        <p>
+          <strong>{{ skill.skill_names }}</strong>
+        </p>
       </ion-card-content>
     </ion-card>
-    <ion-card>
+    <ion-card *ngFor="let skill of userData.skills">
       <ion-card-header>
         <ion-card-title>Job Preferences</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-         <p><strong>Employment Type:</strong>{{userData.skills.employment_type}}</p>
-         <p><strong> Preferred Location:</strong></p>
-         
+        <p><strong>Employment Type:</strong>{{ skill.employment_type }}</p>
+        <p><strong> Preferred Location:</strong></p>
       </ion-card-content>
     </ion-card>
-    <ion-card>
+    <ion-card *ngIf="userData.languages && userData.languages.length">
       <ion-card-header>
         <ion-card-title>Languages Known</ion-card-title>
       </ion-card-header>
+
       <ion-card-content>
-         <p><strong></strong></p>
-         <p><strong></strong></p>
-         <p><strong></strong></p>
-         <p><strong></strong></p>
-         <p><strong></strong></p>
+        <div *ngFor="let lang of userData.languages" class="language-entry">
+          <div class="wrapper">
+            <p class="language-name">{{ lang.language_name }}</p>
+
+            <div class="skills">
+              <div class="skill" *ngIf="lang.rws.includes('Read')">
+                <span class="dot"></span> Read
+              </div>
+              <div class="skill" *ngIf="lang.rws.includes('Write')">
+                <span class="dot"></span> Write
+              </div>
+              <div class="skill" *ngIf="lang.rws.includes('Speak')">
+                <span class="dot"></span> Speak
+              </div>
+            </div>
+          </div>
+          <p class="proficiency">{{ lang.proficiency }}</p>
+        </div>
       </ion-card-content>
     </ion-card>
+    <div class="modalbtn">
+      <ion-button class="submitbtn" (click)="saveCandi()"
+        >Save Candidate</ion-button
+      >
+      <ion-button (click)="close()" class="submitbtn">Close</ion-button>
+    </div>
   </ng-container>
 
   <ion-spinner *ngIf="loading" class="ion-margin"></ion-spinner>
