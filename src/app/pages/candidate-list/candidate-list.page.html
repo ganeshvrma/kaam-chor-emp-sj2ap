@@ -1,3 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button menuId="main-menu"></ion-menu-button>
+    </ion-buttons>
+    <img
+      src="../../../assets/icons/kaam-chor-logo-removebg.png"
+      style="opacity: 0.7"
+      alt="logo"
+    />
+    <!-- <ion-title>Page Title</ion-title> -->
+  </ion-toolbar>
+</ion-header>
+
 <ion-content class="ion-padding">
   <ion-card>
     <ion-card-header>
@@ -13,13 +27,22 @@
               <ion-select formControlName="last_active" placeholder="Select">
                 <ion-select-option value="">Any</ion-select-option>
                 <ion-select-option value="today">Today</ion-select-option>
-                <ion-select-option value="this week">This Week</ion-select-option>
-                <ion-select-option value="this month">This Month</ion-select-option>
-                <ion-select-option value="last 3 months">Last 3 Months</ion-select-option>
-                <ion-select-option value="last 6 months">Last 6 Months</ion-select-option>
-                <ion-select-option value="this year">This Year</ion-select-option>
+                <ion-select-option value="this week"
+                  >This Week</ion-select-option
+                >
+                <ion-select-option value="this month"
+                  >This Month</ion-select-option
+                >
+                <ion-select-option value="last 3 months"
+                  >Last 3 Months</ion-select-option
+                >
+                <ion-select-option value="last 6 months"
+                  >Last 6 Months</ion-select-option
+                >
+                <ion-select-option value="this year"
+                  >This Year</ion-select-option
+                >
               </ion-select>
-
             </ion-col>
 
             <!-- <ion-col size="6">
@@ -36,36 +59,63 @@
               <ion-select formControlName="experience_min" placeholder="Select">
                 <ion-select-option value="">Any</ion-select-option>
                 <ion-select-option value="0">Fresher</ion-select-option>
-                <ion-select-option *ngFor="let year of experienceYears" [value]="year">
-                  {{ year === 1 ? '1 Year' : (year === 30 ? '30+ Years' : year + ' Years') }}
+                <ion-select-option
+                  *ngFor="let year of experienceYears"
+                  [value]="year"
+                >
+                  {{ year === 1 ? '1 Year' : (year === 30 ? '30+ Years' : year +
+                  ' Years') }}
                 </ion-select-option>
               </ion-select>
             </ion-col>
 
-
             <ion-col size="6">
               <ion-label>State</ion-label>
-              <ion-select formControlName="state" placeholder="Select" (ionChange)="onStateChange($event)"
-                *ngIf="states.length">
-                <ion-select-option *ngFor="let state of states" [value]="state.id">{{ state.name }}</ion-select-option>
+              <ion-select
+                formControlName="state"
+                placeholder="Select"
+                (ionChange)="onStateChange($event)"
+                *ngIf="states.length"
+              >
+                <ion-select-option
+                  *ngFor="let state of states"
+                  [value]="state.id"
+                  >{{ state.name }}</ion-select-option
+                >
               </ion-select>
               <ion-text *ngIf="!states.length">Loading states...</ion-text>
             </ion-col>
 
             <ion-col size="6">
               <ion-label>City</ion-label>
-              <ion-select formControlName="city_id" placeholder="Select" *ngIf="cities?.length">
-                <ion-select-option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</ion-select-option>
+              <ion-select
+                formControlName="city_id"
+                placeholder="Select"
+                *ngIf="cities?.length"
+              >
+                <ion-select-option *ngFor="let city of cities" [value]="city.id"
+                  >{{ city.name }}</ion-select-option
+                >
               </ion-select>
               <ion-text *ngIf="!cities.length">Select a state first</ion-text>
             </ion-col>
 
             <ion-col size="6">
               <ion-label>Qualification</ion-label>
-              <ion-select formControlName="qualification_id" placeholder="Select" *ngIf="qualifications?.length">
-                <ion-select-option *ngFor="let q of qualifications" [value]="q.id">{{ q.value }}</ion-select-option>
+              <ion-select
+                formControlName="qualification_id"
+                placeholder="Select"
+                *ngIf="qualifications?.length"
+              >
+                <ion-select-option
+                  *ngFor="let q of qualifications"
+                  [value]="q.id"
+                  >{{ q.value }}</ion-select-option
+                >
               </ion-select>
-              <ion-text *ngIf="!qualifications.length">Loading qualifications...</ion-text>
+              <ion-text *ngIf="!qualifications.length"
+                >Loading qualifications...</ion-text
+              >
             </ion-col>
 
             <ion-col size="6">
@@ -76,27 +126,44 @@
               <ion-text *ngIf="!languages.length">Loading languages...</ion-text> -->
 
               <ion-label>English Proficiency</ion-label>
-              <ion-select formControlName="english_proficiency" interface="popover" placeholder="Select proficiency">
-                <ion-select-option *ngFor="let option of englishProficiencyOptions" [value]="option.value">
+              <ion-select
+                formControlName="english_proficiency"
+                interface="popover"
+                placeholder="Select proficiency"
+              >
+                <ion-select-option
+                  *ngFor="let option of englishProficiencyOptions"
+                  [value]="option.value"
+                >
                   {{ option.label }}
                 </ion-select-option>
               </ion-select>
-
-
             </ion-col>
 
             <ion-col size="12">
               <ion-label>Skills</ion-label>
-              <ion-select formControlName="skills" multiple="true" placeholder="Select Skills"
-                *ngIf="skillsList?.length">
-                <ion-select-option *ngFor="let skill of skillsList" [value]="skill?.id">{{ skill.value
-                  }}</ion-select-option>
+              <ion-select
+                formControlName="skills"
+                multiple="true"
+                placeholder="Select Skills"
+                *ngIf="skillsList?.length"
+              >
+                <ion-select-option
+                  *ngFor="let skill of skillsList"
+                  [value]="skill?.id"
+                  >{{ skill.value }}</ion-select-option
+                >
               </ion-select>
               <ion-text *ngIf="!skillsList.length">Loading skills...</ion-text>
             </ion-col>
 
             <ion-col size="12">
-              <ion-button expand="block" color="medium" (click)="resetFilters()">Reset Filters</ion-button>
+              <ion-button
+                expand="block"
+                (click)="resetFilters()"
+                class="submitbtn"
+                >Reset Filters</ion-button
+              >
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -111,29 +178,44 @@
       </ion-card-header>
       <ion-card-content>
         <p><strong>Gender:</strong> {{ candidate.gender || 'N/A' }}</p>
-        <p><strong>DOB:</strong> {{ candidate.dob ? (candidate.dob | date:'mediumDate') : 'N/A' }}</p>
+        <p>
+          <strong>DOB:</strong> {{ candidate.dob ? (candidate.dob |
+          date:'mediumDate') : 'N/A' }}
+        </p>
         <p><strong>State:</strong> {{ candidate.state_name || 'N/A' }}</p>
         <p><strong>City:</strong> {{ candidate.city_name || 'N/A' }}</p>
-        <p><strong>Qualification:</strong> {{ candidate.title_of_education || candidate.highest_qualification || 'N/A'
-          }}</p>
-        <p><strong>Experience:</strong>
-          {{ candidate.have_experience === 'Yes' ? (candidate.year_of_experience + ' years') : 'Fresher' }}
+        <p>
+          <strong>Qualification:</strong> {{ candidate.title_of_education ||
+          candidate.highest_qualification || 'N/A' }}
+        </p>
+        <p>
+          <strong>Experience:</strong>
+          {{ candidate.have_experience === 'Yes' ? (candidate.year_of_experience
+          + ' years') : 'Fresher' }}
         </p>
         <!-- <p *ngIf="isArray(candidate.skills) && candidate.skills?.length">
           <strong>Skills:</strong> {{ candidate.skills?.join(', ') }}
         </p> -->
         <p>
           <!-- <strong>Skills:</strong> {{ candidate.skills?.length ? candidate.skills.join(', ') : 'N/A' }} -->
-          <strong>Skills:</strong> {{ candidate.skills.length ? candidate.skills.join(', ') : 'N/A' }}
-
+          <strong>Skills:</strong> {{ candidate.skills.length ?
+          candidate.skills.join(', ') : 'N/A' }}
         </p>
 
         <p *ngIf="!isArray(candidate.skills) || !candidate.skills?.length">
           <strong>Skills:</strong> N/A
         </p>
-        <p><strong>Last Active:</strong> {{ candidate.last_active ? (candidate.last_active | date:'medium') : 'N/A' }}
+        <p>
+          <strong>Last Active:</strong> {{ candidate.last_active ?
+          (candidate.last_active | date:'medium') : 'N/A' }}
         </p>
-        <p><strong>Joined On:</strong> {{ candidate.joined ? (candidate.joined | date:'medium') : 'N/A' }}</p>
+        <p>
+          <strong>Joined On:</strong> {{ candidate.joined ? (candidate.joined |
+          date:'medium') : 'N/A' }}
+        </p>
+        <ion-button (click)="viewOpen(candidate)" class="submitbtn"
+          >View</ion-button
+        >
       </ion-card-content>
     </ion-card>
   </ng-container>
@@ -145,8 +227,20 @@
   </ng-template>
 
   <div class="pagination-buttons ion-text-center" *ngIf="totalPages > 1">
-    <ion-button size="small" (click)="prevPage()" [disabled]="currentPage === 1">Previous</ion-button>
+    <ion-button
+      size="small"
+      (click)="prevPage()"
+      [disabled]="currentPage === 1"
+      class="submitbtn"
+      >Previous</ion-button
+    >
     <span>Page {{ currentPage }} of {{ totalPages }}</span>
-    <ion-button size="small" (click)="nextPage()" [disabled]="currentPage === totalPages">Next</ion-button>
+    <ion-button
+      size="small"
+      (click)="nextPage()"
+      [disabled]="currentPage === totalPages"
+      class="submitbtn"
+      >Next</ion-button
+    >
   </div>
 </ion-content>
