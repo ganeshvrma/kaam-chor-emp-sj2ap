@@ -18,4 +18,16 @@ ion-card-content p {
 select, input {
   width: 100%;
   height: 40px;
+}
+
+ion-card {
+  margin-bottom: 20px;
+  border: 1px solid wheat;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.submitbtn {
+  --background: #511168;
+  color: white !important;
+  border-radius: 5px;
 }/*# sourceMappingURL=candidate-list.page.css.map */

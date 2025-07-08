@@ -3,6 +3,10 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
+
+import { ModalController } from '@ionic/angular';
+import { CandidateDetailModalComponent } from 'src/app/candidate-detail-modal/candidate-detail-modal.component';
+
 interface State {
   id: number | string;
   name: string;
@@ -75,7 +79,7 @@ export class CandidateListPage implements OnInit, OnDestroy {
   currentPage = 1;
   pageSize = 5;
   totalPages = 1;
-
+user_id!:number;
   states: State[] = [];
   cities: City[] = [];
   qualifications: Qualification[] = [];
@@ -94,7 +98,7 @@ export class CandidateListPage implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
-  constructor(private fb: FormBuilder, private api: ApiService) {
+  constructor(private fb: FormBuilder, private api: ApiService,private modalCtrl:ModalController) {
     this.filterForm = this.fb.group({
       state: [''],
       city_id: [''],
@@ -124,7 +128,17 @@ export class CandidateListPage implements OnInit, OnDestroy {
 
     this.fetchCandidates();
   }
-
+ 
+  async viewOpen(candidate:any){
+    
+   const modal = await this.modalCtrl.create({
+       component: CandidateDetailModalComponent,
+       componentProps: { userId:candidate.user_id },
+      //  componentProps: { userId:151 },
+   
+     });
+     await modal.present(); 
+   }
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
