@@ -1,13 +1,103 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>inactive_jobs</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button menuId="main-menu"></ion-menu-button>
+    </ion-buttons>
+    <img
+      src="../../../assets/icons/kaam-chor-logo-removebg.png"
+      style="opacity: 0.7"
+      alt="logo"
+    />
+    <!-- <ion-title>Page Title</ion-title> -->
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">inactive_jobs</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <ion-title class="ion-text-center" style="padding-top: 20px"
+    >Inacive Jobs</ion-title
+  >
+  <ion-card>
+    <ion-card-content class="cardBody">
+      <!-- Top Controls -->
+      <ion-row
+        class="ion-align-items-center ion-justify-content-between table-controls"
+      >
+        <ion-col size="6" class="ion-text-left">
+          Show
+          <select placeholder="Entries per page" [(ngModel)]="entriesPerPage">
+            <option value="10">10</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+          </select>
+          entries
+        </ion-col>
+        <ion-col size="6" class="ion-text-center">
+          <!-- <ion-input placeholder="Search..." [(ngModel)]="searchQuery" debounce="300" ></ion-input> -->
+
+          <ion-searchbar
+            placeholder="Search..."
+            [(ngModel)]="searchQuery"
+            debounce="300"
+          ></ion-searchbar>
+        </ion-col>
+      </ion-row>
+      <!-- Mobile-First Card View -->
+      <ion-list>
+        <ion-item
+          *ngFor="let job of filteredJobs(); let i = index"
+          lines="full"
+        >
+          <ion-grid>
+            <ion-row class="ion-align-items-center">
+              <ion-col size="12" class="ion-text-left">
+                <strong>{{ i + 1 }}</strong>
+              </ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col size="12" class="ion-text-center">
+                <img [src]="job.company_logo" alt="Logo" class="logo-img" />
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="info-row">
+              <ion-col size="12">
+                <strong>Job Title:</strong> {{ job.job_title }} <br />
+                <span class="job-type">{{ job.job_type }}</span>
+              </ion-col>
+
+              <ion-col size="12">
+                <strong>Company:</strong> {{ job.company_name }} <br />
+                <strong>Location:</strong> {{ job.company_city_name
+                }},{{job.company_state_name}}
+              </ion-col>
+
+              <ion-col size="12">
+                <strong>Applicants:</strong> {{ job.applicants }}
+              </ion-col>
+
+              <ion-col size="12">
+                <strong>Posted On:</strong> {{ job.created_on }}
+              </ion-col>
+            </ion-row>
+
+            <ion-row class="ion-justify-content-end">
+              <ion-button
+                fill="clear"
+                size="small"
+                (click)="presentActionSheet(job)"
+              >
+                <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+              </ion-button>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+      </ion-list>
+
+      <!-- Pagination Info -->
+      <ion-text class="entry-info ion-text-center">
+        Showing {{ startEntry }} to {{ endEntry }} of {{ totalEntries }} entries
+      </ion-text>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

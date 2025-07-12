@@ -1,9 +1,8 @@
-
-
 .logo-img {
   width: 60px;
   height: 60px;
-  object-fit: contain;
+  -o-object-fit: contain;
+     object-fit: contain;
   margin: 10px auto;
 }
 
@@ -20,6 +19,7 @@
   margin-top: 15px;
   font-size: 14px;
 }
+
 ion-item {
   --padding-start: 0;
   --inner-padding-end: 0;
@@ -27,6 +27,7 @@ ion-item {
   border: 1px solid #e0e0e0;
   border-radius: 5px;
 }
-.cardBody{
+
+.cardBody {
   background-color: #f8f9fa;
-}
+}/*# sourceMappingURL=inactive-jobs.page.css.map */
