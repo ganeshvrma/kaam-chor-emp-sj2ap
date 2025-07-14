@@ -1,24 +1,22 @@
+@charset "UTF-8";
 ::ng-deep ion-segment-button.segment-button-checked {
   background-color: #833aa6 !important;
   color: white !important;
-  // font-weight: 600;
 }
 
 ::ng-deep ion-segment-button {
   --indicator-color: #833aa6;
-  // font-weight: 600;
   height: 44px;
 }
+
 ion-segment-button.segment-button-checked {
   background-color: #833aa6 !important;
   color: white !important;
-  // font-weight: 600;
-
 }
 
-.label{
+.label {
   margin: 0px;
-  padding:19px 10px 12px 0px;
+  padding: 19px 10px 12px 0px;
   background-color: #e2e1e2;
   border-color: #f8f3f8;
 }
@@ -28,9 +26,11 @@ ion-segment-button.segment-button-checked {
   max-height: 100%;
   overflow-y: auto;
 }
+
 form {
   margin-bottom: 170px;
 }
+
 .box {
   padding: 15px;
   background-color: #e2e1e2;
@@ -39,31 +39,29 @@ form {
   margin-top: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
-ion-checkbox{
+
+ion-checkbox {
   padding-left: 8px;
 }
 
-ion-label[position="stacked"] {
+ion-label[position=stacked] {
   font-size: 0.9rem;
   font-weight: 600;
-  // margin-bottom: 4px;
   color: #222;
   margin: 0;
   padding-top: 10px;
-  // padding-bottom:10px;
   padding-left: 2px;
-   background-color: #e2e1e2;
+  background-color: #e2e1e2;
   min-height: 0px;
 }
+
 ion-item {
   --inner-padding-end: 0px;
   --padding-start: 0px;
   --highlight-height: 0;
   border: none;
- background-color: #e2e1e2;
-  // margin-bottom: 10px;
-   margin: 0;
-   
+  background-color: #e2e1e2;
+  margin: 0;
 }
 
 .language-btn {
@@ -87,14 +85,12 @@ ion-item {
   height: 15px;
   border-radius: 50%;
   border: 1px solid purple;
-  
 }
 
 /* When checkbox is checked — purple background */
 .lang-checkbox[checked]::part(container) {
   background: purple;
   border: 1px solid purple;
-  // padding-left: 20px;
 }
 
 /* Label beside checkbox */
@@ -102,7 +98,6 @@ ion-item {
   font-size: 14px;
   font-weight: 500;
   color: black;
-  // padding-left: 3px;
   padding-right: 10px;
 }
 
@@ -110,18 +105,15 @@ ion-item {
   color: white;
 }
 
-
-
 ion-input,
 ion-textarea,
 ion-select {
-   --padding-start: 10px;
+  --padding-start: 10px;
   border: 1px solid #ccc;
   border-radius: 8px;
   background: #fff;
   color: #000;
   font-size: 14px;
-  // height: 44px;
   width: 100%;
   min-height: 30px;
 }
@@ -131,7 +123,6 @@ ion-textarea {
   padding-top: 10px;
 }
 
-
 /* Placeholder styling */
 input::placeholder,
 ion-input::part(native)::-webkit-input-placeholder {
@@ -140,18 +131,19 @@ ion-input::part(native)::-webkit-input-placeholder {
 }
 
 ion-button {
-    --border-radius: 8px;
-    --border-color: purple;
-    height: 20px;
-    font-size: 12px;
-    text-transform: none;
-    font-weight: 500;
+  --border-radius: 8px;
+  --border-color: purple;
+  height: 20px;
+  font-size: 12px;
+  text-transform: none;
+  font-weight: 500;
 }
 
 ion-button.purple-button {
   --background: #6a1b9a;
   color: white;
 }
+
 ion-button.medium {
   --background: #f1f1f1;
   color: #000;
@@ -180,6 +172,7 @@ ion-button.medium {
   margin-bottom: 5px;
   font-size: 13px;
 }
+
 .selected-skill-chip .remove-chip {
   margin-left: 6px;
   cursor: pointer;
@@ -196,143 +189,115 @@ ion-button.medium {
 }
 
 ion-button.submitbtn {
-  // flex: 1;
   --background: #511168;
   color: white;
- 
-  // font-size: 15px;
-  // font-weight: 500;
-  // height: 44px;
 }
 
 /*====================== DARK MODE ======================*/
 @media (prefers-color-scheme: dark) {
-  
-   .language-btn{
-  background-color: #949292;
-  color: white;
-  border: 1px solid purple;
-}
-.lang-checkbox::part(container) {
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  border: 1px solid purple;
-  background-color: white;
-  
-}
-.lang-label {
-  font-size: 14px;
-  font-weight: 500;
-  color: black;
-  // padding-left: 3px;
-  padding-right: 10px;
-}
-
-  .label{
-  margin: 0px;
-  padding:19px 10px 12px 0px;
-  background-color: #2b2a2b;
-  border-color: #c0bac0;
-}
-
-      ion-item {
-  --inner-padding-end: 0px;
-  --padding-start: 0px;
-  --highlight-height: 0;
-  border: none;
-  background: transparent;
-  // margin-bottom: 10px;
-   margin: 0;
-   
-}
-
-   ion-label[position="stacked"] {
-  font-size: 0.9rem;
-  font-weight: 600;
-  // margin-bottom: 4px;
-   color: #dad7d7;
-  margin: 0;
-  padding-top: 10px;
-  // padding-bottom:10px;
-  padding-left: 2px;
-   background-color: #111111;
-}
-
+  .language-btn {
+    background-color: #949292;
+    color: white;
+    border: 1px solid purple;
+  }
+  .lang-checkbox::part(container) {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 1px solid purple;
+    background-color: white;
+  }
+  .lang-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: black;
+    padding-right: 10px;
+  }
+  .label {
+    margin: 0px;
+    padding: 19px 10px 12px 0px;
+    background-color: #2b2a2b;
+    border-color: #c0bac0;
+  }
+  ion-item {
+    --inner-padding-end: 0px;
+    --padding-start: 0px;
+    --highlight-height: 0;
+    border: none;
+    background: transparent;
+    margin: 0;
+  }
+  ion-label[position=stacked] {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #dad7d7;
+    margin: 0;
+    padding-top: 10px;
+    padding-left: 2px;
+    background-color: #111111;
+  }
   ion-input,
-  ion-select{
+  ion-select {
     --padding-start: 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background: #2b2b2b;
-    color: #fff;
-  font-size: 14px;
-  // height: 44px;
-  width: 100%;
-  min-height: 30px;
-  }
-  ion-textarea{
     border: 1px solid #ccc;
-  border-radius: 8px;
-  background: #2b2b2b;
-  color: white;
+    border-radius: 8px;
+    background: #2b2b2b;
+    color: #fff;
+    font-size: 14px;
+    width: 100%;
+    min-height: 30px;
   }
-  
-
+  ion-textarea {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #2b2b2b;
+    color: white;
+  }
   .box {
-   padding: 15px;
-   background-color: #2a2a2a;
+    padding: 15px;
+    background-color: #2a2a2a;
     border-color: #444;
-  border: 1px solid ;
-  border-radius: 10px;
-  margin-top: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid;
+    border-radius: 10px;
+    margin-top: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
-
   ion-button {
-  --border-radius: 6px;
-  height: 15px;         
-  font-size: 12px;          
-  text-transform: none;
-  font-weight: 500;
-}
-
-
-ion-button.purple-button {
-  --background: #6a1b9a;
-  color: rgb(238, 232, 232);
-}
-
-ion-button.medium {
-  --background: #797373;
-  color: #eeeaea;
-}
-
-
+    --border-radius: 6px;
+    height: 15px;
+    font-size: 12px;
+    text-transform: none;
+    font-weight: 500;
+  }
+  ion-button.purple-button {
+    --background: #6a1b9a;
+    color: rgb(238, 232, 232);
+  }
+  ion-button.medium {
+    --background: #797373;
+    color: #eeeaea;
+  }
   .selected-skill-chip {
     background-color: #4b2b64;
     color: white;
   }
-
   .selected-skill-chip .remove-chip {
     color: #ff7b7b;
   }
-  
-  ng-select{
+  ng-select {
     border: 1px solid #ccc;
-  border-radius:8px;
+    border-radius: 8px;
   }
   .submitbtn {
     --background: #833aa6;
   }
 }
-
 /*====================== NG-SELECT ======================*/
-
 ng-select {
   display: block;
   margin-bottom: 10px;
 }
+
 ng-select ::ng-deep .ng-select-container {
   background: #fff;
   border: 1px solid #ccc;
@@ -368,104 +333,89 @@ ng-select ::ng-deep .ng-option:hover {
   background: #f1f1f1;
 }
 
-
 /*====================== DARK MODE NG-SELECT ======================*/
 @media (prefers-color-scheme: dark) {
- ng-select ::ng-deep .ng-select-container {
+  ng-select ::ng-deep .ng-select-container {
     background-color: #2b2b2b;
     border-color: #444;
     color: #fff;
   }
-
   ng-select ::ng-deep .ng-value {
     background-color: #4b2b64;
     color: white;
   }
-
   ng-select ::ng-deep .ng-dropdown-panel {
     background: #2b2b2b;
     border: 1px solid #444;
   }
-
   ng-select ::ng-deep .ng-option {
     background: #2b2b2b;
     color: #fff;
   }
-
   ng-select ::ng-deep .ng-option:hover {
     background: #3c3c3c;
   }
-
 }
-
-
 /*====================== LANGUAGE ADD REMOVE BUTTONS ======================*/
 .languageAddRem {
   margin-top: 10px;
   display: flex;
   gap: 10px;
 }
+
 .rws ion-label {
   font-size: 13px;
 }
 
-
 /*****header */
-//header
 .toolbar {
-      background-color: #e2e1e2;
-      padding: 10px;
-      min-height: 80px;
-      border-bottom: 1px solid #e2e1e2;
-      // position: relative;
-    }
+  background-color: #e2e1e2;
+  padding: 10px;
+  min-height: 80px;
+  border-bottom: 1px solid #e2e1e2;
+}
 
-    .toolbar .title-main {
-      font-size: 15px;
-      font-weight:lighter;
-      margin: 0;
-    }
+.toolbar .title-main {
+  font-size: 15px;
+  font-weight: lighter;
+  margin: 0;
+}
 
-    .toolbar .title-sub {
-      // position: absolute;
-      bottom: 10px;
-      right: 16px;
-      font-size: 12px;
-      // color: #666;
-    }
+.toolbar .title-sub {
+  bottom: 10px;
+  right: 16px;
+  font-size: 12px;
+}
 
-    .segment-toolbar {
-      background-color: #e2e1e2;
-      padding: 10px 10px;
-     
-       border-bottom: 1px solid #ccc;
-      // border-bottom-left-radius:20px ;
-      // border-bottom-right-radius:  20px;
-    }
+.segment-toolbar {
+  background-color: #e2e1e2;
+  padding: 10px 10px;
+  border-bottom: 1px solid #ccc;
+}
 
-    .segments {
-      display: flex;
-      justify-content: space-between;
-      gap: 5px;
-    }
+.segments {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+}
 
-    .segment-button {
-      padding: 10px 16px;
-      border: 1px solid #000;
-      background-color: #fff;
-      color: #000;
-      cursor: pointer;
-      border-radius: 4px;
-      font-weight: 500;
-    }
+.segment-button {
+  padding: 10px 16px;
+  border: 1px solid #000;
+  background-color: #fff;
+  color: #000;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: 500;
+}
 
-    .segment-button.disabled {
-      opacity: 0.5;
-      pointer-events: none;
-      cursor: not-allowed;
-    }
+.segment-button.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
+}
 
-    .segment-button.active {
-      background-color: #511168;
-      color: #fff;
-    }
+.segment-button.active {
+  background-color: #511168;
+  color: #fff;
+}/*# sourceMappingURL=job-detail-page.page.css.map */
