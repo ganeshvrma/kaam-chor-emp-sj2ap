@@ -1,9 +1,16 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators,FormControl  } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormArray,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 import { NavController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
 import { LocalStorageUtil } from 'src/app/shared/utils/localStorageUtil';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-job-detail-page',
@@ -19,58 +26,46 @@ export class JobDetailPage implements OnInit {
   @Input() formData: any;
   @Output() submit = new EventEmitter<void>();
 
-  segmentValue: string = 'step1';  // <-- Added this for ion-segment binding
-
   form = {
-    description: ''
+    description: '',
   };
-
+  city: string | undefined;
+  company_id: string | undefined;
+  state: string | undefined;
   dropdownOptions: any[] = [];
- 
   languageOptions: any[] = [];
   selectedSkills: any[] = [];
-  languageOptions2: any[] = [];
-  qualification:any[]=[];
-  jobForm: FormGroup;
-//   languageOptions = [];
-
-//  languageFilter = '';
-//   filteredLanguages = [];
-  // Qualification options
-  // qualification: string[] = [
-  //   '<10th pass',
-  //   '10th pass',
-  //   'Diploma',
-  //   '12th pass',
-  //   'Graduate',
-  //   'Post Graduate'
-  // ];
   
+  qualification: any[] = [];
+  jobForm: FormGroup;
+  isRecreate: boolean = false;
+  years: number[] = [];
   selectedQualifications: string = '';
+ selectedSegment: string = 'job';
 
   // Radio/select controls holders
   WorkFromHome: string = '';
   isgender: string = '';
-  jobtype: string = '';
-  selectedLocation: string = '';
+  jobType: string = '';
+
   issecuritygiven: string = '';
   candidatetype: string = '';
+  selectedLocation: string = '';
 
   locations: string[] = [
-    "Within 10 KM of my city",
+    'Within 10 KM of my city',
     'Within my city',
-    'Anywhere in India'
+    'Anywhere in India',
   ];
-
-
-
 
   constructor(
     private fb: FormBuilder,
     private apiService: ApiService,
     private navCtrl: NavController,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
+    this.years = Array.from({ length: 29 }, (_, i) => i + 1);
     this.jobForm = this.fb.group({
       jobTitle: ['', [Validators.required, Validators.minLength(3)]],
       jobCategory: ['', Validators.required],
@@ -86,27 +81,83 @@ export class JobDetailPage implements OnInit {
       qualification: [[], Validators.required],
       salary: ['', Validators.required],
       skills: ['', Validators.required],
+      company_id: [''],
+      state: [''],
+      city: [''],
       issecuritygiven: ['', Validators.required],
-      language1: ['', Validators.required],
-      language2: ['', Validators.required],
+      languages: this.fb.array([this.createLanguageGroup()]),
       jobStartTime: ['', Validators.required],
       jobEndTime: ['', Validators.required],
       interviewTime: ['', Validators.required],
       interviewDay: ['', Validators.required],
-         TermsAndconditions: [false, Validators.requiredTrue],
-
+      acceptTerms: [false, Validators.requiredTrue],
     });
   }
 
+  get languages(): FormArray {
+    return this.jobForm.get('languages') as FormArray;
+  }
+
+  createLanguageGroup(): FormGroup {
+    return this.fb.group({
+      language: [null, Validators.required],
+      rws: this.fb.group({
+        read: [false],
+        write: [false],
+        speak: [false],
+      }),
+    });
+  }
+  private transformLanguagesData(languages: any[]): any[] {
+    return languages.map((lang, index) => {
+      const rwsArray = [];
+      if (lang.rws.read) rwsArray.push('Read');
+      if (lang.rws.write) rwsArray.push('Write');
+      if (lang.rws.speak) rwsArray.push('Speak');
+
+      return {
+        // language_id: lang.language_id,
+        language_id: index + 1,
+        language: lang.language,
+        rws: rwsArray.join(', '),
+      };
+    });
+  }
   ngOnInit() {
     this.apiService.getJobCategory().subscribe((res: any) => {
       if (res.status === 'success') {
         this.dropdownOptions = res.data;
       }
     });
+    const user_id = LocalStorageUtil.getItem('userId');
+
+    const data = {
+      user_id: user_id,
+    };
+    this.apiService.get_user_compID(data).subscribe(
+      (response: any) => {
+        this.jobForm.patchValue({
+          company_id: response.company_id,
+          state: response.state,
+          city: response.city,
+        });
+        console.log('response:', response);
+        this.company_id = response.company_id;
+        this.state = response.state;
+        this.city = response.city;
+      },
+      (error) => {
+        console.error('Error fetching data:', error);
+      }
+    );
+
     this.apiService.getLanguages().subscribe((res: any) => {
       if (res.status === 'success') {
         this.languageOptions = res.data;
+        // console.log(this.languageOptions);
+      }
+      if (res) {
+        const skills = this.jobForm.get('rws')?.value;
       }
     });
     this.apiService.getEduQual().subscribe((res: any) => {
@@ -114,104 +165,186 @@ export class JobDetailPage implements OnInit {
         this.qualification = res.data;
       }
     });
-     this.apiService.getLanguages().subscribe((res: any) => {
-      if (res.status === 'success') {
-        this.languageOptions2 = res.data;
-      }
-    });
+
     this.apiService.getSkills().subscribe((res: any) => {
       if (res.status === 'success') {
         this.selectedSkills = res.data;
       }
     });
-    //  this.filteredLanguages = this.languageOptions.slice();
+    const jobId = this.route.snapshot.queryParams['jobId'];
+
+    this.route.queryParams.subscribe((params) => {
+      const jobId = params['jobId'];
+      // fetch data using jobId
+      console.log('job id', jobId);
+    });
+    console.log('jobdg id', jobId);
+
+    if (jobId) {
+      this.apiService.employer_inactive_job_detail(jobId).subscribe({
+        next: (res) => {
+          console.log(res.data);
+          const data = res.data;
+          this.jobType = data.job_type;
+          this.candidatetype = data.exp_checkbox;
+          this.isgender = data.gender_req;
+          this.selectedLocation = data.cand_loc_req;
+          this.WorkFromHome = data.is_wfh;
+          this.issecuritygiven = data.security_amount === 1 ? 'yes' : 'no';
+          const selectedSkill = data.skills_required.map(
+            (skill: { value: string }) => skill.value
+          );
+          const lang = data.job_languages.map(
+            (lg: { language: string }) => lg.language
+          );
+          console.log(lang);
+          this.jobForm.patchValue({
+            jobTitle: data.job_title,
+            jobCategory: data.job_category_id,
+            jobType: data.job_type,
+            positionsOpen: data.no_of_positions,
+            jobDescription: data.job_description,
+            candidatetype: data.exp_checkbox,
+            minexp: data.min_exp,
+            maxexp: data.max_exp,
+            isgender: data.gender_req,
+            locations: data.cand_loc_req,
+            WorkFromHome: data.is_wfh,
+            qualification: data.min_qual_id,
+            salary: data.salary_per_annum,
+            skills: selectedSkill,
+            issecuritygiven: data.security_amount,
+            jobStartTime: data.job_start_time,
+            jobEndTime: data.job_end_time,
+            interviewTime: data.interview_timmings,
+            interviewDay: data.interview_days,
+            languages: lang,
+            //acceptTerms: !!data["Terms&conditions"], // convert to boolean
+          });
+          this.isRecreate=true;
+        },
+        error: () => {
+          alert('Failed to load data');
+        },
+      });
+    }
+    else{
+      this.isRecreate=false;
+    }
   }
-// filterLanguages() {
-//     const search = this.languageFilter.toLowerCase();
-//     this.filteredLanguages = this.languageOptions.filter((lang:any) =>
-//       lang.value.toLowerCase().includes(search)
-//     );
-//   }
+  
   markFormTouched(formGroup: FormGroup) {
-    Object.values(formGroup.controls).forEach(control => {
+    Object.values(formGroup.controls).forEach((control) => {
       control.markAsTouched();
     });
   }
-removeSkill(skill: any) {
-  const currentSkills = this.jobForm.get('skills')?.value || [];
-  this.jobForm.get('skills')?.setValue(currentSkills.filter((id: number) => id !== skill.id));
-}
-
-  nextStep() {
-    this.markFormTouched(this.jobForm);
-    if (this.jobForm.valid) {
-      console.log('Form data:', this.jobForm.value);
-      // Navigate to next step/page here, adjust route accordingly
-      this.navCtrl.navigateForward('');
-      const accepted = this.jobForm.value.TermsAndconditions ? 1 : 0;
-    //   console.log('Accepted value:', accepted);
-    } else {
-      console.log('Form is invalid');
+  basicpg() {
+    this.router.navigate(['/basic-details-page']);
+  }
+  companypg() {
+    this.router.navigate(['/company-details-page']);
+  }
+  removeSkill(skill: any) {
+    const currentSkills = this.jobForm.get('skills')?.value || [];
+    this.jobForm
+      .get('skills')
+      ?.setValue(currentSkills.filter((id: number) => id !== skill.id));
+  }
+  addLanguage() {
+    this.languages.push(this.createLanguageGroup());
+  }
+  removeLanguage(index: number) {
+    if (this.languages.length > 1) {
+      this.languages.removeAt(index);
     }
   }
+  // nextStep() {
+  //   this.markFormTouched(this.jobForm);
+  //   if (this.jobForm.valid) {
+  //     console.log('Form data:', this.jobForm.value);
+  //     this.navCtrl.navigateForward('');
+  //     const accepted = this.jobForm.value.acceptTerms ? true : false;
+  //     console.log('Accepted value:', accepted);
+  //     console.log(this.company_id);
+  //   } else {
+  //     console.log('Form is invalid');
+  //   }
+  // }
 
   previousPage() {
-    // Logic to go to previous step/page
     console.log('Previous step clicked');
-    // For example, you might navigate backward or update UI accordingly
     this.router.navigate(['/company-details-page']);
-   
   }
- 
+
   submitForm() {
     if (this.jobForm.invalid) {
       this.jobForm.markAllAsTouched();
       return;
     }
-
-//   
-const formData = {
-  ...this.jobForm.value,
-  // step_one_data: 'step one',
-  user_id: LocalStorageUtil.getItem('userId'),
-};
+    const formValue = this.jobForm.value;
+    const transformedLanguages = this.transformLanguagesData(
+      formValue.languages
+    );
+    let minExp, maxExp;
+    if (formValue.candidatetype === 'fresher') {
+      minExp = 'Fresher';
+      maxExp = 'Fresher';
+    } else {
+      // For experienced candidates, ensure we have valid numbers
+      minExp = formValue.minexp?.toString() || '0';
+      maxExp = formValue.maxexp?.toString() || '0';
+    }
+    const formData = {
+      ...formValue,
+      user_id: LocalStorageUtil.getItem('userId'),
+      company_id: this.company_id,
+      interviewDay: Array.isArray(formValue.interviewDay)
+        ? formValue.interviewDay.join(',')
+        : formValue.interviewDay,
+      languages: transformedLanguages,
+      skills: Array.isArray(formValue.skills)
+        ? formValue.skills.join(',')
+        : formValue.skills,
+      min_exp: minExp,
+      max_exp: maxExp,
+    };
 
     console.log('Submitting form:', formData);
 
-    // this.apiService.submitJob(formData).subscribe(
-    //   (response: any) => {
-    //     console.log('Success:', response);
-    //     // Show success toast or redirect here
-    //   },
-    //   (error: any) => {
-    //     console.error('API Error:', error);
-    //     // Show error toast here
-    //   }
-    // );
+    this.apiService.submitJob(formData).subscribe(
+      (response: any) => {
+        console.log('Success:', response);
+        localStorage.setItem('type_Of_User','existing');
+        this.router.navigate(['/employer-plan']);
+      },
+      (error: any) => {
+        console.error('API Error:', error);
+      }
+    );
   }
 
   selectQualifications(level: string) {
     this.selectedQualifications = level;
     this.jobForm.get('qualification')?.setValue(level);
-    console.log("Selected qualification:", level);
+    console.log('Selected qualification:', level);
   }
 
   selectWorkType(choice: string) {
     this.WorkFromHome = choice;
     this.jobForm.get('WorkFromHome')?.setValue(choice);
-    console.log("Work from home:", choice);
+    console.log('Work from home:', choice);
   }
 
   selectgenderType(gender: string) {
     this.isgender = gender;
     this.jobForm.get('isgender')?.setValue(gender);
-    console.log("Gender:", gender);
+    console.log('Gender:', gender);
   }
 
-  selectjobType(time: string) {
-    this.jobtype = time;
-    this.jobForm.get('jobType')?.setValue(time);
-    console.log("Job type:", time);
+  selectjobType(type: string) {
+    this.jobType = type;
+    this.jobForm.get('jobType')?.setValue(type);
+    console.log('Job type:', type);
   }
 
   selectLocation(location: string) {
@@ -223,7 +356,7 @@ const formData = {
   selectsecurity(security: string) {
     this.issecuritygiven = security;
     this.jobForm.get('issecuritygiven')?.setValue(security);
-    console.log("Security deposit:", security);
+    console.log('Security deposit:', security);
   }
 
   selectcanType(cantype: string) {
@@ -241,7 +374,6 @@ const formData = {
       this.jobForm.get('minexp')?.enable();
       this.jobForm.get('maxexp')?.enable();
     }
-    console.log("Candidate type:", cantype);
   }
 
   handlerequirement(event: Event): void {
