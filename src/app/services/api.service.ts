@@ -162,7 +162,9 @@ save_candidate( userId: number,candidate_id:number): Observable<any> {
      
     });
   }
-
+getDeviceInfo(userId: number): Observable<any> {
+  return this.http.get<any>(`${this.apiUrl}/Employer_Api/get_Device_Info/${userId}`);
+}
   // https://staging.ekarigar.com/kaam-chor/Employer_Api/downloadResume
 
 }
