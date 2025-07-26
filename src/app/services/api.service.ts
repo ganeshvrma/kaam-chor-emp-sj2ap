@@ -23,6 +23,7 @@ export class ApiService {
   submitJob(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/Employer_Api/jobData`, data);
   }
+   
   submitCompany(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/Employer_Api/compData`, data);
   }
@@ -31,6 +32,9 @@ export class ApiService {
   }
    getJobCategory(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/Api/get_jobcategory`);
+  }
+   getEduBranch(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/Api/get_edu_branch`);
   }
   getEduQual(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/Api/get_edu_qual`);
@@ -72,7 +76,12 @@ export class ApiService {
 getEmployerProfile(userId: number): Observable<any> {
   return this.http.get<any>(`${this.apiUrl}/Employer_Api/getEmployerProfile/${userId}`);
 }
-
+getDeviceInfo(userId: number): Observable<any> {
+  return this.http.get<any>(`${this.apiUrl}/Employer_Api/get_Device_Info/${userId}`);
+}
+postDeviceInfo(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/Employer_Api/post_device_info`, data);
+  }
 updateEmployerEmail(userId: number, email: string) {
   return this.http.put<any>(`${this.apiUrl}/Employer_Api/updateEmployerEmail`, {
     user_id: userId,
@@ -162,9 +171,7 @@ save_candidate( userId: number,candidate_id:number): Observable<any> {
      
     });
   }
-getDeviceInfo(userId: number): Observable<any> {
-  return this.http.get<any>(`${this.apiUrl}/Employer_Api/get_Device_Info/${userId}`);
-}
+
   // https://staging.ekarigar.com/kaam-chor/Employer_Api/downloadResume
 
 }

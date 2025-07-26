@@ -40,7 +40,7 @@
 </ion-content> -->
 <ion-header>
   <ion-toolbar>
-    <ion-title>Checkout Form</ion-title>
+    <ion-title>Payment Form</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="closeModal()">Close</ion-button>
     </ion-buttons>
@@ -51,7 +51,8 @@
   <p><strong>Selected Plan:</strong></p>
   <p>
     ₹{{ plan?.price }} for {{ plan?.duration }} days <br />
-    {{ plan?.candidate_unlock }} Unlocks, {{ plan?.jobs_live }} Jobs, {{ plan?.jobs_boost }} Boosts
+    {{ plan?.unlocks }} Unlocks, {{ plan?.jobs }} Jobs, {{ plan?.boosts }}
+    Boosts
   </p>
 
   <ion-item>
@@ -74,5 +75,5 @@
     <ion-input placeholder="542 W. 15th Street"></ion-input>
   </ion-item>
 
-  <ion-button expand="block" color="secondary">Pay Now</ion-button>
+  <ion-button expand="block" class="btn">Pay Now</ion-button>
 </ion-content>
