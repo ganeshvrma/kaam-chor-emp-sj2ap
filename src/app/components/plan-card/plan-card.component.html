@@ -1,56 +1,22 @@
-<!-- <ion-card class="plan-card">
-  <ion-card-header class="btn">
-    <ion-card-title class="plan-title">{{ title }}</ion-card-title>
-  </ion-card-header>
-
-  <ion-card-content>
-    <h2 class="plan-price">₹ {{ price }}</h2>
-    <p>{{ responses }}</p>
-    <p>{{ unlocks }}</p>
-    <p>{{ jobsLive }}</p>
-    <p>{{ validity }}</p>
-    <p>{{ boosts }}</p>
-
-    <ion-button expand="block" class="btn">Purchase Now</ion-button>
-  </ion-card-content>
-</ion-card> -->
-<!-- <ion-card class="plan-card">
-  <ion-card-header class="btn">
-    <ion-card-title class="plan-title">{{ title }}</ion-card-title>
-  </ion-card-header>
-
-  <ion-card-content>
-    <h2 class="plan-price">₹ {{ price }}</h2>
-    <p>{{ responses }}</p>
-    <p>{{ unlocks }}</p>
-    <p>{{ jobsLive }}</p>
-    <p>{{ validity }}</p>
-    <p>{{ boosts }}</p>
-
-        <ion-button expand="block" class="btn" (click)="openCheckoutModal()">Purchase Now</ion-button>
-    
-  </ion-card-content>
-</ion-card> -->
-
 <ion-card>
-  <ion-card-header class="btn" style="font-size: 1.5rem ; text-align: center;">
-   {{ plan.duration + " " +"plan" }}
+  <ion-card-header class="btn" style="font-size: 1.5rem; text-align: center">
+    {{ plan.duration + " " + "Plan" }}
   </ion-card-header>
 
-  <ion-card-content >
-    <div style="text-align:center;">
-          <p style="font-size: 1.3rem;margin-top: 15px;">₹ {{ plan.price }}</p>
-        <p>  Unlimited Candidate Responses</p>
-    <p>{{ plan.candidate_unlock }} candidate unlocks</p>
-    <p>{{ plan.jobs_live }} job(s) live</p>
-    <p>Valid for {{ plan.duration }}</p>
-    <p>{{ plan.jobs_boost }} job boosts</p>
-   
-   
+  <ion-card-content>
+    <div style="text-align: center">
+      <p style="font-size: 1.3rem; margin-top: 15px">₹ {{ plan.price }}</p>
+      <p>Unlimited Candidate Responses</p>
+      <p>{{ plan.candidate_unlock }} candidate unlocks</p>
+      <p>{{ plan.jobs_live }} job(s) live</p>
+      <p>Valid for {{ plan.duration }}</p>
+      <p>{{ plan.jobs_boost }} job boosts</p>
     </div>
 
-   <div style="text-align: center;"> <ion-button  class="btn"  (click)="onPurchaseClick()" >
-      PURCHASE NOW
-    </ion-button></div>
+    <div style="text-align: center">
+      <ion-button class="btn" (click)="onPurchaseClick()">
+        PURCHASE NOW
+      </ion-button>
+    </div>
   </ion-card-content>
 </ion-card>
