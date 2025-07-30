@@ -3,7 +3,8 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
-
+import { Device } from '@capacitor/device';
+import { App } from '@capacitor/app';
 @Component({
   selector: 'app-lastpage',
   standalone:false,
@@ -36,9 +37,23 @@ export class BasicDetailsPagePage implements OnInit {
       contactperson: ['', Validators.required],
       emplnumber: ['', Validators.required],
     });
+    
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+     const info = await Device.getInfo();
+     const deviceId = await Device.getId();
+     const active = await App.getState();
+    
+     const deviceData = {
+    device_id: deviceId.identifier ,
+    user_id: Number(localStorage.getItem('userId')),
+    device_type: info.operatingSystem,
+    last_active:  active.isActive
+  };
+  // 
+  
+  
     this.apiService.getEmpProfile().subscribe((res: any) => {
       if (res.status === 'success') {
         this.empProfileOptions = res.data;
@@ -47,6 +62,23 @@ export class BasicDetailsPagePage implements OnInit {
     this.user_id = Number(localStorage.getItem('userId'));
     this.fetchMobileNumber();
     this.checkIfUserExists();
+     this.apiService.getDeviceInfo(this.user_id).subscribe((res: any) => {
+      if (res.status === false) {
+        this.apiService.postDeviceInfo(deviceData).subscribe(
+    (res: any) => {
+      console.log('Device info posted:', res);
+    },
+    (err:any) => {
+      console.error('Failed to post device info:', err);
+    }
+  );
+      
+      }
+      else (res.status === true);{
+        console.log( res.data);
+      }
+    });
+    console.log(deviceData);
   }
 
   ionViewDidEnter() {
@@ -101,10 +133,17 @@ export class BasicDetailsPagePage implements OnInit {
 
   onlyNavigation() {
     this.router.navigate(['/company-details-page']);
+    
   }
 
   onlyDashboard() {
     this.router.navigate(['/employer-plan']);
+  }
+logout() {
+    console.log('Logging out...');
+    localStorage.clear();
+    this.router.navigate(['/login']);
+   
   }
 
   submitForm() {

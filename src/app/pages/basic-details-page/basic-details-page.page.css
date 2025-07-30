@@ -178,6 +178,16 @@ ion-text[color=danger] small {
   justify-content: space-between;
 }
 
+.commonheader {
+  display: flex;
+  justify-content: space-between;
+  background-color: #e2e1e2;
+  margin-top: 5px;
+  padding: 10px;
+  min-height: 80px;
+  border-bottom: 1px solid #e2e1e2;
+}
+
 .toolbar {
   background-color: #e2e1e2;
   margin-top: 5px;
@@ -202,9 +212,6 @@ ion-text[color=danger] small {
   background-color: #e2e1e2;
   padding: 10px 10px;
   border-bottom: 1px solid #e2e1e2;
-  border-radius: 15px 30px;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
 }
 
 .segments {
