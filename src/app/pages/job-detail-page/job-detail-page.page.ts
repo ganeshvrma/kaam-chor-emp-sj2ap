@@ -37,17 +37,19 @@ export class JobDetailPage implements OnInit {
   selectedSkills: any[] = [];
   
   qualification: any[] = [];
+  branch:any[]=[];
   jobForm: FormGroup;
   isRecreate: boolean = false;
   years: number[] = [];
   selectedQualifications: string = '';
+  selectedBranch:string='';
  selectedSegment: string = 'job';
 
   // Radio/select controls holders
   WorkFromHome: string = '';
   isgender: string = '';
   jobType: string = '';
-
+perks:string='';
   issecuritygiven: string = '';
   candidatetype: string = '';
   selectedLocation: string = '';
@@ -75,10 +77,12 @@ export class JobDetailPage implements OnInit {
       candidatetype: ['', Validators.required],
       minexp: [''],
       maxexp: [''],
+      perks:[''],
       isgender: ['', Validators.required],
       locations: ['', Validators.required],
       WorkFromHome: ['', Validators.required],
       qualification: [[], Validators.required],
+      branch:[[],Validators.required],
       salary: ['', Validators.required],
       skills: ['', Validators.required],
       company_id: [''],
@@ -165,6 +169,11 @@ export class JobDetailPage implements OnInit {
         this.qualification = res.data;
       }
     });
+     this.apiService.getEduBranch().subscribe((res: any) => {
+      if (res.status === 'success') {
+        this.branch = res.data;
+      }
+    });
 
     this.apiService.getSkills().subscribe((res: any) => {
       if (res.status === 'success') {
@@ -243,6 +252,12 @@ export class JobDetailPage implements OnInit {
   }
   companypg() {
     this.router.navigate(['/company-details-page']);
+  }
+  logout() {
+    console.log('Logging out...');
+    localStorage.clear();
+    this.router.navigate(['/login']);
+   
   }
   removeSkill(skill: any) {
     const currentSkills = this.jobForm.get('skills')?.value || [];
@@ -328,6 +343,11 @@ export class JobDetailPage implements OnInit {
     this.jobForm.get('qualification')?.setValue(level);
     console.log('Selected qualification:', level);
   }
+  selectBranch(level: string) {
+    this.selectedBranch = level;
+    this.jobForm.get('branch')?.setValue(level);
+    console.log('Selected branch:', level);
+  }
 
   selectWorkType(choice: string) {
     this.WorkFromHome = choice;
@@ -357,6 +377,12 @@ export class JobDetailPage implements OnInit {
     this.issecuritygiven = security;
     this.jobForm.get('issecuritygiven')?.setValue(security);
     console.log('Security deposit:', security);
+  }
+
+selectperks(bonus: string) {
+    this.perks = bonus;
+    this.jobForm.get('perks')?.setValue(bonus);
+    console.log('Security deposit:', bonus);
   }
 
   selectcanType(cantype: string) {
