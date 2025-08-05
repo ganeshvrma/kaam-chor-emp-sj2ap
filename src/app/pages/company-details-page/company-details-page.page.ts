@@ -13,7 +13,7 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./company-details-page.page.scss'],
 })
 export class CompanyDetailsPagePage implements OnInit {
-  @Input() formData: any;
+  @Input() formDaata: any;
   @Output() prev = new EventEmitter<void>();
   @Output() submit = new EventEmitter<void>();
   company: FormGroup;
@@ -29,6 +29,10 @@ user_id!: number;
   companycity: string = '';
 isNewUser: boolean = true;
   //
+  selectedLogo!: File;
+  logoUploaded: boolean = false;
+  logoPending:boolean=true;
+   logoPreview: string | ArrayBuffer | null = null;
   constructor(
     private fb: FormBuilder,
     private navCtrl: NavController,
@@ -49,11 +53,14 @@ isNewUser: boolean = true;
         industrytype: ['', Validators.required],
         numemployees: [''],
         companyestb: [''],
+      
+
       });
     }
   }
 
   ngOnInit() {
+      this.user_id=Number(localStorage.getItem('userId'));
     this.apiService.getIndustryType().subscribe((res: any) => {
       if (res.status === 'success') {
         this.industryTypeOptions = res.data;
@@ -63,6 +70,15 @@ isNewUser: boolean = true;
       if (res.status === 'success') {
         this.stateOptions = res.data;
       }
+    });
+     this.apiService.getEmployerProfile(this.user_id).subscribe((res) => {
+         if (res.status && res.data) {
+           console.log(res);
+      if (res.data.company_details.company_images.comp_logo) {
+        this.logoUploaded = true;
+        this.logoPreview = res.data.company_details.company_images.comp_logo;
+        this.logoPending=false;
+      }}
     });
 //      this.user_id=Number(localStorage.getItem('userId'));
 //          this.apiService.getEmployerCompanyData(this.user_id).subscribe((res) => {
@@ -94,13 +110,24 @@ isNewUser: boolean = true;
 //         this.isNewUser = false;
 //          }
 //         });
-        this.user_id=Number(localStorage.getItem('userId'));
+      
 
     this.getEmployerdata();
   }
   ionViewDidEnter(){
       this.getEmployerdata();
     }
+    onLogoSelected(event: any) {
+  const file = event.target.files[0];
+  if (file) {
+    this.selectedLogo = file;
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.logoPreview = reader.result;
+    };
+    reader.readAsDataURL(file);
+  }
+}
  getEmployerdata(){
   // const storedUserId=LocalStorageUtil.getItem('userId');
       // const formCompleted = localStorage.getItem('company_complete') === 'true';
@@ -208,27 +235,54 @@ basicpg(){
   previousPage() {
     this.router.navigate(['/basic-details-page']);
   }
+  logout() {
+    console.log('Logging out...');
+    localStorage.clear();
+    this.router.navigate(['/login']);
+   
+  }
 
   submitForm() {
     if (this.company.invalid) {
       this.company.markAllAsTouched(); // Show validation errors
       return;
     }
+ if (!this.selectedLogo) {
+    alert('Please select a logo first');
+    return;
+  }
+    const formData = new FormData();
+  formData.append('user_id', LocalStorageUtil.getItem('userId'));
+  formData.append('comp_logo', this.selectedLogo);
 
-    // const formData = this.jobForm.value;
-    const formData = {
+  this.apiService.upload_company_logo(formData).subscribe({
+    next: (res) => {
+      alert('Logo uploaded successfully!');
+      this.logoUploaded = true;
+      this.logoPending = false;
+    },
+    error: (err) => {
+      alert('Failed to upload logo.');
+      console.error(err);
+    }
+  });
+    // const formDaata = this.jobForm.value;
+    const formDaata = {
       ...this.company.value,
       // step_two_data: "step 2", // replace with actual step one form/control or object
       user_id: LocalStorageUtil.getItem('userId'),
+       
     };
 
-    console.log('Submitting form:', formData);
+
+    console.log('Submitting form:', formDaata);
 
     // Call your API service here
-    this.apiService.submitCompany(formData).subscribe(
+    this.apiService.submitCompany(formDaata).subscribe(
       (response: any) => {
         console.log('Success:', response);
         // Show success toast or redirect
+        // this.logoUploaded = true;
         localStorage.setItem('company_complete','true');
         this.router.navigate(['/job-detail-page']);
       },
