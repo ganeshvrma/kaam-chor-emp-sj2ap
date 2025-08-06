@@ -79,6 +79,10 @@ getEmployerProfile(userId: number): Observable<any> {
 getDeviceInfo(userId: number): Observable<any> {
   return this.http.get<any>(`${this.apiUrl}/Employer_Api/get_Device_Info/${userId}`);
 }
+getPerksCategory():Observable<any[]>{
+    return this.http.get<any[]>(`${this.apiUrl}/Api/get_perks_options`);
+
+  }
 postDeviceInfo(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/Employer_Api/post_device_info`, data);
   }

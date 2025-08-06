@@ -33,23 +33,26 @@ export class JobDetailPage implements OnInit {
   company_id: string | undefined;
   state: string | undefined;
   dropdownOptions: any[] = [];
+  perksOptions:any[]=[];
   languageOptions: any[] = [];
   selectedSkills: any[] = [];
-  
+   showStartPicker = false;
+  showEndPicker = false;
+  time:any;
   qualification: any[] = [];
-  branch:any[]=[];
+  // branch:any[]=[];
   jobForm: FormGroup;
   isRecreate: boolean = false;
   years: number[] = [];
   selectedQualifications: string = '';
-  selectedBranch:string='';
+  // selectedBranch:string='';
  selectedSegment: string = 'job';
 
   // Radio/select controls holders
   WorkFromHome: string = '';
   isgender: string = '';
   jobType: string = '';
-perks:string='';
+   perks:string='';
   issecuritygiven: string = '';
   candidatetype: string = '';
   selectedLocation: string = '';
@@ -82,8 +85,11 @@ perks:string='';
       locations: ['', Validators.required],
       WorkFromHome: ['', Validators.required],
       qualification: [[], Validators.required],
-      branch:[[],Validators.required],
-      salary: ['', Validators.required],
+      // branch:[[],Validators.required],
+      // salary: ['', Validators.required],
+      minSalary:['',Validators.required],
+      maxSalary:['',Validators.required],
+      perksgiven:[''],
       skills: ['', Validators.required],
       company_id: [''],
       state: [''],
@@ -133,6 +139,12 @@ perks:string='';
         this.dropdownOptions = res.data;
       }
     });
+     this.apiService.getPerksCategory().subscribe((res: any) => {
+      if (res.status === 'success') {
+        this.perksOptions = res.data;
+      }
+    });
+    
     const user_id = LocalStorageUtil.getItem('userId');
 
     const data = {
@@ -169,12 +181,12 @@ perks:string='';
         this.qualification = res.data;
       }
     });
-     this.apiService.getEduBranch().subscribe((res: any) => {
-      if (res.status === 'success') {
-        this.branch = res.data;
-      }
-    });
-
+    //  this.apiService.getEduBranch().subscribe((res: any) => {
+    //   if (res.status === 'success') {
+    //     this.branch = res.data;
+    //   }
+    // });
+ 
     this.apiService.getSkills().subscribe((res: any) => {
       if (res.status === 'success') {
         this.selectedSkills = res.data;
@@ -220,7 +232,10 @@ perks:string='';
             locations: data.cand_loc_req,
             WorkFromHome: data.is_wfh,
             qualification: data.min_qual_id,
-            salary: data.salary_per_annum,
+            // salary: data.salary_per_annum,
+            minSalary:data.min_salary,
+            maxSalary:data.max_salary,
+
             skills: selectedSkill,
             issecuritygiven: data.security_amount,
             jobStartTime: data.job_start_time,
@@ -247,6 +262,13 @@ perks:string='';
       control.markAsTouched();
     });
   }
+  formatTime(time: any): string {
+    if (!time) return '';
+    return new Date(time).toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+    });}
   basicpg() {
     this.router.navigate(['/basic-details-page']);
   }
@@ -343,11 +365,11 @@ perks:string='';
     this.jobForm.get('qualification')?.setValue(level);
     console.log('Selected qualification:', level);
   }
-  selectBranch(level: string) {
-    this.selectedBranch = level;
-    this.jobForm.get('branch')?.setValue(level);
-    console.log('Selected branch:', level);
-  }
+  // selectBranch(level: string) {
+  //   this.selectedBranch = level;
+  //   this.jobForm.get('branch')?.setValue(level);
+  //   console.log('Selected branch:', level);
+  // }
 
   selectWorkType(choice: string) {
     this.WorkFromHome = choice;
@@ -382,7 +404,11 @@ perks:string='';
 selectperks(bonus: string) {
     this.perks = bonus;
     this.jobForm.get('perks')?.setValue(bonus);
-    console.log('Security deposit:', bonus);
+    console.log('bonus given:', bonus);
+    if (bonus === 'no') {
+    this.jobForm.get('perksgiven')?.reset(); // Clear selection if 'No' is selected
+  }
+
   }
 
   selectcanType(cantype: string) {
@@ -412,3 +438,7 @@ selectperks(bonus: string) {
     console.log('Current value:', JSON.stringify(target.value));
   }
 }
+  function formatTime(time: any, string: any) {
+    throw new Error('Function not implemented.');
+  }
+

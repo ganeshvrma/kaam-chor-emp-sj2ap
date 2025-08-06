@@ -172,11 +172,18 @@ ion-button.medium {
 .job-type-toggle,
 .candidate-type-toggle,
 .gender-type-toggle,
-.location-toggle,
+
 .work-type-toggle,
 .security-toggle {
   display: flex;
   flex-wrap: wrap;
+  gap: 10px;
+  margin: 8px 0 10px;
+}
+.location-toggle{
+    display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 10px;
   margin: 8px 0 10px;
 }
@@ -409,6 +416,10 @@ ng-select ::ng-deep .ng-option:hover {
 
 }
 
+ion-datetime {
+  --wheel-highlight-color: #8e24aa; /* for wheel pickers */
+   --ion-color-primary: #8e24aa;
+}
 
 /*====================== LANGUAGE ADD REMOVE BUTTONS ======================*/
 .languageAddRem {
@@ -419,8 +430,17 @@ ng-select ::ng-deep .ng-option:hover {
 .rws ion-label {
   font-size: 13px;
 }
-
-
+.startEnd{
+  display: flex;
+  justify-content: space-between;
+}
+.custom-input-item {
+  // border: 1px solid #d1d1d1; 
+  // border-radius: 4px; 
+  // padding: 8px; 
+  // margin-top: 8px; 
+  --background: #e2e1e2;
+}
 /*****header */
 //header
 .toolbar {
