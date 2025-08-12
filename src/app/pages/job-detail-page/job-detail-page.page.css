@@ -24,6 +24,12 @@ ion-segment-button.segment-button-checked {
   border-bottom: 1px solid #e2e1e2;
 }
 
+.salary_input {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
 .label {
   margin: 0px;
   padding: 19px 10px 12px 0px;

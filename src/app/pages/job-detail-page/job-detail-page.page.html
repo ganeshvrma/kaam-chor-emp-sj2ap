@@ -40,6 +40,7 @@
               placeholder="Enter job title"
               style="margin-bottom: 10px"
               autocapitalize="words"
+              autocomplete="username"
             ></ion-input>
           </div>
           <ion-text
@@ -69,7 +70,7 @@
             formControlName="jobCategory"
             [searchable]="true"
             [multiple]="false"
-            [closeOnSelect]="false"
+            [closeOnSelect]="true"
             [clearable]="false"
             class="custom-job-select"
           >
@@ -265,8 +266,7 @@
           <!-- Gender -->
           <div lines="none">
             <ion-label class="label"
-              >Select Gender of Candidate
-              <span style="color: red">*</span></ion-label
+              >Select Gender <span style="color: red">*</span></ion-label
             >
           </div>
 
@@ -443,18 +443,21 @@
   placeholder="Enter salary amount"
   style="margin-bottom: 5px;"
 ></ion-input> -->
-          <ion-input
-            type="number"
-            formControlName="minSalary"
-            placeholder="Minimum Salary"
-            style="margin-bottom: 5px"
-          ></ion-input>
-          <ion-input
-            type="number"
-            formControlName="maxSalary"
-            placeholder="MaximumSalary"
-            style="margin-bottom: 5px"
-          ></ion-input>
+          <div class="salary_input">
+            <ion-input
+              type="number"
+              formControlName="minSalary"
+              placeholder="Min Salary"
+              style="margin-bottom: 5px"
+            ></ion-input>
+            <span> to </span>
+            <ion-input
+              type="number"
+              formControlName="maxSalary"
+              placeholder="Max Salary"
+              style="margin-bottom: 5px"
+            ></ion-input>
+          </div>
           <ion-text
             color="danger"
             *ngIf="jobForm.get('salary')?.touched && jobForm.get('salary')?.invalid"
@@ -501,8 +504,8 @@
             placeholder="Search to select a perks options"
             formControlName="perksgiven"
             [searchable]="true"
-            [multiple]="true"
-            [closeOnSelect]="false"
+            [multiple]="false"
+            [closeOnSelect]="true"
             [clearable]="false"
             class="custom-job-select"
           >
@@ -521,7 +524,7 @@
             bindValue="id"
             [multiple]="true"
             [searchable]="true"
-            [closeOnSelect]="false"
+            [closeOnSelect]="true"
             [clearable]="true"
             placeholder="Select skills"
             formControlName="skills"
