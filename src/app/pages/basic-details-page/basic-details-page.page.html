@@ -89,7 +89,9 @@
             <ion-select
               placeholder="Select One"
               formControlName="contactperson"
+              (ionChange)="onProfileChange($event)"
             >
+              <!-- <ion-select placeholder="Select One" formControlName="contactperson" > -->
               <ion-select-option value="">Select One</ion-select-option>
               <ion-select-option
                 *ngFor="let option of empProfileOptions"
@@ -97,7 +99,15 @@
               >
                 {{ option.profile }}
               </ion-select-option>
+              <ion-select-option value="other">Other</ion-select-option>
             </ion-select>
+            <ion-input
+              *ngIf="showOtherInput"
+              placeholder="Enter new profile"
+              formControlName="profile_name"
+              (ionBlur)="addNewProfile()"
+              clearInput
+            ></ion-input>
           </div>
           <ion-text
             color="danger"

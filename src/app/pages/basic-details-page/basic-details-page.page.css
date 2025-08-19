@@ -45,7 +45,6 @@ ion-label[position=stacked] {
   margin: 0;
   padding-top: 10px;
   padding-left: 2px;
-  background-color: #e2e1e2;
 }
 
 .ion-text-wrap {
@@ -118,7 +117,6 @@ ion-text[color=danger] small {
     margin: 0;
     padding-top: 10px;
     padding-left: 2px;
-    background-color: #111111;
   }
   .ion-text-wrap {
     color: #ffffff;

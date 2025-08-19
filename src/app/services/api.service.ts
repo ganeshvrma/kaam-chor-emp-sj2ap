@@ -48,6 +48,9 @@ export class ApiService {
    getEmpProfile(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/Api/get_emp_profile`);
   }
+  addEmpProfile(data: any): Observable<any>  {
+  return this.http.post(`${this.apiUrl}/Admin/add_emp_profile`, data);
+}
   getStates(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/Api/get_states`);
   }
