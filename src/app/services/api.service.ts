@@ -179,6 +179,6 @@ save_candidate( userId: number,candidate_id:number): Observable<any> {
     });
   }
 
-  // https://staging.ekarigar.com/kaam-chor/Employer_Api/downloadResume
+  
 
 }
