@@ -108,6 +108,9 @@
               (ionBlur)="addNewProfile()"
               clearInput
             ></ion-input>
+            <ion-button *ngIf="showOtherInput" (click)="addNewProfile()"
+              >Add</ion-button
+            >
           </div>
           <ion-text
             color="danger"
