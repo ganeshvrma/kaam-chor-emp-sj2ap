@@ -114,6 +114,16 @@ input::placeholder {
   font-weight: 500;
   text-transform: none;
 }
+.addbtn {
+  --background: #511168;
+  color: white !important;
+  border-radius: 20px;
+  margin-left: 5px;
+  height: 30px;
+  font-size: 15px;
+  font-weight: 500;
+  text-transform: none;
+}
 
 ion-text[color="danger"] small {
   font-size: 0.75rem;

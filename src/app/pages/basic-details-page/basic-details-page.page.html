@@ -105,10 +105,14 @@
               *ngIf="showOtherInput"
               placeholder="Enter new profile"
               formControlName="profile_name"
-              (ionBlur)="addNewProfile()"
               clearInput
             ></ion-input>
-            <ion-button *ngIf="showOtherInput" (click)="addNewProfile()"
+            <ion-button
+              id="present-alert"
+              *ngIf="showOtherInput"
+              class="addbtn"
+              size="small"
+              (click)="addNewProfile()"
               >Add</ion-button
             >
           </div>
