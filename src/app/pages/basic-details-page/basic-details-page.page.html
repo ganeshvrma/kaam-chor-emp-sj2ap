@@ -101,20 +101,34 @@
               </ion-select-option>
               <ion-select-option value="other">Other</ion-select-option>
             </ion-select>
-            <ion-input
-              *ngIf="showOtherInput"
-              placeholder="Enter new profile"
-              formControlName="profile_name"
-              clearInput
-            ></ion-input>
-            <ion-button
-              id="present-alert"
-              *ngIf="showOtherInput"
-              class="addbtn"
-              size="small"
-              (click)="addNewProfile()"
-              >Add</ion-button
+            <ion-label *ngIf="showOtherInput"
+              >Please enter new profile option</ion-label
             >
+
+            <div class="newProfilefield">
+              <ion-input
+                *ngIf="showOtherInput"
+                placeholder="Enter new profile"
+                formControlName="profile_name"
+                clearInput
+              ></ion-input>
+              <!-- (ionBlur)="addNewProfile()" -->
+              <ion-button
+                id="present-alert"
+                *ngIf="showOtherInput"
+                class="addbtn"
+                size="small"
+                (click)="addNewProfile()"
+                >Add</ion-button
+              >
+              <!-- <ion-alert
+  trigger="present-alert"
+  header="Profile Added"
+  
+  message="Select the value after adding"
+  [buttons]="alertButtons"
+></ion-alert> -->
+            </div>
           </div>
           <ion-text
             color="danger"

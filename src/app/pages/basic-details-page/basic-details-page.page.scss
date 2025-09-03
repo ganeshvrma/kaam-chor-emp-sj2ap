@@ -84,10 +84,10 @@ ion-select {
   color: #000;
   font-size: 14px;
   // height: 44px;
-  width: 100%;
-  min-height: 30px;
   margin-top: 7px;
   margin-bottom: 10px;
+  width: 100%;
+  min-height: 30px;
 }
 
 input::placeholder {
@@ -130,7 +130,11 @@ ion-text[color="danger"] small {
   margin-top: 2px;
   display: block;
 }
-
+.newProfilefield{
+  display: flex;
+  justify-content: start;
+  gap: 2;
+}
 /* ========== DARK MODE ========== */
 @media (prefers-color-scheme: dark) {
   

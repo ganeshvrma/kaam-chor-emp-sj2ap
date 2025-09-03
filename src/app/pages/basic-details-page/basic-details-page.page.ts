@@ -25,6 +25,7 @@ export class BasicDetailsPagePage implements OnInit {
   isNewUser: boolean = true;
   selectedSegment: string = 'basic';
   profile_name: string = '';
+  //  alertButtons = ['Action'];
   constructor(
     private fb: FormBuilder,
     private navCtrl: NavController,
@@ -40,7 +41,7 @@ export class BasicDetailsPagePage implements OnInit {
       ],
       contactperson: ['', Validators.required],
       emplnumber: ['', Validators.required],
-     
+     profile_name:[]
     });
   }
 
@@ -77,13 +78,23 @@ export class BasicDetailsPagePage implements OnInit {
       }
     });
   }
-  loadEmpProfiles() {
+  // selectedId?: number
+  loadEmpProfiles(selectedId?: number) {
     this.apiService.getEmpProfile().subscribe((res: any) => {
       if (res.status === 'success') {
         this.empProfileOptions = res.data;
-      }
+     
+        if (selectedId) {
+      this.basiclast.get('contactperson')?.setValue(selectedId);
+      // setTimeout(() => {
+      //     this.basiclast.get('contactperson')?.setValue(selectedId);
+      //   });
+    }
+     }
     });
   }
+
+
 
   ionViewDidEnter() {
     this.checkIfUserExists(); // Always check if user already submitted
@@ -106,24 +117,32 @@ export class BasicDetailsPagePage implements OnInit {
   }
   addNewProfile() {
      const trimmedName = this.basiclast.get('profile_name')?.value?.trim();
-    // const trimmedName = this.profile_name.trim();
+        // const trimmedName = this.profile_name.trim();
     if (!trimmedName) return;
-    console.log('Calling API with:', trimmedName);
+    // console.log('Calling API with:', trimmedName);
     this.apiService.addEmpProfile({ profile: trimmedName }).subscribe((res: any) => {
-      if (res.status === 'success') {
+      if (res.status === 'success' || res.status === 'exists') {
         // Reload profiles
-        this.loadEmpProfiles();
-
+        const newId = res.insertedId || res.id;   
+     
+        this.loadEmpProfiles(newId);
+         alert('New profile added in dropdown');
         // Set the new option as selected
-        const newId = res.insertedId || res.data?.id;
-        this.basiclast.get('contactperson')?.setValue(newId);
+        // const newId = res.insertedId || res.data?.id;
+        // this.basiclast.get('contactperson')?.setValue(newId);
 
-        this.showOtherInput = false;
-        this.profile_name = '';
+        // this.showOtherInput = false;
+        // this.profile_name = '';
+      // this.basiclast.get('contactperson')?.setValue(newId);
+
+      this.showOtherInput = false;
+      // this.basiclast.get('profile_name')?.reset();
       }
     });
     
   }
+  
+  
   checkIfUserExists() {
     this.apiService.getEmployerData(this.user_id).subscribe(
       (res) => {
