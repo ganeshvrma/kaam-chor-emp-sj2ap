@@ -30,11 +30,18 @@ export class ApiService {
   submitBasic(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/Employer_Api/regData`, data);
   }
+  getJobTitles(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/Api/get_job_titles`);
+  }
    getJobCategory(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/Api/get_jobcategory`);
   }
    getEduBranch(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/Api/get_edu_branch`);
+  }
+  getPerksCategory():Observable<any[]>{
+    return this.http.get<any[]>(`${this.apiUrl}/Api/get_perks_options`);
+
   }
   getEduQual(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/Api/get_edu_qual`);
@@ -48,13 +55,6 @@ export class ApiService {
    getEmpProfile(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/Api/get_emp_profile`);
   }
-  getJobTitle(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/Api/get_job_title`);
-  }
-
-  addEmpProfile(data: any): Observable<any>  {
-  return this.http.post(`${this.apiUrl}/Admin/add_emp_profile`, data);
-}
   getStates(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/Api/get_states`);
   }
@@ -86,10 +86,11 @@ getEmployerProfile(userId: number): Observable<any> {
 getDeviceInfo(userId: number): Observable<any> {
   return this.http.get<any>(`${this.apiUrl}/Employer_Api/get_Device_Info/${userId}`);
 }
-getPerksCategory():Observable<any[]>{
-    return this.http.get<any[]>(`${this.apiUrl}/Api/get_perks_options`);
-
-  }
+//post profile options
+addEmpProfile(data: { profile: string }): Observable<any>  {
+  return this.http.post(`${this.apiUrl}/Api/add_employee_profile`, data);
+}
+//
 postDeviceInfo(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/Employer_Api/post_device_info`, data);
   }
@@ -183,6 +184,6 @@ save_candidate( userId: number,candidate_id:number): Observable<any> {
     });
   }
 
-  
+
 
 }

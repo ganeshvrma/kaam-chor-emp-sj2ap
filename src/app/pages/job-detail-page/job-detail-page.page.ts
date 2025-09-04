@@ -33,6 +33,7 @@ export class JobDetailPage implements OnInit {
   company_id: string | undefined;
   state: string | undefined;
   dropdownOptions: any[] = [];
+  titlesOptions:any[]=[];
   perksOptions:any[]=[];
   languageOptions: any[] = [];
   selectedSkills: any[] = [];
@@ -72,8 +73,8 @@ export class JobDetailPage implements OnInit {
   ) {
     this.years = Array.from({ length: 29 }, (_, i) => i + 1);
     this.jobForm = this.fb.group({
-      jobTitle: ['', [Validators.required, Validators.minLength(3)]],
-      jobCategory: ['', Validators.required],
+      jobTitle: [null, [Validators.required]],
+      jobCategory: [null, Validators.required],
       jobType: ['', Validators.required],
       positionsOpen: ['', [Validators.required, Validators.min(1)]],
       jobDescription: ['', Validators.required],
@@ -97,7 +98,7 @@ export class JobDetailPage implements OnInit {
       issecuritygiven: ['', Validators.required],
       languages: this.fb.array([this.createLanguageGroup()]),
       jobStartTime: ['', Validators.required],
-      jobEndTime: ['', Validators.required],
+      // jobEndTime: ['', Validators.required],
       interviewTime: ['', Validators.required],
       interviewDay: ['', Validators.required],
       acceptTerms: [false, Validators.requiredTrue],
@@ -137,6 +138,11 @@ export class JobDetailPage implements OnInit {
     this.apiService.getJobCategory().subscribe((res: any) => {
       if (res.status === 'success') {
         this.dropdownOptions = res.data;
+      }
+    });
+    this.apiService.getJobTitles().subscribe((res: any) => {
+      if (res.status === 'success') {
+        this.titlesOptions = res.data;
       }
     });
      this.apiService.getPerksCategory().subscribe((res: any) => {
@@ -441,4 +447,3 @@ selectperks(bonus: string) {
   function formatTime(time: any, string: any) {
     throw new Error('Function not implemented.');
   }
-
