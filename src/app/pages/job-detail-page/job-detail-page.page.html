@@ -213,7 +213,7 @@
           <ng-container *ngIf="candidatetype">
             <!-- For Fresher -->
             <ng-container *ngIf="candidatetype === 'fresher'">
-              <div lines="none">
+              <div lines="none" [hidden]="fresherselected">
                 <ion-label class="label">Min Experience</ion-label>
                 <ion-input
                   formControlName="minexp"
@@ -223,7 +223,7 @@
                 ></ion-input>
               </div>
 
-              <div lines="none">
+              <div lines="none" [hidden]="fresherselected">
                 <ion-label class="label">Max Experience</ion-label>
                 <ion-input
                   formControlName="maxexp"

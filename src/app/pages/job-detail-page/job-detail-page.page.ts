@@ -57,7 +57,7 @@ export class JobDetailPage implements OnInit {
   issecuritygiven: string = '';
   candidatetype: string = '';
   selectedLocation: string = '';
-
+fresherselected=false;
   locations: string[] = [
     'Within 10 KM of my city',
     'Within my city',
@@ -426,6 +426,7 @@ selectperks(bonus: string) {
       this.jobForm.get('maxexp')?.setValue('Fresher');
       this.jobForm.get('minexp')?.disable();
       this.jobForm.get('maxexp')?.disable();
+      this.fresherselected=true;
     } else {
       this.jobForm.get('minexp')?.reset();
       this.jobForm.get('maxexp')?.reset();
