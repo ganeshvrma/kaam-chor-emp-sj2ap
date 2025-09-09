@@ -43,6 +43,12 @@ dismiss() {
   setActiveButton(button: string) {
     this.activeButton = button;
   }
+  get skillList(): string {
+  return this.jobData?.skills_required?.map((skill: { value: any; }) => skill.value).join(', ') || '';
+}
+ get langList(): string {
+  return this.jobData?.job_languages?.map((lang: { language: any; }) => lang.language).join(', ') || '';
+}
   // backpage(){
   //   this.router.navigate(['Smy-jobs'])
   // }
