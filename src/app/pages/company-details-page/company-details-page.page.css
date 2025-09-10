@@ -27,8 +27,9 @@ form {
 .label {
   margin: 0px;
   padding: 19px 10px 12px 0px;
-  background-color: #e2e1e2;
   border-color: #e2e1e2;
+  font-size: 0.9rem;
+  font-weight: 600;
 }
 
 ion-item {
@@ -47,7 +48,6 @@ ion-label[position=stacked] {
   margin: 0;
   padding-top: 10px;
   padding-left: 2px;
-  background-color: #e2e1e2;
 }
 
 ion-input,
@@ -118,7 +118,6 @@ ion-text[color=danger] small {
   .label {
     margin: 0px;
     padding: 19px 10px 12px 0px;
-    background-color: #0c0c0c;
     border-color: #050505;
   }
   ion-item {
@@ -136,7 +135,6 @@ ion-text[color=danger] small {
     margin: 0;
     padding-top: 10px;
     padding-left: 2px;
-    background-color: #111111;
   }
   ion-input,
   ion-select,
@@ -164,7 +162,7 @@ ion-text[color=danger] small {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
   .submitbtn {
-    --background: #833aa6;
+    --background: #511168;
     color: white !important;
   }
   ion-text[color=danger] small {

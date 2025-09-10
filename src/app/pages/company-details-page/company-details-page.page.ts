@@ -159,13 +159,13 @@ isNewUser: boolean = true;
          const stateId = res.data.state;
          const cityId = res.data.city;
          this.initializecity(stateId, cityId);
-this.company.disable();
+         this.company.disable();
          
          }
          else {
         // If no data, treat as new user
         this.isNewUser = true;
-this.company.enable();
+        this.company.enable();
 
          }
         });
@@ -241,13 +241,8 @@ basicpg(){
     this.router.navigate(['/login']);
    
   }
-
-  submitForm() {
-    if (this.company.invalid) {
-      this.company.markAllAsTouched(); // Show validation errors
-      return;
-    }
- if (!this.selectedLogo) {
+logoUploading(){
+   if (!this.selectedLogo) {
     alert('Please select a logo first');
     return;
   }
@@ -260,12 +255,40 @@ basicpg(){
       alert('Logo uploaded successfully!');
       this.logoUploaded = true;
       this.logoPending = false;
+      console.log(res);
     },
     error: (err) => {
       alert('Failed to upload logo.');
       console.error(err);
     }
   });
+}
+  submitForm() {
+    if (this.company.invalid) {
+      this.company.markAllAsTouched(); // Show validation errors
+      return;
+    }
+     if (!this.selectedLogo) {
+    alert('Please select a logo first');
+    return;
+  }
+    const formData = new FormData();
+  formData.append('user_id', LocalStorageUtil.getItem('userId'));
+  formData.append('comp_logo', this.selectedLogo);
+
+  this.apiService.upload_company_logo(formData).subscribe({
+    next: (res) => {
+      alert('Logo uploaded successfully!');
+      this.logoUploaded = true;
+      this.logoPending = false;
+      console.log(res);
+    },
+    error: (err) => {
+      alert('Failed to upload logo.');
+      console.error(err);
+    }
+  });
+    
     // const formDaata = this.jobForm.value;
     const formDaata = {
       ...this.company.value,

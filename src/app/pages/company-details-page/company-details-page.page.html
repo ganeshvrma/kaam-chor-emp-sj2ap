@@ -34,12 +34,16 @@
 
             <!-- <div *ngIf="logoPending">  -->
 
-            <ion-input
+            <input
               *ngIf="logoPending"
               type="file"
+              accept="image/*"
               placeholder="Select company logo"
               (change)="onLogoSelected($event)"
-            ></ion-input>
+            />
+            <!-- <ion-button (click)="logoUploading()" *ngIf="logoPending">
+            Upload
+           </ion-button> -->
           </div>
           <!-- </div> -->
           <!-- <div *ngIf="logoUploaded">  -->
@@ -210,7 +214,7 @@
 
           <!-- Company Website -->
           <div>
-            <ion-label>Company Website</ion-label>
+            <ion-label position="stacked">Company Website</ion-label>
             <ion-input
               formControlName="companywebsite"
               placeholder="Enter website URL"
