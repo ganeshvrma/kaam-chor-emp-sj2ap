@@ -205,7 +205,7 @@ uploadLogo() {
   formData.append('user_id', this.user_id.toString());
   formData.append('comp_logo', this.selectedLogo);
 
-  this.apiService.upload_company_logo(formData).subscribe({
+  this.apiService.update_company_logo(formData).subscribe({
     next: (res) => {
       alert('Logo uploaded successfully!');
       this.logoUploaded = true;

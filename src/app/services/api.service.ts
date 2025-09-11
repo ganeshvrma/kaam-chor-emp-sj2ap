@@ -143,10 +143,14 @@ candidateDetail(data: any,userId: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/Employer_Api/job_details/${job_id}`);
   }
 
-   upload_company_logo(formData: FormData): Observable<any> {
+   update_company_logo(formData: FormData): Observable<any> {
     return this.http.post(`${this.apiUrl}/Employer_Api/upload_company_logo`, formData
-      
-      
+
+    );
+  }
+   upload_company_logo(formData: FormData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/Employer_Api/insert_company_logo`, formData
+
     );
   }
    upload_office_images(formData: FormData): Observable<any> {
