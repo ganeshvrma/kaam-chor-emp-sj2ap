@@ -6,6 +6,8 @@ import {
   Validators,
   FormControl,
 } from '@angular/forms';
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+
 import { NavController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
 import { LocalStorageUtil } from 'src/app/shared/utils/localStorageUtil';
@@ -57,13 +59,14 @@ export class JobDetailPage implements OnInit {
   issecuritygiven: string = '';
   candidatetype: string = '';
   selectedLocation: string = '';
-fresherselected=false;
+  hideMinExp =false;
+  hideMaxExp =false;
   locations: string[] = [
     'Within 10 KM of my city',
     'Within my city',
     'Anywhere in India',
   ];
-
+ filteredMaxExp: number[] = [];
   constructor(
     private fb: FormBuilder,
     private apiService: ApiService,
@@ -102,7 +105,9 @@ fresherselected=false;
       interviewTime: ['', Validators.required],
       interviewDay: ['', Validators.required],
       acceptTerms: [false, Validators.requiredTrue],
-    });
+    },
+    {validators: this.salaryRangeValidator() }
+  );
   }
 
   get languages(): FormArray {
@@ -192,7 +197,12 @@ fresherselected=false;
     //     this.branch = res.data;
     //   }
     // });
- 
+  this.filteredMaxExp = this.years;
+
+    // watch minexp changes
+    this.jobForm.get('minexp')?.valueChanges.subscribe((minVal: number) => {
+      this.updateMaxExpOptions(minVal);
+    });
     this.apiService.getSkills().subscribe((res: any) => {
       if (res.status === 'success') {
         this.selectedSkills = res.data;
@@ -262,7 +272,53 @@ fresherselected=false;
       this.isRecreate=false;
     }
   }
-  
+  updateMaxExpOptions(minVal: number) {
+    if (!minVal) {
+      this.filteredMaxExp = this.years;
+      return;
+    }
+
+    if (minVal ) {
+      // special rule: if min = 3, max must be >= 5
+      // this.filteredMaxExp = this.years.filter((y) => y >= 5);
+    // } else {
+      // normal rule: max > min
+      this.filteredMaxExp = this.years.filter((y) => y > minVal);
+    }
+
+    // reset maxexp if current value invalid
+    const currentMax = this.jobForm.get('maxexp')?.value;
+    if (currentMax && !this.filteredMaxExp.includes(currentMax)) {
+      this.jobForm.patchValue({ maxexp: '' });
+    }
+  }
+   validateJobStartTime(value: string): boolean {
+  // Allow only letters, numbers, spaces, and colon
+  // const regex = /^[a-zA-Z0-9: ]+$/;
+const regex = /^[0-9: ]+(AM|PM)?$/i;
+
+  if (!regex.test(value)) {
+    // You can use Ionic Toast or AlertController instead of alert
+    // alert('Invalid Job Start Time! Allowed: letters, numbers, colon (:), and space.');
+     alert('Invalid time format! Use hh:mm AM/PM.');
+    return false;
+  }
+  return true;
+}
+
+salaryRangeValidator(): ValidatorFn {
+  return (group: AbstractControl): ValidationErrors | null => {
+    const min = group.get('minSalary')?.value;
+    const max = group.get('maxSalary')?.value;
+
+    if (min && max && max <= min) {
+      return { salaryRange: true };
+    }
+    return null;
+  };
+}
+
+
   markFormTouched(formGroup: FormGroup) {
     Object.values(formGroup.controls).forEach((control) => {
       control.markAsTouched();
@@ -324,6 +380,12 @@ fresherselected=false;
       this.jobForm.markAllAsTouched();
       return;
     }
+   const jobStartTime = this.jobForm.value.jobStartTime; 
+
+  if (!this.validateJobStartTime(jobStartTime)) {
+    return; // ❌ stop API call
+  }
+
     const formValue = this.jobForm.value;
     const transformedLanguages = this.transformLanguagesData(
       formValue.languages
@@ -426,7 +488,8 @@ selectperks(bonus: string) {
       this.jobForm.get('maxexp')?.setValue('Fresher');
       this.jobForm.get('minexp')?.disable();
       this.jobForm.get('maxexp')?.disable();
-      this.fresherselected=true;
+     this.hideMinExp =true;
+     this.hideMaxExp=true;
     } else {
       this.jobForm.get('minexp')?.reset();
       this.jobForm.get('maxexp')?.reset();
