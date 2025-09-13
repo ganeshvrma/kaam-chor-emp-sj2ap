@@ -43,12 +43,12 @@ export class JobDetailPage implements OnInit {
   showEndPicker = false;
   time:any;
   qualification: any[] = [];
-  // branch:any[]=[];
+  branch:any[]=[];
   jobForm: FormGroup;
   isRecreate: boolean = false;
   years: number[] = [];
   selectedQualifications: string = '';
-  // selectedBranch:string='';
+  selectedBranch:string='';
  selectedSegment: string = 'job';
 
   // Radio/select controls holders
@@ -89,7 +89,7 @@ export class JobDetailPage implements OnInit {
       locations: ['', Validators.required],
       WorkFromHome: ['', Validators.required],
       qualification: [[], Validators.required],
-      // branch:[[],Validators.required],
+      branch:[[]],
       // salary: ['', Validators.required],
       minSalary:['',Validators.required],
       maxSalary:['',Validators.required],
@@ -192,11 +192,11 @@ export class JobDetailPage implements OnInit {
         this.qualification = res.data;
       }
     });
-    //  this.apiService.getEduBranch().subscribe((res: any) => {
-    //   if (res.status === 'success') {
-    //     this.branch = res.data;
-    //   }
-    // });
+     this.apiService.getEduBranch().subscribe((res: any) => {
+      if (res.status === 'success') {
+        this.branch = res.data;
+      }
+    });
   this.filteredMaxExp = this.years;
 
     // watch minexp changes
@@ -433,11 +433,11 @@ salaryRangeValidator(): ValidatorFn {
     this.jobForm.get('qualification')?.setValue(level);
     console.log('Selected qualification:', level);
   }
-  // selectBranch(level: string) {
-  //   this.selectedBranch = level;
-  //   this.jobForm.get('branch')?.setValue(level);
-  //   console.log('Selected branch:', level);
-  // }
+  selectBranch(level: string) {
+    this.selectedBranch = level;
+    this.jobForm.get('branch')?.setValue(level);
+    console.log('Selected branch:', level);
+  }
 
   selectWorkType(choice: string) {
     this.WorkFromHome = choice;
