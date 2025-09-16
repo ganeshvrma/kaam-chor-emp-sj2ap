@@ -67,7 +67,11 @@ const routes: Routes = [
   {
     path: 'candidate-list',
     loadChildren: () => import('./pages/candidate-list/candidate-list.module').then( m => m.CandidateListPageModule)
+  },  {
+    path: 'payment',
+    loadChildren: () => import('./payment/payment.module').then( m => m.PaymentPageModule)
   },
+
 
 
 
