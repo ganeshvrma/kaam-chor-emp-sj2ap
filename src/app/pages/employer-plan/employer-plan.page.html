@@ -87,6 +87,49 @@
 </ion-header>
 <ion-content>
   <h3 style="text-align: center">Employer Dashboard</h3>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-card>
+          <ion-card-header class="ion-text-center">
+            <ion-card-title>Active Jobs / Allowed Jobs</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            <div class="cardbtnlower">
+              <ion-button class="btn">WIP/54</ion-button>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col
+        ><ion-card>
+          <ion-card-header class="ion-text-center">
+            <ion-card-title>Saved Candidates</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            <div class="cardbtnlower">
+              <ion-button class="btn">24</ion-button>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col>
+        <ion-card>
+          <ion-card-header class="ion-text-center">
+            <ion-card-title>Active Plan</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            <div class="cardbtnlower">
+              <ion-button class="btn">Valid till</ion-button>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
   <div *ngIf="userType==='existing'">
     <div style="text-align: center; padding: 10px">
       <ion-button class="btn"
@@ -104,7 +147,7 @@
       </ion-row>
     </ion-grid>
 
-    <ion-grid>
+    <!-- <ion-grid>
       <ion-row>
         <ion-col>
           <ion-card>
@@ -146,7 +189,7 @@
           </ion-card>
         </ion-col>
       </ion-row>
-    </ion-grid>
+    </ion-grid> -->
   </div>
   <div *ngIf="userType==='new'">
     <ion-card color="light" class="ion-text-center">
