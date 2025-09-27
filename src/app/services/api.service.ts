@@ -30,6 +30,15 @@ export class ApiService {
   submitBasic(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/Employer_Api/regData`, data);
   }
+  //checkout for data submission 
+  submitCheckoutData(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/Employer_Api/appCheckoutData`, data);
+  }
+  //order create fot the plan
+ orderCreate(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/Employer_Api/appOrderCreate`, data);
+  }
+
   getJobTitles(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/Api/get_job_titles`);
   }
