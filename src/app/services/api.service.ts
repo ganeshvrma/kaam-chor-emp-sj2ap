@@ -34,11 +34,14 @@ export class ApiService {
   submitCheckoutData(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/Employer_Api/appCheckoutData`, data);
   }
-  //order create fot the plan
- orderCreate(data: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/Employer_Api/appOrderCreate`, data);
+    //order create fot the plan
+ orderCreate(planPrice: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/Payment/create_order`, {planPrice:planPrice});
   }
-
+//for verify payment 
+  verifyPayment(data: any) {
+       return this.http.post(`${this.apiUrl}/Payment/verify_payment`, data);
+  }
   getJobTitles(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/Api/get_job_titles`);
   }
