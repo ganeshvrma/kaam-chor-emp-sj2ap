@@ -230,7 +230,18 @@ basicpg(){
   //
 
   onlyNavigate() {
-    this.router.navigate(['/job-detail-page']);
+ this.user_id=Number(localStorage.getItem('userId'));
+ this.apiService.checkPlanTaken(this.user_id).subscribe((res: any) => {
+        if (res.status === true) {
+          this.router.navigate(['/job-detail-page']);
+        }
+        else{
+          alert("Plan is not active");
+        }
+      });
+
+    // this.router.navigate(['/job-detail-page']);
+    
   }
   previousPage() {
     this.router.navigate(['/basic-details-page']);
@@ -307,7 +318,15 @@ logoUploading(){
         // Show success toast or redirect
         // this.logoUploaded = true;
         localStorage.setItem('company_complete','true');
-        this.router.navigate(['/job-detail-page']);
+        // this.router.navigate(['/job-detail-page']);
+        this.apiService.checkPlanTaken(this.user_id).subscribe((res: any) => {
+        if (res.status === true) {
+          this.router.navigate(['/job-detail-page']);
+        }
+        else{
+          alert("Plan is not active");
+        }
+      });
       },
       (error: any) => {
         console.error('API Error:', error);
