@@ -51,30 +51,82 @@
   <p><strong>Selected Plan:</strong></p>
   <p>
     ₹{{ plan?.price }} for {{ plan?.duration }} days <br />
-    {{ plan?.unlocks }} Unlocks, {{ plan?.jobs }} Jobs, {{ plan?.boosts }}
-    Boosts
+    {{ plan?.candidate_unlock }} Unlocks, {{ plan?.jobs_live }} Live Jobs, {{
+    plan?.jobs_boost }} Job Boosts
   </p>
+  <form [formGroup]="checkOutData">
+    <ion-item>
+      <ion-label position="stacked">Full Name</ion-label>
+      <ion-input
+        type="name"
+        formControlName="name"
+        placeholder="John M. Doe"
+      ></ion-input>
+      <ion-text
+        color="danger"
+        *ngIf="checkOutData.get('name')?.touched && checkOutData.get('name')?.invalid"
+      >
+        <small *ngIf="checkOutData.get('name')?.errors?.['required']"
+          >Feild is required</small
+        >
+      </ion-text>
+    </ion-item>
 
-  <ion-item>
-    <ion-label position="stacked">Full Name</ion-label>
-    <ion-input type="name" placeholder="John M. Doe"></ion-input>
-  </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Email</ion-label>
+      <ion-input
+        type="email"
+        formControlName="email"
+        placeholder="john@example.com"
+      ></ion-input>
+      <ion-text
+        color="danger"
+        *ngIf="checkOutData.get('email')?.touched && checkOutData.get('email')?.invalid"
+      >
+        <small *ngIf="checkOutData.get('email')?.errors?.['required']"
+          >Feild is required</small
+        >
+      </ion-text>
+    </ion-item>
 
-  <ion-item>
-    <ion-label position="stacked">Email</ion-label>
-    <ion-input type="email" placeholder="john@example.com"></ion-input>
-  </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Mobile</ion-label>
+      <ion-input
+        type="tel"
+        formControlName="mobile"
+        placeholder="Mobile Number"
+      ></ion-input>
+      <ion-text
+        color="danger"
+        *ngIf="checkOutData.get('mobile')?.touched && checkOutData.get('mobile')?.invalid"
+      >
+        <small *ngIf="checkOutData.get('mobile')?.errors?.['required']"
+          >Feild is required</small
+        >
+      </ion-text>
+    </ion-item>
 
-  <ion-item>
-    <ion-label position="stacked">Mobile</ion-label>
-    <ion-input type="tel" placeholder="Mobile Number"></ion-input>
-  </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Address</ion-label>
+      <ion-input
+        type="name"
+        formControlName="address"
+        placeholder="542 W. 15th Street"
+      ></ion-input>
+      <ion-text
+        color="danger"
+        *ngIf="checkOutData.get('address')?.touched && checkOutData.get('address')?.invalid"
+      >
+        <small *ngIf="checkOutData.get('address')?.errors?.['required']"
+          >Feild is required</small
+        >
+      </ion-text>
+    </ion-item>
 
-  <ion-item>
-    <ion-label position="stacked">Address</ion-label>
-    <ion-input type="name" placeholder="542 W. 15th Street"></ion-input>
-  </ion-item>
-
-  <ion-button expand="block" class="btn">Pay Now</ion-button>
-  <ion-button id="trial_btn">trial payment</ion-button>
+    <ion-button expand="block" class="btn" (click)="onPayNow()"
+      >Pay Now</ion-button
+    >
+    <!-- <input type="number"  name= "amount"  value="{{ plan?.price }}"> -->
+    <!-- <ion-button expand="block" class="btn" (click)="paytesting()" >Pay Now</ion-button> -->
+  </form>
 </ion-content>
