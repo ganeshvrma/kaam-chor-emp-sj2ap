@@ -87,6 +87,7 @@
 </ion-header>
 <ion-content>
   <h3 style="text-align: center">Employer Dashboard</h3>
+
   <ion-grid>
     <ion-row>
       <ion-col>
@@ -96,8 +97,15 @@
           </ion-card-header>
 
           <ion-card-content>
-            <div class="cardbtnlower">
-              <ion-button class="btn">WIP/54</ion-button>
+            <div *ngIf="planStatus==='paid'">
+              <div class="cardbtnlower">
+                <ion-button class="btn">{{activejobs}}</ion-button>
+              </div>
+            </div>
+            <div *ngIf="planStatus!=='paid'">
+              <div class="cardbtnlower">
+                <ion-button class="btn">Not active plan</ion-button>
+              </div>
             </div>
           </ion-card-content>
         </ion-card>
@@ -110,7 +118,7 @@
 
           <ion-card-content>
             <div class="cardbtnlower">
-              <ion-button class="btn">24</ion-button>
+              <ion-button class="btn">{{savedCandidates}}</ion-button>
             </div>
           </ion-card-content>
         </ion-card>
@@ -122,15 +130,25 @@
           </ion-card-header>
 
           <ion-card-content>
-            <div class="cardbtnlower">
-              <ion-button class="btn">Valid till</ion-button>
+            <div *ngIf="planStatus==='paid'">
+              <div class="cardbtnlower">
+                <ion-button class="btn"> {{duration}} Plan</ion-button><br />
+                <ion-text>Plan valid till {{planExpiryDate}}</ion-text>
+              </div>
+            </div>
+            <div *ngIf="planStatus!=='paid'">
+              <div class="cardbtnlower">
+                <ion-button class="btn">Not active plan</ion-button><br />
+                <!-- <ion-text>Not active plan</ion-text> -->
+              </div>
             </div>
           </ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>
-  <div *ngIf="userType==='existing'">
+
+  <div *ngIf="planStatus!=='paid'">
     <div style="text-align: center; padding: 10px">
       <ion-button class="btn"
         >Recommended Pricing Plans for Employers</ion-button
@@ -139,73 +157,43 @@
     <ion-grid>
       <ion-row>
         <ion-col size="12" size-md="6" size-lg="3" *ngFor="let plan of plans">
-          <app-plan-card
-            [plan]="plan"
-            (purchase)="openCheckoutModal($event)"
-          ></app-plan-card>
+          <app-plan-card [plan]="plan" (purchase)="openCheckoutModal($event)">
+          </app-plan-card>
         </ion-col>
       </ion-row>
     </ion-grid>
-
-    <!-- <ion-grid>
-      <ion-row>
-        <ion-col>
-          <ion-card>
-            <ion-card-header class="ion-text-center">
-              <ion-card-title>Active Jobs / Allowed Jobs</ion-card-title>
-            </ion-card-header>
-
-            <ion-card-content>
-              <div class="cardbtnlower">
-                <ion-button class="btn">WIP/54</ion-button>
-              </div>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-        <ion-col
-          ><ion-card>
-            <ion-card-header class="ion-text-center">
-              <ion-card-title>Saved Candidates</ion-card-title>
-            </ion-card-header>
-
-            <ion-card-content>
-              <div class="cardbtnlower">
-                <ion-button class="btn">24</ion-button>
-              </div>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-        <ion-col>
-          <ion-card>
-            <ion-card-header class="ion-text-center">
-              <ion-card-title>Active Plan</ion-card-title>
-            </ion-card-header>
-
-            <ion-card-content>
-              <div class="cardbtnlower">
-                <ion-button class="btn">Valid till</ion-button>
-              </div>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-grid> -->
   </div>
-  <!-- <div *ngIf="userType==='new'">
-    <ion-card color="light" class="ion-text-center">
+  <div *ngIf="planStatus==='paid'">
+    <!-- <ion-card color="light" class="ion-text-center">
+  <ion-card-content> -->
+    <!-- <ion-icon name="briefcase-outline" size="large" color="primary"></ion-icon> -->
+    <!-- <h2 style="margin-top: 10px;">Your Current Plan</h2>
+    <p>{{duration}} Plan</p> -->
+    <!-- <ion-button class="btn" expand="block" routerLink="/basic-details-page">
+      Post Job Now
+    </ion-button> -->
+    <!-- </ion-card-content>
+</ion-card> -->
+    <ion-card>
+      <ion-card-header
+        class="btn"
+        style="font-size: 1.5rem; text-align: center"
+      >
+        Your Current Plan
+      </ion-card-header>
+
       <ion-card-content>
-        <ion-icon
-          name="briefcase-outline"
-          size="large"
-          color="primary"
-        ></ion-icon>
-        <h2 style="margin-top: 10px">Post a Job</h2>
-        <p>Post a job to view your available plans and pricing.</p>
-        <ion-button class="btn" expand="block" routerLink="/basic-details-page">
-          Post Job Now
-        </ion-button>
+        <div style="text-align: center">
+          <p>{{duration}} Plan</p>
+          <p style="font-size: 1.3rem; margin-top: 15px">₹ {{ planAmount }}</p>
+          <p>Unlimited Candidate Responses</p>
+          <p>{{ planUnlock}} candidate unlocks</p>
+          <p>{{ planJobslive }} job(s) live</p>
+          <p>Valid for {{ duration }}</p>
+          <p>{{ jobs_boost }} job boosts</p>
+        </div>
       </ion-card-content>
     </ion-card>
-  </div> -->
+  </div>
 </ion-content>
 <!-- </div> -->

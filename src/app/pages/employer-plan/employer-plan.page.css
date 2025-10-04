@@ -3,7 +3,7 @@
 }
 
 .btn {
-  --background: purple;
+  --background:#511168;
   color: white !important;
 }
 
@@ -43,4 +43,23 @@
   text-align: left;
   --padding-start: 16px; /* Optional spacing */
   --padding-end: 16px;
+}
+
+.plan-card {
+  border-radius: 12px;
+  background-color: #fff;
+  text-align: center;
+}
+.plan-card .plan-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+.plan-card .plan-price {
+  color: #9900cc;
+  font-size: 1.5rem;
+  margin: 10px 0;
+}
+
+p {
+  margin-bottom: 12px;
 }/*# sourceMappingURL=employer-plan.page.css.map */
