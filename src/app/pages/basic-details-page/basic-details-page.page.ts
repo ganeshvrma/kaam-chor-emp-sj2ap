@@ -63,20 +63,22 @@ export class BasicDetailsPagePage implements OnInit {
     this.fetchMobileNumber();
     this.checkIfUserExists();
     this.apiService.getDeviceInfo(this.user_id).subscribe((res: any) => {
-      if (res.status === false) {
-        this.apiService.postDeviceInfo(deviceData).subscribe(
-          (res: any) => {
-            console.log('Device info posted:', res);
-          },
-          (err: any) => {
-            console.error('Failed to post device info:', err);
-          }
-        );
-      } else res.status === true;
-      {
-        console.log(res.data);
+     
+    if (res.status === true) {
+      console.log( "Device info already exist");
       }
-    });
+    
+    },
+    (error)=>
+    this.apiService.postDeviceInfo(deviceData).subscribe(
+    (res: any) => {
+      console.log('Device info posted:', res);
+    },
+    (err:any) => {
+      console.error('Failed to post device info:', err);
+    }
+  )
+    );
   }
   // selectedId?: number
   loadEmpProfiles(selectedId?: number) {
