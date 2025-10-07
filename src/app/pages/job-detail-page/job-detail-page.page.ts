@@ -295,7 +295,7 @@ export class JobDetailPage implements OnInit {
    validateJobStartTime(value: string): boolean {
   // Allow only letters, numbers, spaces, and colon
   // const regex = /^[a-zA-Z0-9: ]+$/;
-const regex = /^[0-9: ]+(AM|PM)?$/i;
+const regex = /^([0-9]{1,2}:[0-9]{2}\s?(AM|PM))\s+to\s+([0-9]{1,2}:[0-9]{2}\s?(AM|PM))$/i;
 
   if (!regex.test(value)) {
     // You can use Ionic Toast or AlertController instead of alert

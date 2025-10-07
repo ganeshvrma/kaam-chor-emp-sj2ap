@@ -157,7 +157,7 @@ export class BasicDetailsPagePage implements OnInit {
             contactperson: res.data.contact_person_profile,
             emplemail: res.data.email,
           });
-          // this.basiclast.disable();
+          this.basiclast.disable();
         } else {
           // ✅ Server says no data: treat as new user
           this.isNewUser = true;
