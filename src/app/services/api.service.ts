@@ -54,6 +54,9 @@ CountActiveJobs(userId:number):Observable<any>{
 activePlanStatus(userId:number):Observable<any>{
   return this.http.get<any>(`${this.apiUrl}/Employer_Api/planValid/${userId}`)
 }
+previousPlanStatus(userId:number):Observable<any>{
+  return this.http.get<any>(`${this.apiUrl}/Employer_Api/previouPlan/${userId}`)
+}
   getJobTitles(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/Api/get_job_titles`);
   }

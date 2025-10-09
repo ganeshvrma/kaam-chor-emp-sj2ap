@@ -101,10 +101,12 @@
 
   <div *ngIf="activeButton === 'description'" class="job_cutom_div">
     <!-- <h3>About this Job</h3> -->
-    <ion-text class="commom"> About this Job </ion-text>
+    <ion-text class="commom">
+      About this Job: {{ jobData.job_description }}
+    </ion-text>
     <!-- <p>As a {{jobData.job_title}}, you will be a key contributor to the growth, implementation and overall improvement of
       Scott's Design rights. You will be collaborating with a lean team to...</p> -->
-    <p>{{ jobData.job_title }}:- {{ jobData.job_description }}</p>
+    <!-- <p>{{ jobData.job_title }}:- {{ jobData.job_description }}</p> -->
 
     <ion-card class="job-highlights-card">
       <ion-card-header>
@@ -166,13 +168,15 @@
       <strong>Industry type:</strong>{{ jobData.industry_type }}<br />
     </p>
 
-    <ion-text class="commom"> About the Company </ion-text>
+    <ion-text class="commom">
+      About the Company : {{ jobData.abt_the_comp }}
+    </ion-text>
     <!-- <p>
      {{jobData.company_name}} is a leading agency specializing in innovative graphic design solutions. Our mission is to provide
       exceptional design services that help our clients stand out in a competitive market. We pride ourselves on our
       creative approach and commitment to excellence.
     </p> -->
-    <p>{{ jobData.company_name }} {{ jobData.abt_the_comp }}</p>
+    <!-- <p>{{ jobData.company_name }} {{ jobData.abt_the_comp }}</p> -->
   </div>
   <div *ngIf="activeButton === 'requirements'" class="job_cutom_div">
     <ion-text class="commom"> Candidate Requirements </ion-text>
