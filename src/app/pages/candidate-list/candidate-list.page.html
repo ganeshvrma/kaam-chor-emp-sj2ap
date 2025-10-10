@@ -213,9 +213,11 @@
           <strong>Joined On:</strong> {{ candidate.joined ? (candidate.joined |
           date:'medium') : 'N/A' }}
         </p>
-        <ion-button (click)="viewOpen(candidate)" class="submitbtn"
-          >View</ion-button
-        >
+        <div style="text-align: end">
+          <ion-button (click)="viewOpen(candidate)" class="submitbtn"
+            >View</ion-button
+          >
+        </div>
       </ion-card-content>
     </ion-card>
   </ng-container>
