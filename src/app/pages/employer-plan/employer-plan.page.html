@@ -150,9 +150,11 @@
           <ion-card-header class="ion-text-center">
             <ion-card-title>Previous Plan</ion-card-title>
           </ion-card-header>
-          <ion-card-content>
-            <ion-text>{{prevduration}} Plan</ion-text>
-            <ion-text> Plan Expired on: {{ prevplanExpiryDate}}</ion-text>
+          <ion-card-content class="ion-text-center ion-flex-column">
+            <ion-button class="btn">{{prevduration}} Plan</ion-button>
+            <p class="ion-text-center">
+              Plan Expired on: {{ prevplanExpiryDate}}
+            </p>
           </ion-card-content>
         </ion-card>
       </ion-col>
