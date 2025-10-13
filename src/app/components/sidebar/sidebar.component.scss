@@ -30,3 +30,8 @@
   --color: #fff;
   font-weight: bold;
 }
+@media (prefers-color-scheme: dark) {
+.menu-item{
+  --color:white !important;
+  }
+}

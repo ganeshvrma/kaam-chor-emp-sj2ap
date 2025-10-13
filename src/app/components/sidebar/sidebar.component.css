@@ -25,4 +25,10 @@
   background-color: #511168;
   --color: #fff;
   font-weight: bold;
+}
+
+@media (prefers-color-scheme: dark) {
+  .menu-item {
+    --color:white !important;
+  }
 }/*# sourceMappingURL=sidebar.component.css.map */

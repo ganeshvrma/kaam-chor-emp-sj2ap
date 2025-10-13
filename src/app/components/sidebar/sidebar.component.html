@@ -1,7 +1,7 @@
 <!-- <ion-menu contentId="main-content">
   <ion-header>
     <ion-toolbar>
-      
+     
     </ion-toolbar>
   </ion-header>
   <ion-content class="ion-padding">
@@ -72,10 +72,10 @@
 
 
   </div> -->
-   <ion-menu [menuId]="menuId" [contentId]="contentId" side="start" type="overlay">
+<ion-menu [menuId]="menuId" [contentId]="contentId" side="start" type="overlay">
   <ion-header>
-    <ion-toolbar >
-      <!-- <ion-title>Menu</ion-title> -->
+    <ion-toolbar>
+      <ion-title>Kaamchor</ion-title>
       <ion-buttons slot="end">
         <ion-button fill="clear" (click)="closeMenu()">
           <ion-icon name="close"></ion-icon>
@@ -86,17 +86,16 @@
 
   <ion-content>
     <ion-list>
-      <ion-item 
-        *ngFor="let item of menuItems" 
-        button 
+      <ion-item
+        *ngFor="let item of menuItems"
+        button
         (click)="onItemClick(item)"
         [routerLink]="item.route"
         routerDirection="root"
-         [class.active-menu-item]="isActiveRoute(item.route)"
+        [class.active-menu-item]="isActiveRoute(item.route)"
         [class.logout-item]="item.action === 'logout'"
         class="menu-item"
-        
-        >
+      >
         <ion-icon [name]="item.icon" slot="start"></ion-icon>
         <ion-label>{{ item.title }}</ion-label>
       </ion-item>
