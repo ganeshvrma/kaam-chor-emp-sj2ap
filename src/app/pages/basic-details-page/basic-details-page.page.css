@@ -129,6 +129,12 @@ ion-text[color=danger] small {
     background: transparent;
     margin: 0;
   }
+  .commonheader {
+    background-color: #2a2a2a !important;
+  }
+  .segment-toolbar {
+    background-color: #2a2a2a !important;
+  }
   ion-label[position=stacked] {
     font-size: 0.9rem;
     font-weight: 600;
@@ -167,7 +173,7 @@ ion-text[color=danger] small {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
   .submitbtn {
-    --background: #833aa6;
+    --background: #511168;
     color: white !important;
   }
   ion-text[color=danger] small {
@@ -199,18 +205,14 @@ ion-text[color=danger] small {
   display: flex;
   justify-content: space-between;
   background-color: #e2e1e2;
-  margin-top: 5px;
   padding: 10px;
   min-height: 80px;
-  border-bottom: 1px solid #e2e1e2;
 }
 
 .toolbar {
-  background-color: #e2e1e2;
   margin-top: 5px;
   padding: 10px;
   min-height: 80px;
-  border-bottom: 1px solid #e2e1e2;
 }
 
 .toolbar .title-main {
