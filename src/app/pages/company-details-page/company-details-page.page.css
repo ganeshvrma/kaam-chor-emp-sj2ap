@@ -13,10 +13,8 @@
   display: flex;
   justify-content: space-between;
   background-color: #e2e1e2;
-  margin-top: 5px;
   padding: 10px;
   min-height: 80px;
-  border-bottom: 1px solid #e2e1e2;
 }
 
 form {
@@ -120,6 +118,9 @@ ion-text[color=danger] small {
     padding: 19px 10px 12px 0px;
     border-color: #050505;
   }
+  .commonheader {
+    background-color: #2a2a2a;
+  }
   ion-item {
     --inner-padding-end: 0px;
     --padding-start: 0px;
@@ -179,6 +180,9 @@ ion-text[color=danger] small {
     color: #dad7d7;
     padding-bottom: 0px;
   }
+  .segment-toolbar {
+    background-color: #2a2a2a !important;
+  }
 }
 .btn {
   display: flex;
@@ -214,10 +218,8 @@ ion-text[color=danger] small {
 }
 
 .toolbar {
-  background-color: #e2e1e2;
   padding: 10px;
   min-height: 80px;
-  border-bottom: 1px solid #e2e1e2;
 }
 
 .toolbar .title-main {

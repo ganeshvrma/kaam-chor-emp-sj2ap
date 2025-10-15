@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NavController } from '@ionic/angular';
+import { NavController, ToastController,IonToast } from '@ionic/angular';
 import { LocalStorageUtil } from 'src/app/shared/utils/localStorageUtil';
 import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
@@ -20,25 +20,27 @@ export class CompanyDetailsPagePage implements OnInit {
   //get api
   industryTypeOptions: any[] = [];
   selectedIndustryType: string = '';
-user_id!: number;
+  user_id!: number;
   stateOptions: any[] = [];
   selectedState: string = '';
- selectedSegment: string = 'company';
+  selectedSegment: string = 'company';
 
   cityOptions: any[] = [];
   companycity: string = '';
-isNewUser: boolean = true;
+  isNewUser: boolean = true;
   //
   selectedLogo!: File;
   logoUploaded: boolean = false;
   logoPending:boolean=true;
+   isToastOpen = false;
    logoPreview: string | ArrayBuffer | null = null;
   constructor(
     private fb: FormBuilder,
     private navCtrl: NavController,
     private apiService: ApiService,
     private router: Router,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private toastController: ToastController
   ) {
     {
       this.company = this.fb.group({
@@ -80,37 +82,7 @@ isNewUser: boolean = true;
         this.logoPending=false;
       }}
     });
-//      this.user_id=Number(localStorage.getItem('userId'));
-//          this.apiService.getEmployerCompanyData(this.user_id).subscribe((res) => {
-//          if (res.status && res.data) {
-//            console.log(res);
 
-//         this.isNewUser = false;
-          
-//          this.company.patchValue({
-//           companyname:res.data.company_name,
-//           companyaddress:res.data.full_address,
-//          companystate:res.data.state,
-//          companycity:res.data.city,
-//          google_map_loc:this.sanitizer.bypassSecurityTrustHtml(res.data.google_map_loc),
-//          companywebsite:res.data.comp_website,
-//          companydesc:res.data.abt_the_comp,
-//          industrytype:res.data.industry_type,
-//          numemployees:res.data.comp_size,
-//          companyestb:res.data.year_of_establishment,
-//          });
-//          const stateId = res.data.state;
-//          const cityId = res.data.city;
-//          this.initializecity(stateId, cityId);
-// this.company.disable();
-         
-//          }
-//          else {
-//         // If no data, treat as new user
-//         this.isNewUser = false;
-//          }
-//         });
-      
 
     this.getEmployerdata();
   }
@@ -128,6 +100,8 @@ isNewUser: boolean = true;
     reader.readAsDataURL(file);
   }
 }
+
+
  getEmployerdata(){
   // const storedUserId=LocalStorageUtil.getItem('userId');
       // const formCompleted = localStorage.getItem('company_complete') === 'true';
@@ -215,36 +189,33 @@ isNewUser: boolean = true;
       this.company.get('companycity')?.setValue('');
     }
   }
-basicpg(){
-  this.router.navigate(['/basic-details-page']);
-}
-  // nextStep2() {
-  //   if (this.company.valid) {
-  //     console.log('Form data:', this.company.value);
-     
-  //   } else {
-  //     this.company.markAllAsTouched();
-  //     console.log('Form is invalid');
-  //   }
-  // }
-  //
+ 
 
-  onlyNavigate() {
+//next button function
+  onlyNavigate(isOpen: boolean) {
  this.user_id=Number(localStorage.getItem('userId'));
  this.apiService.checkPlanTaken(this.user_id).subscribe((res: any) => {
         if (res.status === true) {
           this.router.navigate(['/job-detail-page']);
         }
-        else{
-          alert("Plan is not active");
-        }
-      });
+     
+      },
+      (error)=>{
+           this.isToastOpen = isOpen;
+            // console.log(res.message);
+            // console.log("res nhi chal ")
+      }
+    );
 
     // this.router.navigate(['/job-detail-page']);
     
   }
+
+   //back button 
   previousPage() {
     this.router.navigate(['/basic-details-page']);
+      
+
   }
   logout() {
     console.log('Logging out...');
@@ -274,7 +245,7 @@ logoUploading(){
     }
   });
 }
-  submitForm() {
+  submitForm(isOpen: boolean) {
     if (this.company.invalid) {
       this.company.markAllAsTouched(); // Show validation errors
       return;
@@ -287,18 +258,7 @@ logoUploading(){
   formData.append('user_id', LocalStorageUtil.getItem('userId'));
   formData.append('comp_logo', this.selectedLogo);
 
-  this.apiService.upload_company_logo(formData).subscribe({
-    next: (res) => {
-      alert('Logo uploaded successfully!');
-      this.logoUploaded = true;
-      this.logoPending = false;
-      console.log(res);
-    },
-    error: (err) => {
-      alert('Failed to upload logo.');
-      console.error(err);
-    }
-  });
+ 
     
     // const formDaata = this.jobForm.value;
     const formDaata = {
@@ -317,16 +277,32 @@ logoUploading(){
         console.log('Success:', response);
         // Show success toast or redirect
         // this.logoUploaded = true;
+         this.apiService.update_company_logo(formData).subscribe({
+    next: (res) => {
+      alert('Logo uploaded successfully!');
+      this.logoUploaded = true;
+      this.logoPending = false;
+      console.log(res);
+    },
+    error: (err) => {
+      alert('Failed to upload logo.');
+      console.error(err);
+    }
+  });
         localStorage.setItem('company_complete','true');
         // this.router.navigate(['/job-detail-page']);
         this.apiService.checkPlanTaken(this.user_id).subscribe((res: any) => {
         if (res.status === true) {
           this.router.navigate(['/job-detail-page']);
         }
-        else{
-          alert("Plan is not active");
-        }
-      });
+        // else{
+        //   alert("Plan is not active");
+        // }
+      },(error: any) => {
+       this.isToastOpen = isOpen;
+        // Show error toast
+      }
+    );
       },
       (error: any) => {
         console.error('API Error:', error);
