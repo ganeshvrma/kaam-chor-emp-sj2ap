@@ -18,14 +18,22 @@ export class MyProfilePage implements OnInit {
   @Input() formData: any;
   proData:any;
   profilePage:FormGroup;
+  newEmail:FormGroup;
   user_id!: number;
   empProfileOptions:any[]=[];
   industryTypeOptions: any[] = [];
   stateOptions: any[] = [];
   cityOptions: any[] = [];
-isProfileIncomplete!:boolean;
+  editEmail!:boolean;
+  oldemail: string = '';
+  newemail: string = '';
+  editingEmail: boolean = false;
+  loading: boolean = false;
+  errorMessage: string = '';
+  successMessage: string = '';
   city: string = '';
-  // isProfileIncomplete = true; // Later you can fetch real value from backend
+ 
+  isProfileIncomplete = false; // Later you can fetch real value from backend
   // showLogoUpload = false;
   // showOfficeUpload = false;
 
@@ -58,6 +66,7 @@ officeImagesPreview: string[]=[] ;
 
   employer_name: [''],
   email: [''],
+  newemail:[''],
   reg_mb: [''],
   contact_person_profile: [''],
   company_name:[''],
@@ -73,7 +82,11 @@ officeImagesPreview: string[]=[] ;
   country:['India']
  
     
-        });}
+        });
+     this.newEmail=this.fb.group({
+      newemail:[''],
+     }) ;
+    }
    }
 
   ngOnInit() {
@@ -99,6 +112,8 @@ officeImagesPreview: string[]=[] ;
      this.apiService.getEmployerProfile(this.user_id).subscribe((res) => {
          if (res.status && res.data) {
            console.log(res);
+           this.editEmail=true;
+           this.oldemail=res.data.personal_details.email;
       if (res.data.company_details.company_images.comp_logo) {
         this.logoUploaded = true;
         this.logoPreview = res.data.company_details.company_images.comp_logo;
@@ -133,12 +148,13 @@ officeImagesPreview: string[]=[] ;
          const stateId = res.data.state;
          const cityId = res.data.city;
          this.initializecity(stateId, cityId);
-           this.profilePage.disable();
+          //  this.profilePage.disable();
         }
 
         },(error)=>{
-          this.isProfileIncomplete=true;
-        })
+      this.isProfileIncomplete=true;
+     }
+      )
          }
          
   }
@@ -260,6 +276,48 @@ uploadOfficeImages() {
     }
   });
 }
+enableEmailEdit() {
+    this.editingEmail = true;
+    // this.newemail = this.oldemail;
+    console.log(this.oldemail);
+    this.errorMessage = '';
+    this.successMessage = '';
+    this.editEmail=false;
+  }
 
+  updateEmail() {
+    const neewemail = this.newEmail.value.newemail;
+
+    if (!neewemail || !this.user_id) {
+      this.errorMessage = 'Email cannot be empty.';
+      return;
+    }
+   console.log(neewemail);
+   console.log(this.user_id);
+    this.loading = true;
+    this.errorMessage = '';
+    this.successMessage = '';
+  //  const dataForm={
+  //   ...this.newEmail.value,
+  //    user_id: this.user_id,
+  //  }
+    this.apiService.updateEmployerEmail(this.user_id,neewemail).subscribe(
+      (res) => {
+        this.loading = false;
+        if (res.status) {
+          this.oldemail = neewemail;
+          this.editingEmail = false;
+          this.successMessage = 'Email updated successfully!';
+        } else {
+          this.errorMessage = res.message || 'Update failed.';
+        }
+      },
+      (error) => {
+        this.loading = false;
+        this.errorMessage = 'An error occurred. Please try again.';
+        console.error('HTTP Error:', error);
+      }
+    );
+  }
 
 }
