@@ -34,7 +34,7 @@ export class ApiService {
   submitCheckoutData(data: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/Employer_Api/appCheckoutData`, data);
   }
-    //order create fot the plan
+  //order create fot the plan
  orderCreate(planPrice: number): Observable<any> {
     return this.http.post(`${this.apiUrl}/Payment/create_order`, {planPrice:planPrice});
   }
@@ -42,21 +42,26 @@ export class ApiService {
   verifyPayment(data: any) {
        return this.http.post(`${this.apiUrl}/Payment/verify_payment`, data);
   }
-   checkPlanTaken(userId: number): Observable<any> {
+
+ checkPlanTaken(userId: number): Observable<any> {
   return this.http.get<any>(`${this.apiUrl}/Employer_Api/checkcondition/${userId}`);
 }
+//for dashboard card which displaying saved candidates 
 CountSavedcandidates(userId:number):Observable<any>{
   return this.http.get<any>(`${this.apiUrl}/Employer_Api/countSavedCandidate/${userId}`)
 }
+//for dashboard card which displaying active jobs [only for paid users]
 CountActiveJobs(userId:number):Observable<any>{
   return this.http.get<any>(`${this.apiUrl}/Employer_Api/activeJobsCount/${userId}`)
 }
+////for dashboard card which displaying active plan details
 activePlanStatus(userId:number):Observable<any>{
   return this.http.get<any>(`${this.apiUrl}/Employer_Api/planValid/${userId}`)
 }
 previousPlanStatus(userId:number):Observable<any>{
   return this.http.get<any>(`${this.apiUrl}/Employer_Api/previouPlan/${userId}`)
 }
+
   getJobTitles(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/Api/get_job_titles`);
   }
@@ -127,6 +132,11 @@ updateEmployerEmail(userId: number, email: string) {
     email: email
   });
 }
+// updateEmployerEmail(data: any) {
+//   return this.http.put<any>(`${this.apiUrl}/Employer_Api/updateEmployerEmail`, {
+//     data
+//   });
+// }
  emailbyuserid(userId: number): Observable<any> {
   return this.http.get<any>(`${this.apiUrl}/Employer_Api/emailbyuserid/${userId}`);
 }
