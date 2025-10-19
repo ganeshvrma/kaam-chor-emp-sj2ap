@@ -16,7 +16,7 @@ export class AppComponent {
     { title: 'Inactive Jobs', icon: 'list-outline', route: '/inactive-jobs' },
     { title: 'Post Job', icon: 'information-circle', route: '/basic-details-page' },
     { title: 'Saved Candidate', icon: 'bookmark-outline', route: '/saved-candidates' },
-    { title: ' Account Setting', icon: 'settings-outline', route: '/account-setting' },
+    // { title: ' Account Setting', icon: 'settings-outline', route: '/account-setting' },
     {title:'Logout',icon:'log-out-outline',action:'logout' }
 
   ];
