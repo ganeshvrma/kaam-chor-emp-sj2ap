@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button (click)="goBack()" defaultHref="/tabs/tab1"></ion-back-button>
+      <ion-back-button (click)="goBack()"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -9,52 +9,62 @@
 
 <ion-content class="ion-padding">
   <div *ngIf="!isNewUser">
-  <h1 >Welcome back <br> {{username}}!</h1>
+    <h1>
+      Welcome back <br />
+      {{username}}!
+    </h1>
   </div>
 
   <div *ngIf="isNewUser">
- <h1>Welcome to our service! </h1> <p>We have sent an OTP via SMS to {{mobileNumber}} for verification. Please enter the OTP below to complete your registration.</p>
-   </div>
+    <h1>Welcome to our service!</h1>
+    <p>
+      We have sent an OTP via SMS to {{mobileNumber}} for verification. Please
+      enter the OTP below to complete your registration.
+    </p>
+  </div>
   <!-- align center the heading how to do it -->
   <div *ngIf="!isNewUser">
-  <p>We Have Sent OTP Via SMS To {{mobileNumber}} For Verification</p>
+    <p>We Have Sent OTP Via SMS To {{mobileNumber}} For Verification</p>
   </div>
 
   <!-- <app-otp-input [(ngModel)]="otp"></app-otp-input> -->
 
   <ion-grid>
-  <ion-row>
-    <ion-col size="3" *ngFor="let _ of [1,2,3,4]; let i = index">
-      <ion-input 
-        type="tel"
-        inputmode="numeric"
-        pattern="[0-9]*"
-        maxlength="1" 
-        class="otp-input" 
-        [id]="'otp-' + i"
-        (ionInput)="onOtpChange($event, i)"
-        (keydown)="onKeyDown($event, i)"
-      ></ion-input>
-    </ion-col>
-  </ion-row>
-</ion-grid>
+    <ion-row>
+      <ion-col size="3" *ngFor="let _ of [1,2,3,4]; let i = index">
+        <ion-input
+          type="tel"
+          inputmode="numeric"
+          pattern="[0-9]*"
+          maxlength="1"
+          class="otp-input"
+          [id]="'otp-' + i"
+          (ionInput)="onOtpChange($event, i)"
+          (keydown)="onKeyDown($event, i)"
+        ></ion-input>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-  
-  <ion-button expand="block" color="primary" (click)="verifyOtp()" [disabled]="otp.length !== 4 || isLoading">
+  <ion-button
+    expand="block"
+    class="btn"
+    (click)="verifyOtp()"
+    [disabled]="otp.length !== 4 || isLoading"
+  >
     <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>
     <span *ngIf="!isLoading">Verify</span>
   </ion-button>
-  
 
-  <p class="ion-text-center">You are already registered.<br>Please enter OTP to move ahead.</p>
+  <!-- <p class="ion-text-center">You are already registered.<br>Please enter OTP to move ahead.</p> -->
 
   <!-- show always in bottom -->
-  <div class="">
+  <!-- <div class="">
   <p class="ion-text-center bottom-content">
     Didn't receive OTP?<br>
     Retry in 1 sec<br>
     OR<br>
     <a href="#">Verify using call</a>
   </p>
-  </div>
+  </div> -->
 </ion-content>

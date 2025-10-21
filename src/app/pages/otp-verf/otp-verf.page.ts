@@ -6,7 +6,7 @@ import { StatusBar,Style as StatusBarStyle } from '@capacitor/status-bar';
 import { AlertController, IonicModule, NavController, Platform } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
-
+import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support';
 
 @Component({
   selector: 'app-otp-verf',
@@ -21,6 +21,7 @@ export class OtpVerfPage implements OnInit {
   username: string = '';
   isLoading: boolean = false;
   isNewUser: boolean = false;
+  userId!:number;
   // isNewUser: boolean | undefined;
 userType:string='';
 backButtonSub: Subscription | undefined;
@@ -32,13 +33,14 @@ backButtonSub: Subscription | undefined;
   constructor(private navCtrl: NavController,
      private platform: Platform,private router: Router,private route: ActivatedRoute,private authService: AuthService,
      
-    private alertCtrl: AlertController,) { }
+    private alertCtrl: AlertController,) { this.initEdgeToEdge();}
 
   ngOnInit() {
-    StatusBar.setBackgroundColor({ color: '#ffffff' }); // white
+    StatusBar.setBackgroundColor({ color: '#0a0a0aff' }); // white
       // Set the status bar style to dark (black text/icons)
       StatusBar.setStyle({ style: StatusBarStyle.Dark });
     // console.log(this.isNewUser);
+    
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras.state) {
       this.mobileNumber = navigation.extras.state['mobileNumber'];
@@ -47,10 +49,17 @@ backButtonSub: Subscription | undefined;
     }
     this.handleBackButton();
   }
-
+async initEdgeToEdge() {
+    try {
+      await EdgeToEdge.enable();  // enables immersive mode
+      console.log('Edge-to-edge mode enabled!');
+    } catch (error) {
+      console.error('Failed to enable edge-to-edge:', error);
+    }
+  }
   submitOtp(){
     console.log('Attempting navigation to /tabs/home');
-  this.router.navigate(['/job-detail-page']).then(
+    this.router.navigate(['/job-detail-page']).then(
     () => console.log('Navigation successful'),
     (err) => console.error('Navigation failed', err)
   );
@@ -61,6 +70,7 @@ backButtonSub: Subscription | undefined;
       this.isLoading = true;
       console.log('Verifying OTP:', this.otp);
 
+      //  console.log("userid before api calll",this.userId);
       this.authService.verifyOtp(this.mobileNumber, this.otp).subscribe({
         next: (response) => {
           console.log('OTP verified successfully', response);
