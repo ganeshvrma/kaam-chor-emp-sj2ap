@@ -5,7 +5,7 @@
 
 .sidebarBtn ion-button.active {
   --background: #511168;
-  --color: white;
+  --color: #511168;
 }
 
 .menu-item {
@@ -23,8 +23,11 @@
 
 .active-menu-item {
   background-color: #511168;
-  --color: #fff;
+  --color: #fff ;
   font-weight: bold;
+}
+.active-menu-item .colorIcon {
+  color: #fff !important;
 }
 
 @media (prefers-color-scheme: dark) {
