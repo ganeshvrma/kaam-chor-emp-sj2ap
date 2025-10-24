@@ -32,7 +32,7 @@ export class MyProfilePage implements OnInit {
   errorMessage: string = '';
   successMessage: string = '';
   city: string = '';
- 
+ ifChanged!:boolean;
   isProfileIncomplete = false; // Later you can fetch real value from backend
   // showLogoUpload = false;
   // showOfficeUpload = false;
@@ -148,7 +148,8 @@ officeImagesPreview: string[]=[] ;
          const stateId = res.data.state;
          const cityId = res.data.city;
          this.initializecity(stateId, cityId);
-          //  this.profilePage.disable();
+           this.profilePage.disable();
+          this.profilePage.get('email')?.enable();
         }
 
         },(error)=>{
@@ -282,7 +283,7 @@ enableEmailEdit() {
     console.log(this.oldemail);
     this.errorMessage = '';
     this.successMessage = '';
-    this.editEmail=false;
+    // this.editEmail=false;
   }
 
   updateEmail() {
@@ -307,6 +308,7 @@ enableEmailEdit() {
         if (res.status) {
           this.oldemail = neewemail;
           this.editingEmail = false;
+          this.ifChanged=true;
           this.successMessage = 'Email updated successfully!';
         } else {
           this.errorMessage = res.message || 'Update failed.';

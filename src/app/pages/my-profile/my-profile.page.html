@@ -184,7 +184,8 @@
           <input formControlName="employer_name" />
 
           <p>Email</p>
-          <input type="email" formControlName="email" />
+          <input *ngIf="!ifChanged" type="email" formControlName="email" />
+          <p *ngIf="ifChanged">{{oldemail}}</p>
           <ng-container *ngIf="editEmail">
             <p class="email-text">
               <a class="change-link" (click)="enableEmailEdit()"
@@ -215,7 +216,7 @@
                 <ion-button
                   size="small"
                   color="medium"
-                  (click)="editingEmail = false"
+                  (click)="editingEmail = false "
                 >
                   Cancel
                 </ion-button>
