@@ -94,4 +94,10 @@ ion-button {
 
 ion-button {
   margin-top: 20px;
+}
+
+@media (prefers-color-scheme: dark) {
+  p {
+    color: #fff;
+  }
 }/*# sourceMappingURL=login.page.css.map */
