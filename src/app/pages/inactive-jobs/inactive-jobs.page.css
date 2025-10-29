@@ -1,3 +1,19 @@
+.logo-light {
+  display: block;
+}
+
+.logo-dark {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .logo-light {
+    display: none;
+  }
+  .logo-dark {
+    display: block;
+  }
+}
 .logo-img {
   width: 60px;
   height: 60px;
