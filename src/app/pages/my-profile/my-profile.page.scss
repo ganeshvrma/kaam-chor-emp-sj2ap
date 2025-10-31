@@ -8,7 +8,21 @@ ion-item {
   margin-bottom: 15px;
   border: 1px solid #ccc;
 }
+.logo-light {
+  display: block;
+}
+.logo-dark {
+  display: none;
+}
 
+@media (prefers-color-scheme: dark) {
+  .logo-light {
+    display: none;
+  }
+  .logo-dark {
+    display: block;
+  }
+}
 /* Style for ion-label when floating */
 ion-label {
   font-size: 14px;

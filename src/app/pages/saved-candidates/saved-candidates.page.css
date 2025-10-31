@@ -6,6 +6,22 @@ ion-item {
   border-radius: 8px;
 }
 
+.logo-light {
+  display: block;
+}
+
+.logo-dark {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .logo-light {
+    display: none;
+  }
+  .logo-dark {
+    display: block;
+  }
+}
 ion-col {
   font-size: 14px;
 }
