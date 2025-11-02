@@ -1,11 +1,21 @@
 <ion-content *ngIf="!offline" class="ion-padding">
   <div class="logo-container">
-    b
-    <img
-      src="assets/logo-with-white-bg.svg"
-      alt="Kaam Chor Logo"
-      class="logo"
-    />
+    <!-- <img src="assets/logo-with-white-bg.svg" alt="Kaam Chor Logo" class="logo"> -->
+
+    <div style="display: flex; justify-content: center">
+      <img
+        src="../../../assets/kaamchor-logo.svg"
+        class="block logo logo-light dark:hidden"
+        alt="Logo for light theme"
+      />
+    </div>
+    <div style="display: flex; justify-content: center">
+      <img
+        src="../../../assets/icons/kc_login_logo.svg"
+        class="hidden logo logo-dark dark:block"
+        alt="Logo for dark theme"
+      />
+    </div>
   </div>
 
   <h2>Enter Your Phone Number</h2>

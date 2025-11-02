@@ -11,15 +11,31 @@ ion-content {
   max-width: 150px;
 }
 
+.logo-light {
+  display: block;
+}
+
+.logo-dark {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .logo-light {
+    display: none;
+  }
+  .logo-dark {
+    display: block;
+  }
+}
 h2 {
   font-size: 24px;
-  color: #511168;
+  color: #bc2ef0;
   font-weight: bolder;
   padding-left: 13px;
 }
 
 p {
-  color: #000;
+  color: #8c1ab6;
   padding-left: 13px;
   font-size: small;
 }
@@ -94,10 +110,4 @@ ion-button {
 
 ion-button {
   margin-top: 20px;
-}
-
-@media (prefers-color-scheme: dark) {
-  p {
-    color: #fff;
-  }
 }/*# sourceMappingURL=login.page.css.map */

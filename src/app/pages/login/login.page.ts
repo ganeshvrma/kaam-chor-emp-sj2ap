@@ -43,21 +43,23 @@ export class LoginPage implements OnInit {
   constructor(private router: Router, private authService: AuthService,private alertController: AlertController,private navCtrl: NavController) { this.initEdgeToEdge();}
 
   ngOnInit() {
-    StatusBar.setBackgroundColor({ color: '#fff' }); // white
+this.initEdgeToEdge();
+
+    // StatusBar.setBackgroundColor({ color: '#fff' }); // white
       // Set the status bar style to dark (black text/icons)
-      StatusBar.setStyle({ style: StatusBarStyle.Dark });
+      StatusBar.setStyle({ style: StatusBarStyle.Light });
      
     Network.addListener('networkStatusChange',(status)  => {
       if (!status.connected) {
         this.showAlert('You are offline. Please check your internet connection.');
       }
     });
-
     this.checkNetworkStatus();
   }
 async initEdgeToEdge() {
     try {
-      await EdgeToEdge.enable();  // enables immersive mode
+      await EdgeToEdge.enable();
+      backgroundColor: '#511168';  // enables immersive mode
       console.log('Edge-to-edge mode enabled!');
     } catch (error) {
       console.error('Failed to enable edge-to-edge:', error);
