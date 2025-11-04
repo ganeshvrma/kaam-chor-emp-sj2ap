@@ -6,9 +6,11 @@
   width: 100%;
   background-color: white;
 }
- .logo-light {
+
+.logo-light {
   display: block;
 }
+
 .logo-dark {
   display: none;
 }
@@ -21,7 +23,6 @@
     display: block;
   }
 }
-
 /* Wrapper to center all content */
 .content {
   display: flex;
@@ -46,7 +47,8 @@
 .logo {
   width: 160px;
   height: 160px;
-  object-fit: contain;
+  -o-object-fit: contain;
+     object-fit: contain;
   opacity: 0;
   transform: scale(0.8);
   animation: fadeScale 1.2s ease-in-out forwards;
@@ -66,7 +68,8 @@
 .job-image {
   width: 336px;
   height: auto;
-  object-fit: contain;
+  -o-object-fit: contain;
+     object-fit: contain;
 }
 
 /* Spinner Bounce Effect */
@@ -86,7 +89,6 @@
     transform: scale(1);
   }
 }
-
 @keyframes slideUp {
   0% {
     opacity: 0;
@@ -97,7 +99,6 @@
     transform: translateY(0);
   }
 }
-
 @keyframes bounce {
   0%, 100% {
     transform: translateY(0);
@@ -106,7 +107,6 @@
     transform: translateY(-5px);
   }
 }
-
 /* Responsive Adjustments */
 @media (min-width: 768px) {
   .logo {
@@ -117,7 +117,6 @@
     width: 320px;
   }
 }
-
 @media (min-width: 1024px) {
   .logo {
     width: 224px;
@@ -126,4 +125,4 @@
   .job-image {
     width: 384px;
   }
-}
+}/*# sourceMappingURL=splash-screen.page.css.map */
