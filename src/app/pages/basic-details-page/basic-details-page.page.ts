@@ -98,11 +98,14 @@ export class BasicDetailsPagePage implements OnInit {
 
 
 
-  ionViewDidEnter() {
+  ionViewWillEnter() {
     this.checkIfUserExists(); // Always check if user already submitted
+    this.fetchMobileNumber();
   }
 
   fetchMobileNumber() {
+    this.user_id = Number(localStorage.getItem('userId'));
+
     this.apiService.Getmbbyuserid(this.user_id).subscribe((res) => {
       if (res.status && res.data?.mobile_number) {
         this.mobileNumber = res.data.mobile_number;
@@ -146,6 +149,8 @@ export class BasicDetailsPagePage implements OnInit {
   
   
   checkIfUserExists() {
+    this.user_id = Number(localStorage.getItem('userId'));
+
     this.apiService.getEmployerData(this.user_id).subscribe(
       (res) => {
         if (res.status && res.data && res.data.employer_name) {
