@@ -5,6 +5,8 @@ import { NavController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
 import { Device } from '@capacitor/device';
 import { App } from '@capacitor/app';
+ import { Storage } from '@ionic/storage-angular';
+
 @Component({
   selector: 'app-lastpage',
   standalone: false,
@@ -31,8 +33,12 @@ export class BasicDetailsPagePage implements OnInit {
     private navCtrl: NavController,
     private apiService: ApiService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+        private storage: Storage
+
   ) {
+               this.initStorage();
+
     this.basiclast = this.fb.group({
       emplname: ['', Validators.required],
       emplemail: [
@@ -44,22 +50,26 @@ export class BasicDetailsPagePage implements OnInit {
      profile_name:[]
     });
   }
-
+async initStorage() {
+    await this.storage.create();
+  }
   async ngOnInit() {
     const info = await Device.getInfo();
     const deviceId = await Device.getId();
     const active = await App.getState();
+    const user_id=await this.storage.get('userId');
 
     const deviceData = {
       device_id: deviceId.identifier,
-      user_id: Number(localStorage.getItem('userId')),
+      // user_id: Number(localStorage.getItem('userId')),
+      user_id:user_id,
       device_type: info.operatingSystem,
       last_active: active.isActive,
     };
     console.log(deviceData);
     this.loadEmpProfiles();
 
-    this.user_id = Number(localStorage.getItem('userId'));
+    // this.user_id = Number(localStorage.getItem('userId'));
     this.fetchMobileNumber();
     this.checkIfUserExists();
     this.apiService.getDeviceInfo(this.user_id).subscribe((res: any) => {
@@ -103,8 +113,9 @@ export class BasicDetailsPagePage implements OnInit {
     this.fetchMobileNumber();
   }
 
-  fetchMobileNumber() {
-    this.user_id = Number(localStorage.getItem('userId'));
+ async fetchMobileNumber() {
+    // this.user_id = Number(localStorage.getItem('userId'));
+    const user_id=await this.storage.get('userId');
 
     this.apiService.Getmbbyuserid(this.user_id).subscribe((res) => {
       if (res.status && res.data?.mobile_number) {
@@ -148,8 +159,9 @@ export class BasicDetailsPagePage implements OnInit {
   }
   
   
-  checkIfUserExists() {
-    this.user_id = Number(localStorage.getItem('userId'));
+ async checkIfUserExists() {
+    // this.user_id = Number(localStorage.getItem('userId'));
+    const user_id=await this.storage.get('userId');
 
     this.apiService.getEmployerData(this.user_id).subscribe(
       (res) => {
@@ -193,9 +205,10 @@ export class BasicDetailsPagePage implements OnInit {
   onlyDashboard() {
     this.router.navigate(['/employer-plan']);
   }
-  logout() {
+ async logout() {
     console.log('Logging out...');
-    localStorage.clear();
+    // localStorage.clear();
+    await this.storage.clear();
     this.router.navigate(['/login']);
   }
 

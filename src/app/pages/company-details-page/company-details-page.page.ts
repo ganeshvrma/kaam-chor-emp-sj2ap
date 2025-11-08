@@ -192,20 +192,23 @@ export class CompanyDetailsPagePage implements OnInit {
  
 
 //next button function
-  onlyNavigate(isOpen: boolean) {
- this.user_id=Number(localStorage.getItem('userId'));
- this.apiService.checkPlanTaken(this.user_id).subscribe((res: any) => {
-        if (res.status === true) {
+  // onlyNavigate(isOpen: boolean) {
+  onlyNavigate() {
           this.router.navigate(['/job-detail-page']);
-        }
+
+//  this.user_id=Number(localStorage.getItem('userId'));
+//  this.apiService.checkPlanTaken(this.user_id).subscribe((res: any) => {
+//         if (res.status === true) {
+//           this.router.navigate(['/job-detail-page']);
+//         }
      
-      },
-      (error)=>{
-           this.isToastOpen = isOpen;
-            // console.log(res.message);
-            // console.log("res nhi chal ")
-      }
-    );
+//       },
+//       (error)=>{
+//            this.isToastOpen = isOpen;
+//             // console.log(res.message);
+//             // console.log("res nhi chal ")
+//       }
+//     );
 
     // this.router.navigate(['/job-detail-page']);
     
@@ -217,7 +220,7 @@ export class CompanyDetailsPagePage implements OnInit {
       
 
   }
-  logout() {
+ async logout() {
     console.log('Logging out...');
     localStorage.clear();
     this.router.navigate(['/login']);
@@ -245,7 +248,9 @@ logoUploading(){
     }
   });
 }
-  submitForm(isOpen: boolean) {
+  // submitForm(isOpen: boolean) {
+  submitForm() {
+
     if (this.company.invalid) {
       this.company.markAllAsTouched(); // Show validation errors
       return;
@@ -289,20 +294,20 @@ logoUploading(){
       console.error(err);
     }
   });
-        localStorage.setItem('company_complete','true');
-        // this.router.navigate(['/job-detail-page']);
-        this.apiService.checkPlanTaken(this.user_id).subscribe((res: any) => {
-        if (res.status === true) {
-          this.router.navigate(['/job-detail-page']);
-        }
-        // else{
-        //   alert("Plan is not active");
-        // }
-      },(error: any) => {
-       this.isToastOpen = isOpen;
-        // Show error toast
-      }
-    );
+        // localStorage.setItem('company_complete','true');
+        this.router.navigate(['/job-detail-page']);
+    //     this.apiService.checkPlanTaken(this.user_id).subscribe((res: any) => {
+    //     if (res.status === true) {
+    //       this.router.navigate(['/job-detail-page']);
+    //     }
+    //     // else{
+    //     //   alert("Plan is not active");
+    //     // }
+    //   },(error: any) => {
+    //    this.isToastOpen = isOpen;
+    //     // Show error toast
+    //   }
+    // );
       },
       (error: any) => {
         console.error('API Error:', error);
