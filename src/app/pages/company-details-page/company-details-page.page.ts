@@ -5,6 +5,7 @@ import { LocalStorageUtil } from 'src/app/shared/utils/localStorageUtil';
 import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
+ import { Storage } from '@ionic/storage-angular';
 
 @Component({
   selector: 'app-mainfirst',
@@ -40,8 +41,12 @@ export class CompanyDetailsPagePage implements OnInit {
     private apiService: ApiService,
     private router: Router,
     private sanitizer: DomSanitizer,
-    private toastController: ToastController
+    private toastController: ToastController,
+            private storage: Storage
+
   ) {
+                   this.initStorage();
+
     {
       this.company = this.fb.group({
         companyname: ['', Validators.required],
@@ -60,9 +65,13 @@ export class CompanyDetailsPagePage implements OnInit {
       });
     }
   }
+async initStorage() {
+    await this.storage.create();
+  }
+ async ngOnInit() {
+      // this.user_id=Number(localStorage.getItem('userId'));
+          const user_id=await this.storage.get('userId');
 
-  ngOnInit() {
-      this.user_id=Number(localStorage.getItem('userId'));
     this.apiService.getIndustryType().subscribe((res: any) => {
       if (res.status === 'success') {
         this.industryTypeOptions = res.data;
@@ -222,17 +231,22 @@ export class CompanyDetailsPagePage implements OnInit {
   }
  async logout() {
     console.log('Logging out...');
-    localStorage.clear();
+    // localStorage.clear();
+    await this.storage.clear();
     this.router.navigate(['/login']);
    
   }
-logoUploading(){
+  async logoUploading(){
    if (!this.selectedLogo) {
     alert('Please select a logo first');
     return;
   }
+      const user_id=await this.storage.get('userId');
+
     const formData = new FormData();
-  formData.append('user_id', LocalStorageUtil.getItem('userId'));
+  // formData.append('user_id', LocalStorageUtil.getItem('userId'));
+  formData.append('user_id', user_id);
+
   formData.append('comp_logo', this.selectedLogo);
 
   this.apiService.upload_company_logo(formData).subscribe({
@@ -249,7 +263,7 @@ logoUploading(){
   });
 }
   // submitForm(isOpen: boolean) {
-  submitForm() {
+  async submitForm() {
 
     if (this.company.invalid) {
       this.company.markAllAsTouched(); // Show validation errors
@@ -259,8 +273,10 @@ logoUploading(){
     alert('Please select a logo first');
     return;
   }
+      const user_id=await this.storage.get('userId');
+
     const formData = new FormData();
-  formData.append('user_id', LocalStorageUtil.getItem('userId'));
+  formData.append('user_id', user_id);
   formData.append('comp_logo', this.selectedLogo);
 
  
@@ -269,7 +285,8 @@ logoUploading(){
     const formDaata = {
       ...this.company.value,
       // step_two_data: "step 2", // replace with actual step one form/control or object
-      user_id: LocalStorageUtil.getItem('userId'),
+      // user_id: LocalStorageUtil.getItem('userId'),
+      user_id: user_id,
        
     };
 
