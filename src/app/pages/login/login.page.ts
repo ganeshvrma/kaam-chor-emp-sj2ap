@@ -47,7 +47,7 @@ this.initEdgeToEdge();
 
     // StatusBar.setBackgroundColor({ color: '#fff' }); // white
       // Set the status bar style to dark (black text/icons)
-      StatusBar.setStyle({ style: StatusBarStyle.Light });
+      StatusBar.setStyle({ style: StatusBarStyle.Dark });
      
     Network.addListener('networkStatusChange',(status)  => {
       if (!status.connected) {

@@ -36,9 +36,11 @@ backButtonSub: Subscription | undefined;
     private alertCtrl: AlertController,) { this.initEdgeToEdge();}
 
   ngOnInit() {
-    StatusBar.setBackgroundColor({ color: '#0a0a0aff' }); // white
+    // StatusBar.setBackgroundColor({ color: '#0a0a0aff' }); // white
       // Set the status bar style to dark (black text/icons)
+      // StatusBar.setStyle({ style: StatusBarStyle.Dark });
       StatusBar.setStyle({ style: StatusBarStyle.Dark });
+
     // console.log(this.isNewUser);
     
     const navigation = this.router.getCurrentNavigation();
