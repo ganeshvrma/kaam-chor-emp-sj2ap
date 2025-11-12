@@ -13,6 +13,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { LocalStorageUtil } from 'src/app/shared/utils/localStorageUtil';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
+import { Storage } from '@ionic/storage-angular';
 
 @Component({
   selector: 'app-job-detail-page',
@@ -31,6 +32,7 @@ export class JobDetailPage implements OnInit {
   form = {
     description: '',
   };
+  user_id!:number;
   city: string | undefined;
   company_id: string | undefined;
   state: string | undefined;
@@ -66,14 +68,17 @@ export class JobDetailPage implements OnInit {
     'Within my city',
     'Anywhere in India',
   ];
+  showSecondSelect = false;
  filteredMaxExp: number[] = [];
   constructor(
     private fb: FormBuilder,
     private apiService: ApiService,
     private navCtrl: NavController,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private storage: Storage
   ) {
+     this.initStorage();
     this.years = Array.from({ length: 29 }, (_, i) => i + 1);
     this.jobForm = this.fb.group({
       jobTitle: [null, [Validators.required]],
@@ -89,7 +94,7 @@ export class JobDetailPage implements OnInit {
       locations: ['', Validators.required],
       WorkFromHome: ['', Validators.required],
       qualification: [[], Validators.required],
-      branch:[[]],
+      branch:[null],
       // salary: ['', Validators.required],
       minSalary:['',Validators.required],
       maxSalary:['',Validators.required],
@@ -139,7 +144,10 @@ export class JobDetailPage implements OnInit {
       };
     });
   }
-  ngOnInit() {
+   async initStorage() {
+    await this.storage.create();
+  }
+  async ngOnInit() {
     this.apiService.getJobCategory().subscribe((res: any) => {
       if (res.status === 'success') {
         this.dropdownOptions = res.data;
@@ -154,10 +162,11 @@ export class JobDetailPage implements OnInit {
       if (res.status === 'success') {
         this.perksOptions = res.data;
       }
+     
     });
     
-    const user_id = LocalStorageUtil.getItem('userId');
-
+    // const user_id = LocalStorageUtil.getItem('userId');
+const user_id=await this.storage.get('userId');
     const data = {
       user_id: user_id,
     };
@@ -192,6 +201,19 @@ export class JobDetailPage implements OnInit {
         this.qualification = res.data;
       }
     });
+    // this.apiService.getEduQual().subscribe({
+    //     next: (data) => {
+    //       // Example API response → map it for ng-select
+    //       // e.g. [{ id: 1, name: 'Tech' }] → { label: 'Tech', value: 1 }
+    //       this.qualification = data.map(item => ({
+    //         label: item.name,
+    //         id: item.id
+    //       }));
+    //     },
+    //     error: (err) => {
+    //       console.error('Failed to load categories', err);
+    //     }
+    //   });
      this.apiService.getEduBranch().subscribe((res: any) => {
       if (res.status === 'success') {
         this.branch = res.data;
@@ -203,6 +225,7 @@ export class JobDetailPage implements OnInit {
     this.jobForm.get('minexp')?.valueChanges.subscribe((minVal: number) => {
       this.updateMaxExpOptions(minVal);
     });
+
     this.apiService.getSkills().subscribe((res: any) => {
       if (res.status === 'success') {
         this.selectedSkills = res.data;
@@ -271,6 +294,29 @@ export class JobDetailPage implements OnInit {
     else{
       this.isRecreate=false;
     }
+
+ const storedUserId=await this.storage.get('userId');
+    this.user_id = parseInt(storedUserId, 10);
+      if(this.user_id){
+        const savedData = await this.storage.get('tempFormData');
+      if (savedData) {
+          this.jobForm.patchValue(savedData);
+            }
+      }
+
+  }
+   
+    // selectedId = this.?.id;
+  onFirstSelectChange(selected: any) {
+    // 👇 show second select only for specific options
+    const selectedId = selected?.id;
+    //  console.log(selectedId);
+    if (selectedId>= '4') {
+      this.showSecondSelect = true;
+    } else {
+      this.showSecondSelect = false;
+       // clear when hidden
+    }
   }
   updateMaxExpOptions(minVal: number) {
     if (!minVal) {
@@ -337,9 +383,11 @@ salaryRangeValidator(): ValidatorFn {
   companypg() {
     this.router.navigate(['/company-details-page']);
   }
-  logout() {
+  async logout() {
     console.log('Logging out...');
-    localStorage.clear();
+    // localStorage.clear();
+     await this.storage.clear();
+     await this.storage.remove('tempFormData');
     this.router.navigate(['/login']);
    
   }
@@ -375,7 +423,7 @@ salaryRangeValidator(): ValidatorFn {
     this.router.navigate(['/company-details-page']);
   }
 
-  submitForm() {
+  async submitForm() {
     if (this.jobForm.invalid) {
       this.jobForm.markAllAsTouched();
       return;
@@ -399,9 +447,12 @@ salaryRangeValidator(): ValidatorFn {
       minExp = formValue.minexp?.toString() || '0';
       maxExp = formValue.maxexp?.toString() || '0';
     }
+     const storedUserId=await this.storage.get('userId');
+     this.user_id = parseInt(storedUserId, 10);
     const formData = {
       ...formValue,
-      user_id: LocalStorageUtil.getItem('userId'),
+      // user_id: LocalStorageUtil.getItem('userId'),
+      user_id: await this.storage.get('userId'),
       company_id: this.company_id,
       interviewDay: Array.isArray(formValue.interviewDay)
         ? formValue.interviewDay.join(',')
@@ -410,33 +461,107 @@ salaryRangeValidator(): ValidatorFn {
       skills: Array.isArray(formValue.skills)
         ? formValue.skills.join(',')
         : formValue.skills,
+      perksgiven:Array.isArray(formValue.perksgiven) ? formValue.perksgiven.join(',') : formValue.perksgiven,
       min_exp: minExp,
       max_exp: maxExp,
     };
 
-    console.log('Submitting form:', formData);
-
-    this.apiService.submitJob(formData).subscribe(
-      (response: any) => {
+    // console.log('Submitting form:', formData);
+      //  const user_id= await this.storage.get('userId');
+    
+     this.apiService.checkPlanTaken(this.user_id).subscribe((res: any) => {
+        if (res.status === true) {
+      console.log(formData);
+          this.apiService.submitJob(formData).subscribe(
+      async (response: any) => {
         console.log('Success:', response);
-        localStorage.setItem('type_Of_User','existing');
+         await this.storage.remove('tempFormData');
+        // localStorage.setItem('type_Of_User','existing');
+        this.router.navigate(['/my-jobs']);
+      });
+        }
+        
+      },async (error: any) => {
         this.router.navigate(['/employer-plan']);
-      },
-      (error: any) => {
-        console.error('API Error:', error);
+        await this.storage.set('tempFormData', formData);
+        // console.log(formData);
       }
     );
+    // this.apiService.submitJob(formData).subscribe(
+    //   (response: any) => {
+    //     console.log('Success:', response);
+    //     localStorage.setItem('type_Of_User','existing');
+    //     this.router.navigate(['/employer-plan']);
+    //   },
+    //   (error: any) => {
+    //     console.error('API Error:', error);
+    //   }
+    // );
   }
+//  async submitForm() {
+//     if (this.jobForm.invalid) {
+//       this.jobForm.markAllAsTouched();
+//       return;
+//     }
+//    const jobStartTime = this.jobForm.value.jobStartTime; 
 
+//   if (!this.validateJobStartTime(jobStartTime)) {
+//     return; // ❌ stop API call
+//   }
+
+//     const formValue = this.jobForm.value;
+//     const transformedLanguages = this.transformLanguagesData(
+//       formValue.languages
+//     );
+//     let minExp, maxExp;
+//     if (formValue.candidatetype === 'fresher') {
+//       minExp = 'Fresher';
+//       maxExp = 'Fresher';
+//     } else {
+//       // For experienced candidates, ensure we have valid numbers
+//       minExp = formValue.minexp?.toString() || '0';
+//       maxExp = formValue.maxexp?.toString() || '0';
+//     }
+//      const storedUserId=await this.storage.get('userId');
+//      this.user_id = parseInt(storedUserId, 10);
+//     const formData = {
+//       ...formValue,
+//       user_id:this.user_id,
+//       company_id: this.company_id,
+//       interviewDay: Array.isArray(formValue.interviewDay)
+//         ? formValue.interviewDay.join(',')
+//         : formValue.interviewDay,
+//       languages: transformedLanguages,
+//       skills: Array.isArray(formValue.skills)
+//         ? formValue.skills.join(',')
+//         : formValue.skills,
+//       perksgiven:Array.isArray(formValue.perksgiven) ? formValue.perksgiven.join(',') : formValue.perksgiven,
+//       min_exp: minExp,
+//       max_exp: maxExp,
+//     };
+
+//     console.log('Submitting form:', formData);
+
+//     this.apiService.submitJob(formData).subscribe(
+//       (response: any) => {
+//         console.log('Success:', response);
+//         localStorage.setItem('type_Of_User','existing');
+//         this.router.navigate(['/employer-plan']);
+//       },
+//       (error: any) => {
+//         console.error('API Error:', error);
+//       }
+//     );
+//   }
   selectQualifications(level: string) {
     this.selectedQualifications = level;
     this.jobForm.get('qualification')?.setValue(level);
     console.log('Selected qualification:', level);
   }
-  selectBranch(level: string) {
-    this.selectedBranch = level;
-    this.jobForm.get('branch')?.setValue(level);
-    console.log('Selected branch:', level);
+  selectBranch(branchold: string) {
+    this.selectedBranch = branchold;
+    this.jobForm.get('branch')?.setValue(branchold);
+    console.log('Selected branch:', branchold);
   }
 
   selectWorkType(choice: string) {
