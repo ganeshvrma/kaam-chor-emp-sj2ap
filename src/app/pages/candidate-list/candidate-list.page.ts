@@ -133,7 +133,7 @@ user_id!:number;
     
    const modal = await this.modalCtrl.create({
        component: CandidateDetailModalComponent,
-       componentProps: { userId:candidate.user_id },
+       componentProps: { userId:candidate.user_id,fromPage:'candidateList' },
       //  componentProps: { userId:151 },
    
      });

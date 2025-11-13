@@ -29,6 +29,7 @@ import { CommonModule } from '@angular/common';
 })
 export class CandidateDetailModalComponent implements OnInit {
   @Input() userId!: number;
+   @Input() fromPage!: string;
   userData: any;
   loading = true;
 candidate_id!:number;
