@@ -7,6 +7,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Storage } from '@ionic/storage-angular';
+
 @Component({
   selector: 'app-my-profile',
   templateUrl: './my-profile.page.html',
@@ -61,7 +63,15 @@ officeImagesPreview: string[]=[] ;
   officeImages: File[] = [];
 
 
-  constructor(private fb: FormBuilder,private apiService: ApiService,private router: Router,private route: ActivatedRoute,private sanitizer: DomSanitizer) {
+  constructor(
+    private fb: FormBuilder,
+    private apiService: ApiService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private sanitizer: DomSanitizer,
+    private storage: Storage
+  ) {
+    this.initStorage();
      {this.profilePage = this.fb.group({
 
   employer_name: [''],
@@ -88,8 +98,10 @@ officeImagesPreview: string[]=[] ;
      }) ;
     }
    }
-
-  ngOnInit() {
+ async initStorage() {
+    await this.storage.create();
+  }
+  async ngOnInit() {
      this.apiService.getEmpProfile().subscribe((res: any) => {
        if (res.status === 'success') {
          this.empProfileOptions = res.data;
@@ -105,7 +117,8 @@ officeImagesPreview: string[]=[] ;
         this.stateOptions = res.data;
       }
     });
-     const storedUserId = localStorage.getItem('userId');
+    //  const storedUserId = localStorage.getItem('userId');
+    const storedUserId=await this.storage.get('userId');
      if (storedUserId) {
        this.user_id = parseInt(storedUserId, 10);
 
@@ -145,11 +158,15 @@ officeImagesPreview: string[]=[] ;
          city:res.data.company_details.city,
          google_map_loc:this.sanitizer.bypassSecurityTrustHtml(res.data.company_details.google_map_loc)
          });
+         this.newEmail.patchValue({
+         newemail:res.data.personal_details.email,
+
+         })
          const stateId = res.data.state;
          const cityId = res.data.city;
          this.initializecity(stateId, cityId);
            this.profilePage.disable();
-          this.profilePage.get('email')?.enable();
+          // this.profilePage.get('email')?.enable();
         }
 
         },(error)=>{
@@ -200,7 +217,12 @@ officeImagesPreview: string[]=[] ;
   }
 }
 
-
+basicPage(){
+ this.router.navigate(['/basic-details-page']);
+}
+compPage(){
+  this.router.navigate(['/company-details-page']);
+}
 onLogoSelected(event: any) {
   const file = event.target.files[0];
   if (file) {

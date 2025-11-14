@@ -66,18 +66,13 @@
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
-      <!-- <img
-        src="../../../assets/icons/kaam-chor-logo-removebg.png"
-        style="opacity: 0.7"
-        alt="logo"
-      /> -->
       <img
-        src="assets/logo-dark.png"
+        src="../../../assets/icons/kaam-chor-logo-removebg.png"
         class="block logo-light dark:hidden"
         alt="Logo for light theme"
       />
       <img
-        src="assets/logo-light.png"
+        src="../../../assets/icons/kaam-chor11.svg"
         class="hidden logo-dark dark:block"
         alt="Logo for dark theme"
       />
@@ -186,8 +181,16 @@
       <ion-card>
         <ion-card-header>
           <ion-card-title style="color: purple"
-            >Personal Details</ion-card-title
-          >
+            >Personal Details
+          </ion-card-title>
+          <p>
+            <ion-icon
+              style="font-size: 18px"
+              name="eyedrop-outline"
+              class="cardIcon"
+              (click)="basicPage()"
+            ></ion-icon>
+          </p>
         </ion-card-header>
         <ion-card-content>
           <p>Name</p>
@@ -264,7 +267,17 @@
       <!-- Company Details -->
       <ion-card>
         <ion-card-header>
-          <ion-card-title style="color: purple">Company Details</ion-card-title>
+          <ion-card-title style="color: purple"
+            >Company Details
+          </ion-card-title>
+          <p>
+            <ion-icon
+              style="font-size: 18px"
+              name="eyedrop-outline"
+              class="cardIcon"
+              (click)="compPage()"
+            ></ion-icon>
+          </p>
         </ion-card-header>
         <ion-card-content>
           <p>Company Name</p>

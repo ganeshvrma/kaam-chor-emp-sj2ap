@@ -78,12 +78,12 @@
       <ion-menu-button menuId="main-menu"></ion-menu-button>
     </ion-buttons>
     <img
-      src="assets/logo-dark.png"
+      src="../../../assets/icons/kaam-chor-logo-removebg.png"
       class="block logo-light dark:hidden"
       alt="Logo for light theme"
     />
     <img
-      src="assets/logo-light.png"
+      src="../../../assets/icons/kaam-chor11.svg"
       class="hidden logo-dark dark:block"
       alt="Logo for dark theme"
     />
@@ -109,7 +109,7 @@
             </div>
             <div *ngIf="planStatus!=='paid'">
               <div class="cardbtnlower">
-                <ion-button class="btn">Not active plan</ion-button>
+                <ion-button class="btn">No active plan</ion-button>
               </div>
             </div>
           </ion-card-content>
@@ -143,7 +143,7 @@
             </div>
             <div *ngIf="planStatus!=='paid'">
               <div class="cardbtnlower">
-                <ion-button class="btn">Not active plan</ion-button><br />
+                <ion-button class="btn">No active plan</ion-button><br />
                 <!-- <ion-text>Not active plan</ion-text> -->
               </div>
             </div>
@@ -165,7 +165,11 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+
   <div *ngIf="planStatus==='paid'">
+    <!-- <div style="text-align: center; padding: 10px;">
+      <ion-button class="btn"  > Your Current Plan</ion-button>
+     </div> -->
     <ion-card>
       <ion-card-header
         class="btn"
@@ -189,13 +193,20 @@
   </div>
   <!-- <div *ngIf="planStatus!=='paid'"> -->
 
-  <div style="text-align: center; padding: 10px">
+  <div *ngIf="planStatus!=='paid'" style="text-align: center; padding: 10px">
     <ion-button class="btn">Recommended Pricing Plans for Employers</ion-button>
+  </div>
+  <div *ngIf="planStatus==='paid'" style="text-align: center; padding: 10px">
+    <ion-button class="btn">Upgrade Your Current Plan</ion-button>
   </div>
   <ion-grid>
     <ion-row>
       <ion-col size="12" size-md="6" size-lg="3" *ngFor="let plan of plans">
-        <app-plan-card [plan]="plan" (purchase)="openCheckoutModal($event)">
+        <app-plan-card
+          [plan]="plan"
+          [plStatus]="planStatus"
+          (purchase)="openCheckoutModal($event)"
+        >
         </app-plan-card>
       </ion-col>
     </ion-row>

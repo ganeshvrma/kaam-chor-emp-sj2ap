@@ -5,6 +5,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { Router } from '@angular/router';
 import { Device } from '@capacitor/device';
 import { App } from '@capacitor/app';
+import { Storage } from '@ionic/storage-angular';
 
 @Component({
   selector: 'app-employer-plan',
@@ -27,14 +28,21 @@ user_id!:number;
  planUnlock!:number;
  jobs_boost!:number;
  planExpiryDate:string |null=null;
- planStatus:string |null =null;
+//  planStatus:string |null =null;
+ planStatus!:string;
+
  previousPlan!:boolean;
   constructor(
     private modalCtrl: ModalController,
     private apiService: ApiService,
-    private router: Router
-  ) {}
-
+    private router: Router,
+    private storage: Storage
+  ) {
+     this.initStorage();
+  }
+ async initStorage() {
+    await this.storage.create();
+  }
   async openCheckoutModal(plan: any) {
     const modal = await this.modalCtrl.create({
       component: CheckoutModalPage,
@@ -48,8 +56,8 @@ user_id!:number;
     if (navigation?.extras.state) {
       this.userType = navigation.extras.state['userType'];
     }
-    this.userType=localStorage.getItem('type_Of_User');
-  
+    // this.userType=localStorage.getItem('type_Of_User');
+    this.userType=await this.storage.get('type_Of_User');
     // console.log("from local storage",this.userType);
 
     // if (this.userType === 'existing') {
@@ -66,13 +74,15 @@ user_id!:number;
      const active = await App.getState();
      const deviceData = {
     device_id: deviceId.identifier ,
-    user_id: Number(localStorage.getItem('userId')),
+    // user_id: Number(localStorage.getItem('userId')),
+      user_id:await this.storage.get('userId'),
    
     device_type: info.operatingSystem,
     last_active:  active.isActive
   };
-   this.user_id= Number(localStorage.getItem('userId')),
-
+  //  this.user_id= Number(localStorage.getItem('userId')),
+      this.user_id=await this.storage.get('userId'),
+   
    this.apiService.getDeviceInfo(this.user_id).subscribe((res: any) => {
   //     if (res.status === true) {
   //     console.log( "Device info already exist");
@@ -177,12 +187,12 @@ user_id!:number;
        // to show active jobs in 
        this.currentActiveJobs();
   }
-  logout() {
+async  logout() {
     // Step 1: Clear the user_id from localStorage
-    localStorage.removeItem('user_id');
-
+    // localStorage.removeItem('user_id');
+ await this.storage.clear();
     // OR reset completely
-    localStorage.clear(); // if you want to clear everything
+    // localStorage.clear(); // if you want to clear everything
 
     // Step 2: Navigate to the login page
     this.router.navigate(['/login']);

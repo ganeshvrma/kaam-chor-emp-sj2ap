@@ -9,22 +9,6 @@ ion-item {
   border: 1px solid #ccc;
 }
 
-.logo-light {
-  display: block;
-}
-
-.logo-dark {
-  display: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  .logo-light {
-    display: none;
-  }
-  .logo-dark {
-    display: block;
-  }
-}
 /* Style for ion-label when floating */
 ion-label {
   font-size: 14px;
@@ -96,4 +80,29 @@ ion-card-title {
   text-align: left;
   --padding-start: 16px; /* Optional spacing */
   --padding-end: 16px;
+}
+
+.logo-light {
+  display: block;
+}
+
+.logo-dark {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .logo-light {
+    display: none;
+  }
+  .logo-dark {
+    display: block;
+  }
+}
+ion-card-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 5px !important;
+  padding-top: 8px;
 }/*# sourceMappingURL=my-profile.page.css.map */
