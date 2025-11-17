@@ -47,7 +47,7 @@ this.initEdgeToEdge();
 
     // StatusBar.setBackgroundColor({ color: '#fff' }); // white
       // Set the status bar style to dark (black text/icons)
-      StatusBar.setStyle({ style: StatusBarStyle.Dark });
+      // StatusBar.setStyle({ style: StatusBarStyle.Dark });
      
     Network.addListener('networkStatusChange',(status)  => {
       if (!status.connected) {
@@ -59,7 +59,7 @@ this.initEdgeToEdge();
 async initEdgeToEdge() {
     try {
       await EdgeToEdge.enable();
-      backgroundColor: '#511168';  // enables immersive mode
+      // backgroundColor: '#511168';  // enables immersive mode
       console.log('Edge-to-edge mode enabled!');
     } catch (error) {
       console.error('Failed to enable edge-to-edge:', error);

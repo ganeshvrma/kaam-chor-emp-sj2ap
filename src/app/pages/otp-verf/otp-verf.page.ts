@@ -7,6 +7,7 @@ import { AlertController, IonicModule, NavController, Platform } from '@ionic/an
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support';
+import { Storage } from '@ionic/storage-angular';
 
 @Component({
   selector: 'app-otp-verf',
@@ -30,17 +31,24 @@ backButtonSub: Subscription | undefined;
   // Define your route restrictions here
   restrictedRoutes: string[] = [ '/otp-verf'];
   confirmRoutes: string[] = ['/employer-plan', '/basic-details-page'];
-  constructor(private navCtrl: NavController,
-     private platform: Platform,private router: Router,private route: ActivatedRoute,private authService: AuthService,
-     
-    private alertCtrl: AlertController,) { this.initEdgeToEdge();}
-
+  constructor(
+    private navCtrl: NavController,
+     private platform: Platform,
+     private router: Router,
+     private route: ActivatedRoute,
+     private authService: AuthService,
+     private storage: Storage,
+    private alertCtrl: AlertController,) { 
+      this.initEdgeToEdge();
+       this.initStorage();
+    }
+ async initStorage() {
+    await this.storage.create();
+  }
   ngOnInit() {
-    // StatusBar.setBackgroundColor({ color: '#0a0a0aff' }); // white
+    // StatusBar.setBackgroundColor({ color: '#fff' }); // white
       // Set the status bar style to dark (black text/icons)
       // StatusBar.setStyle({ style: StatusBarStyle.Dark });
-      StatusBar.setStyle({ style: StatusBarStyle.Dark });
-
     // console.log(this.isNewUser);
     
     const navigation = this.router.getCurrentNavigation();
@@ -67,14 +75,14 @@ async initEdgeToEdge() {
   );
   }
 
-  verifyOtp() {
+  async verifyOtp() {
     if (this.otp.length === 4 && !this.isLoading) {
       this.isLoading = true;
       console.log('Verifying OTP:', this.otp);
 
       //  console.log("userid before api calll",this.userId);
       this.authService.verifyOtp(this.mobileNumber, this.otp).subscribe({
-        next: (response) => {
+        next: async (response) => {
           console.log('OTP verified successfully', response);
           this.isLoading = false;
 
@@ -82,9 +90,12 @@ async initEdgeToEdge() {
           // Set localStorage indicator for login
           console.log('userid',response.data.user_id);
           this.userType=response.data.user_type;
-          localStorage.setItem('isLoggedIn', 'true');
-          localStorage.setItem('type_Of_User',response.data.user_type);
-          localStorage.setItem('userId', response.data.user_id.toString());
+          // localStorage.setItem('isLoggedIn', 'true');
+          // localStorage.setItem('type_Of_User',response.data.user_type);
+          // localStorage.setItem('userId', response.data.user_id.toString());
+          await this.storage.set('isLoggedIn', 'true');
+           await this.storage.set('type_Of_User',response.data.user_type);
+          await this.storage.set('userId', response.data.user_id.toString());
 
         //   this.formDataService.getFormData(this.userId).subscribe(data => {
         //     this.formDataService.setFormData(data); // Prefill the form data
@@ -108,8 +119,8 @@ async initEdgeToEdge() {
           //   this.router.navigate(['/employer-plan'], navigationExtras);
           // }
           if(this.userType==="new"){
-          localStorage.setItem('userId', response.data.user_id.toString());
-
+          // localStorage.setItem('userId', response.data.user_id.toString());
+            await this.storage.set('userId', response.data.user_id.toString());
             this.router.navigate(['/basic-details-page'], navigationExtras);
           }else{
             this.router.navigate(['/employer-plan'], navigationExtras);
