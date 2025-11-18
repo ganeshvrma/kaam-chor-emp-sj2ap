@@ -232,6 +232,8 @@ export class CompanyDetailsPagePage implements OnInit {
     console.log('Logging out...');
     // localStorage.clear();
      await this.storage.clear();
+     await this.storage.remove('userId');
+
     this.router.navigate(['/login']);
    
   }

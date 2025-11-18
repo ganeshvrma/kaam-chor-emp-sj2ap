@@ -50,6 +50,7 @@ export class SidebarComponent {
   logout() {
     console.log('Logging out...');
     localStorage.clear();
+    
     this.router.navigate(['/login']);
     this.closeMenu();
   }

@@ -387,7 +387,9 @@ salaryRangeValidator(): ValidatorFn {
     console.log('Logging out...');
     // localStorage.clear();
      await this.storage.clear();
-     await this.storage.remove('tempFormData');
+     await this.storage.remove('userId');
+
+    //  await this.storage.remove('tempFormData');
     this.router.navigate(['/login']);
    
   }

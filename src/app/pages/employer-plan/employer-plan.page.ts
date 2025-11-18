@@ -191,6 +191,8 @@ async  logout() {
     // Step 1: Clear the user_id from localStorage
     // localStorage.removeItem('user_id');
  await this.storage.clear();
+     await this.storage.remove('userId');
+
     // OR reset completely
     // localStorage.clear(); // if you want to clear everything
 
