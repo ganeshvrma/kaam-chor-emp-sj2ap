@@ -128,6 +128,7 @@ user_id!:number;
       this.currentActiveJobs();
      // to show active plan status 
       this.planCurrentStatus();
+      this.user_id=await this.storage.get('userId'),
 
         this.apiService.checkPlanTaken(this.user_id).subscribe((res: any) => {
         if (res.status === true) {
@@ -139,7 +140,9 @@ user_id!:number;
 
   }
   //previous plan status
-  prevPlanStatus(){
+ async prevPlanStatus(){
+      this.user_id=await this.storage.get('userId'),
+
     this.apiService.previousPlanStatus(this.user_id).subscribe((res:any)=>{
       if(res.status==="success"){
          this.prevduration=res.data.duration;
@@ -149,7 +152,8 @@ user_id!:number;
     })
   }
    // to show active plan status
-  planCurrentStatus(){
+ async planCurrentStatus(){
+      this.user_id=await this.storage.get('userId'),
     
      this.apiService.activePlanStatus(this.user_id).subscribe((res:any)=>{
       if(res.status==="success"){
@@ -165,7 +169,9 @@ user_id!:number;
     
      });
   }
-  currentActiveJobs(){
+async  currentActiveJobs(){
+      this.user_id=await this.storage.get('userId'),
+
      this.apiService.CountActiveJobs(this.user_id).subscribe((res:any)=>{
       if(res.status==="success"){
         // console.log(res.data);
@@ -174,8 +180,10 @@ user_id!:number;
       }
      });
   }
-  ionViewDidEnter(){
+async  ionViewDidEnter(){
     //checking condition every time
+      this.user_id=await this.storage.get('userId'),
+
       this.apiService.checkPlanTaken(this.user_id).subscribe((res: any) => {
         if (res.status === true) {
           console.log("plan  activated ");
